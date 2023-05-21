@@ -1,7 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
 using HarmonyLib;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,15 +7,12 @@ namespace osu_patcher_hook
 {
     public class EntryPoint
     {
+        private const string GithubUrl = "https://github.com/rushiiMachine/osu-patcher";
         private static Harmony _harmony;
 
         public static int Initialize(string _)
         {
-            var stream = new FileStream("C:\\osu!\\Logs\\patcher.txt", FileMode.Create);
-            var writer = new StreamWriter(stream);
-            writer.AutoFlush = true;
-            Console.SetOut(writer);
-            Console.SetError(writer);
+            ConsoleUtil.InitConsoleWriteHooks();
 
             try
             {
@@ -25,11 +20,22 @@ namespace osu_patcher_hook
                 _harmony.PatchAll(typeof(EntryPoint).Assembly);
 
                 NotificationsUtil.ShowMessage("osu!patcher initialized!", Color.WhiteSmoke, 5000,
-                    () => { Process.Start("https://github.com/rushiiMachine/osu-patcher"); });
+                    () => { Process.Start(GithubUrl); });
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                try
+                {
+                    NotificationsUtil.ShowMessage("osu!patcher experienced an error! Click to report.", Color.Red,
+                        20000,
+                        () => { Process.Start($"{GithubUrl}/issues"); });
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2);
+                }
             }
 
             return 0;
