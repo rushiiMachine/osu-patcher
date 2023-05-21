@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-patcher-hook", "osu-patcher-hook\osu-patcher-hook.csproj", "{5F7A12A3-C211-4318-94FD-92651DD730A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-patcher", "osu-patcher\osu-patcher.csproj", "{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F7A12A3-C211-4318-94FD-92651DD730A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7A12A3-C211-4318-94FD-92651DD730A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7A12A3-C211-4318-94FD-92651DD730A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7A12A3-C211-4318-94FD-92651DD730A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
