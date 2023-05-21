@@ -9,7 +9,7 @@ namespace osu_patcher_hook.patches
     ///     to prevent peppy getting spammed with errors caused by this patcher.
     /// </summary>
     [HarmonyPatch]
-    internal class PatchDisableErrorReporting : Patch
+    internal class PatchDisableErrorReporting
     {
         // #=zhC91LB1xsJMwYkF0UQ==:#=zPqLxZPA=
         private static readonly OpCode[] Signature =
@@ -33,7 +33,7 @@ namespace osu_patcher_hook.patches
         [HarmonyTargetMethod]
         private static MethodBase Target()
         {
-            return FindMethodBySignature(Signature);
+            return SigUtils.FindMethodBySignature(Signature);
         }
 
         [HarmonyPrefix]

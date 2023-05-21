@@ -20,7 +20,7 @@ namespace osu_patcher_hook.patches
     ///     ]]></code>
     /// </summary>
     [HarmonyPatch]
-    internal class PatchAutoSaveRelaxScores : Patch
+    internal class PatchAutoSaveRelaxScores
     {
         // #=zG9n2xn5fBJ3KmhYrFhPv_ouHnledvs2AJ1Dwx_c=:#=zPWtjIx_tsaf1
         private static readonly OpCode[] Signature =
@@ -61,13 +61,13 @@ namespace osu_patcher_hook.patches
         [HarmonyTargetMethod]
         private static MethodBase Target()
         {
-            return FindMethodBySignature(Signature);
+            return SigUtils.FindMethodBySignature(Signature);
         }
 
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return NoopAfterBySignature(
+            return SigUtils.NoopAfterBySignature(
                 instructions,
                 Signature.Take(Signature.Length - 24).ToArray(),
                 24

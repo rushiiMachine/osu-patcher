@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +20,7 @@ namespace osu_patcher_hook.patches
     ///     ]]></code>
     /// </summary>
     [HarmonyPatch]
-    internal class PatchEnableRelaxMisses : Patch
+    internal class PatchEnableRelaxMisses
     {
         // #=zTBjFb7Vm$jY$rY4MsKxmcIvGHnQN:\u0005\u200A\u2002\u2002\u2001\u2004\u2003\u2007\u2001\u2002\u2002\u2000
         private static readonly OpCode[] Signature =
@@ -42,13 +41,13 @@ namespace osu_patcher_hook.patches
         [HarmonyTargetMethod]
         private static MethodBase Target()
         {
-            return FindMethodBySignature(Signature) ?? throw new Exception("unable to find");
+            return SigUtils.FindMethodBySignature(Signature);
         }
 
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return NoopAfterBySignature(
+            return SigUtils.NoopAfterBySignature(
                 instructions,
                 Signature.Take(Signature.Length - 4).ToArray(),
                 4

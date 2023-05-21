@@ -21,7 +21,7 @@ namespace osu_patcher_hook.patches
     ///     ]]></code>
     /// </summary>
     [HarmonyPatch]
-    internal class PatchEnableRelaxComboBreakSound : Patch
+    internal class PatchEnableRelaxComboBreakSound
     {
         // #=z04fOmc1I_BS0TV6TAo2QOUQvjceryuOcqoleWPg=:#=zSio4IZHzUUrC
         private static readonly OpCode[] Signature =
@@ -34,20 +34,19 @@ namespace osu_patcher_hook.patches
             OpCodes.Ldsfld, // --------
             OpCodes.Brtrue_S, // All no-oped (4 inst)
             OpCodes.Ldsfld,
-            OpCodes.Brtrue_S, // --------
             OpCodes.Brtrue_S // --------
         };
 
         [HarmonyTargetMethod]
         private static MethodBase Target()
         {
-            return FindMethodBySignature(Signature);
+            return SigUtils.FindMethodBySignature(Signature);
         }
 
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return NoopAfterBySignature(
+            return SigUtils.NoopAfterBySignature(
                 instructions,
                 Signature.Take(Signature.Length - 4).ToArray(),
                 4

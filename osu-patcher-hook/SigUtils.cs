@@ -10,11 +10,11 @@ namespace osu_patcher_hook
     /// <summary>
     ///     A base patch that provides utility methods for signature-based patching.
     /// </summary>
-    internal class Patch
+    internal sealed class SigUtils
     {
         private static readonly Module OsuModule;
 
-        static Patch()
+        static SigUtils()
         {
             var osuAssembly = AppDomain.CurrentDomain.GetAssemblies()
                 .SingleOrDefault(assembly => assembly.GetName().Name == "osu!");
@@ -23,7 +23,7 @@ namespace osu_patcher_hook
                         ?? throw new Exception("Unable to find a loaded osu! assembly!");
         }
 
-        protected static MethodInfo FindMethodBySignature(OpCode[] signature)
+        internal static MethodInfo FindMethodBySignature(OpCode[] signature)
         {
             if (signature.Length <= 0) return null;
 
@@ -57,7 +57,7 @@ namespace osu_patcher_hook
         /// <param name="replaceAfterSignature">The amount of instructions to replace after the signature.</param>
         /// <param name="replaceAll">No-op multiple times for every signature found.</param>
         /// <returns></returns>
-        protected static IEnumerable<CodeInstruction> NoopAfterBySignature(
+        internal static IEnumerable<CodeInstruction> NoopAfterBySignature(
             IEnumerable<CodeInstruction> instructions,
             OpCode[] signature,
             uint replaceAfterSignature,

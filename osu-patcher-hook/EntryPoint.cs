@@ -1,6 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using HarmonyLib;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace osu_patcher_hook
 {
@@ -16,12 +19,13 @@ namespace osu_patcher_hook
             Console.SetOut(writer);
             Console.SetError(writer);
 
-            Console.WriteLine("osu! init");
-
             try
             {
                 _harmony = new Harmony("io.github.rushiimachine.osu-patcher");
                 _harmony.PatchAll(typeof(EntryPoint).Assembly);
+
+                NotificationsUtil.ShowMessage("osu!patcher initialized!", Color.WhiteSmoke, 5000,
+                    () => { Process.Start("https://github.com/rushiiMachine/osu-patcher"); });
             }
             catch (Exception e)
             {
