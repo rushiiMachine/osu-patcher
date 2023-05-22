@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace osu_patcher_hook
 {
@@ -25,7 +24,7 @@ namespace osu_patcher_hook
         });
 
         public static void ShowMessage(string message,
-            Color color,
+            object color, // Instance of Microsoft.Xna.Framework.Graphics.Color
             int duration = 5000,
             ShowMessageAction action = null)
         {
@@ -35,7 +34,7 @@ namespace osu_patcher_hook
             var voidDelegateType = MShowMessage.GetParameters()[3].ParameterType;
             var voidDelegate = Delegate.CreateDelegate(voidDelegateType, action, "Invoke");
 
-            MShowMessage.Invoke(null, new object[] { message, color, duration, voidDelegate });
+            MShowMessage.Invoke(null, new[] { message, color, duration, voidDelegate });
         }
     }
 }

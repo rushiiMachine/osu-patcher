@@ -35,9 +35,6 @@
         <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
             <HintPath>..\packages\Lib.Harmony.2.2.2\lib\net45\0Harmony.dll</HintPath>
         </Reference>
-        <Reference Include="osu!">
-            <HintPath>..\..\..\..\osu!\osu!.exe</HintPath>
-        </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
@@ -48,6 +45,8 @@
         <Compile Include="EntryPoint.cs"/>
         <Compile Include="NotificationsUtil.cs"/>
         <Compile Include="OpCodeReader.cs"/>
+        <Compile Include="patches\PatchFixRelaxScoreMultiplier.cs"/>
+        <Compile Include="patches\PatchRemoveModCombinationRestrictions.cs"/>
         <Compile Include="SigUtils.cs"/>
         <Compile Include="patches\PatchAutoSaveRelaxScores.cs"/>
         <Compile Include="patches\PatchDisableErrorReporting.cs"/>
@@ -60,12 +59,4 @@
         <None Include="packages.config"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
-
 </Project>
