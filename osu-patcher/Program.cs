@@ -17,7 +17,7 @@ internal class Program
         var injectable = new InjectableProcess((uint)osuProc.Id);
 
         injectable.Inject(
-            "C:\\Projects\\_personal\\osu-patcher\\osu-patcher-hook\\bin\\Debug\\osu_patcher_hook.dll",
+            Path.Combine(typeof(Program).Assembly.Location, "..\\osu_patcher_hook.dll"),
             "osu_patcher_hook.EntryPoint",
             "Initialize");
     }
