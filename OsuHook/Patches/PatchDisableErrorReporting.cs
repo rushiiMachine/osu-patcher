@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace osu_patcher_hook.patches
+namespace OsuHook.Patches
 {
     /// <summary>
     ///     No-ops the entire method <c>osu.Helpers.ErrorSubmission:Submit(OsuError)</c>

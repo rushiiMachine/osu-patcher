@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+        <ProjectGuid>{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}</ProjectGuid>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>OsuInjector</RootNamespace>
+        <AssemblyName>osu!.patcher</AssemblyName>
+        <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <OutputPath>bin\x86\Debug\</OutputPath>
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <OutputPath>bin\x86\Release\</OutputPath>
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <Target Name="BundleOsuHook" BeforeTargets="AfterBuild">
+        <MSBuild Projects="..\OsuHook\OsuHook.csproj" Properties="TargetFramework=net452"/>
+        <ItemGroup>
+            <OutputFiles Include="..\OsuHook\bin\$(Platform)\$(Configuration)\net452\**\*.*;"/>
+        </ItemGroup>
+        <Copy SourceFiles="%(OutputFiles.FullPath)" DestinationFolder="$(OutputPath)"/>
+    </Target>
+    <ItemGroup>
+        <PackageReference Include="HoLLy.ManagedInjector" Version="1.0.0"/>
+    </ItemGroup>
+</Project>

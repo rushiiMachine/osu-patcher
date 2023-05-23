@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace osu_patcher_hook
+namespace OsuHook
 {
     /// <summary>
     ///     Sequentially reads all OpCodes from a method body's IL byte instructions.

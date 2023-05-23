@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics;
 using HarmonyLib;
 
-namespace osu_patcher_hook
+namespace OsuHook
 {
-    public class EntryPoint
+    public class MainHook
     {
         private const string GithubUrl = "https://github.com/rushiiMachine/osu-patcher";
         private static Harmony _harmony;
@@ -16,7 +16,7 @@ namespace osu_patcher_hook
             try
             {
                 _harmony = new Harmony("io.github.rushiimachine.osu-patcher");
-                _harmony.PatchAll(typeof(EntryPoint).Assembly);
+                _harmony.PatchAll(typeof(MainHook).Assembly);
 
                 NotificationsUtil.ShowMessage(
                     "osu!patcher initialized!",

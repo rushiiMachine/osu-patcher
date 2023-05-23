@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace osu_patcher_hook.patches
+namespace OsuHook.Patches
 {
     /// <summary>
     ///     Removes the following code from <c>osu.GameModes.Ranking:loadLocalUserScore(bool showRankingDialog)</c>

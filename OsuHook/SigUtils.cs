@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace osu_patcher_hook
+namespace OsuHook
 {
     /// <summary>
     ///     A base patch that provides utility methods for signature-based patching.

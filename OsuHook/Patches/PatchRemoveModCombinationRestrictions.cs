@@ -1,4 +1,4 @@
-namespace osu_patcher_hook.patches
+namespace OsuHook.Patches
 {
     // TODO: make this patch allow only Sudden Death/Perfect *client side* only
     // ie. store real selected mods independently of Player.CurrentScore and make the player exit if conditions met

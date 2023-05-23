@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
 
-namespace osu_patcher_hook
+namespace OsuHook
 {
-    internal class ConsoleUtil
+    internal static class ConsoleUtil
     {
         private static bool _consoleInitialized;
 

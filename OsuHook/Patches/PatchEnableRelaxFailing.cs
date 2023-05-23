@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace osu_patcher_hook.patches
+namespace OsuHook.Patches
 {
     /// <summary>
     ///     Changes the following code in <c>osu.GameModes.Play.Player:CheckFailed()</c>

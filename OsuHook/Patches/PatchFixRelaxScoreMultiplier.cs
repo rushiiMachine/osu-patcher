@@ -1,4 +1,4 @@
-namespace osu_patcher_hook.patches
+namespace OsuHook.Patches
 {
     // TODO: change this patch to be client-side ui only
     // ie. calculate score independently of actual Player.CurrentScore state

@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace osu_patcher_hook
+namespace OsuHook
 {
     internal static class NotificationsUtil
     {
