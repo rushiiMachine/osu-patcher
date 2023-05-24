@@ -37,5 +37,6 @@
     </Target>
     <ItemGroup>
         <PackageReference Include="HoLLy.ManagedInjector" Version="1.0.0"/>
+        <PackageReference Include="System.Management" Version="7.0.1"/>
     </ItemGroup>
 </Project>
