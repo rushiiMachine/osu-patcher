@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
+using OsuHook.Signature;
 
 namespace OsuHook.Patches
 {
@@ -33,7 +34,7 @@ namespace OsuHook.Patches
         [HarmonyTargetMethod]
         private static MethodBase Target()
         {
-            return SigUtils.FindMethodBySignature(Signature);
+            return Signatures.FindMethodBySignature(Signature);
         }
 
         [HarmonyPrefix]

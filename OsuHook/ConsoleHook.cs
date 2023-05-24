@@ -7,9 +7,13 @@ using Microsoft.Win32.SafeHandles;
 
 namespace OsuHook
 {
-    internal static class ConsoleUtil
+    /// <summary>
+    ///     A utility for immediately showing a console window with AllocConsole() upon something being written to
+    ///     stdout/stderr and redirecting any further output to that window.
+    /// </summary>
+    internal static class ConsoleHook
     {
-        private static bool _consoleInitialized;
+        private static volatile bool _consoleInitialized;
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetStdHandle(int nStdHandle);
@@ -17,7 +21,7 @@ namespace OsuHook
         [DllImport("kernel32.dll")]
         private static extern int AllocConsole();
 
-        public static void InitConsoleWriteHooks()
+        public static void Initialize()
         {
             if (_consoleInitialized) return;
 
@@ -41,6 +45,7 @@ namespace OsuHook
             [MethodImpl(MethodImplOptions.Synchronized)]
             public override void Write(char value)
             {
+                // Console window already present, redirect to new stdout/stderr
                 if (_consoleInitialized)
                 {
                     if (_isStdErr)
@@ -55,6 +60,7 @@ namespace OsuHook
 
                 AllocConsole();
 
+                // Redirect Console to the new stdout/stderr
                 var stdOutHandle = new SafeFileHandle(GetStdHandle(StdOutputHandle), true);
                 var stdErrHandle = new SafeFileHandle(GetStdHandle(StdErrorHandle), true);
 
@@ -66,6 +72,7 @@ namespace OsuHook
                 Console.SetOut(stdOut);
                 Console.SetError(stdErr);
 
+                // Write the original value to the new out
                 if (!_isStdErr)
                     stdOut.Write(value);
                 else

@@ -5,16 +5,16 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace OsuHook
+namespace OsuHook.Signature
 {
     /// <summary>
     ///     A base patch that provides utility methods for signature-based patching.
     /// </summary>
-    internal sealed class SigUtils
+    internal static class Signatures
     {
         private static readonly Module OsuModule;
 
-        static SigUtils()
+        static Signatures()
         {
             var osuAssembly = AppDomain.CurrentDomain.GetAssemblies()
                 .SingleOrDefault(assembly => assembly.GetName().Name == "osu!");
@@ -57,7 +57,7 @@ namespace OsuHook
         /// <param name="replaceAfterSignature">The amount of instructions to replace after the signature.</param>
         /// <param name="replaceAll">No-op multiple times for every signature found.</param>
         /// <returns></returns>
-        internal static IEnumerable<CodeInstruction> NoopAfterBySignature(
+        internal static IEnumerable<CodeInstruction> NoopAfterSignature(
             IEnumerable<CodeInstruction> instructions,
             OpCode[] signature,
             uint replaceAfterSignature,

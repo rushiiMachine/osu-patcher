@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using HarmonyLib;
+using OsuHook.Osu;
 
 namespace OsuHook
 {
@@ -11,30 +12,29 @@ namespace OsuHook
 
         public static int Initialize(string _)
         {
-            ConsoleUtil.InitConsoleWriteHooks();
+            ConsoleHook.Initialize();
 
             try
             {
                 _harmony = new Harmony("io.github.rushiimachine.osu-patcher");
                 _harmony.PatchAll(typeof(MainHook).Assembly);
 
-                NotificationsUtil.ShowMessage(
+                Notifications.ShowMessage(
                     "osu!patcher initialized!",
-                    AccessTools.PropertyGetter("Microsoft.Xna.Framework.Graphics.Color:WhiteSmoke")
-                        .Invoke(null, null),
+                    Notifications.GetColor("GhostWhite"),
                     5000,
                     () => { Process.Start(GithubUrl); });
             }
             catch (Exception e)
             {
+                Console.WriteLine("Failed to show error notification!");
                 Console.WriteLine(e);
 
                 try
                 {
-                    NotificationsUtil.ShowMessage(
+                    Notifications.ShowMessage(
                         "osu!patcher experienced an error! Click to report.",
-                        AccessTools.PropertyGetter("Microsoft.Xna.Framework.Graphics.Color:Red")
-                            .Invoke(null, null),
+                        Notifications.GetColor("Red"),
                         20000,
                         () => { Process.Start($"{GithubUrl}/issues"); });
                 }

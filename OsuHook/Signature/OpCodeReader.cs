@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace OsuHook
+namespace OsuHook.Signature
 {
     /// <summary>
     ///     Sequentially reads all OpCodes from a method body's IL byte instructions.

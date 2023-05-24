@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
+using OsuHook.Signature;
 
 namespace OsuHook.Patches
 {
@@ -61,13 +62,13 @@ namespace OsuHook.Patches
         [HarmonyTargetMethod]
         private static MethodBase Target()
         {
-            return SigUtils.FindMethodBySignature(Signature);
+            return Signatures.FindMethodBySignature(Signature);
         }
 
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return SigUtils.NoopAfterBySignature(
+            return Signatures.NoopAfterSignature(
                 instructions,
                 Signature.Take(Signature.Length - 24).ToArray(),
                 24
