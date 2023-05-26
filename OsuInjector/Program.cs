@@ -30,8 +30,8 @@ namespace OsuInjector
         }
 
         /// <summary>
-        ///     Find a <c>osu!.exe</c> process that has either <c>-devserver akatsuki.</c> or
-        ///     <c>-devserver example.com</c> in the cli arguments.
+        ///     Find a <c>osu!.exe</c> process that has a devserver in the cli arguments.
+        ///     (Not connected to osu!bancho)
         /// </summary>
         /// <returns>The process id of the first matching process.</returns>
         /// <exception cref="Exception">If found invalid osu! process or no process at all.</exception>
@@ -49,9 +49,8 @@ namespace OsuInjector
                         var commandLine = (string)process["CommandLine"];
                         var pid = (uint)process["ProcessId"];
 
-                        if (!commandLine.Contains(" -devserver akatsuki.") &&
-                            !commandLine.Contains(" -devserver example.com"))
-                            throw new Exception("Will not inject into osu! because it is not connected to Akatsuki!");
+                        if (!commandLine.Contains(" -devserver "))
+                            throw new Exception("Will not inject into osu! connected to Bancho!");
 
                         return pid;
                     }
