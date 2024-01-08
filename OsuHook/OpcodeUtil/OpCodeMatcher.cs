@@ -18,7 +18,10 @@ namespace OsuHook.OpcodeUtil
             if (signature.Count <= 0) return null;
 
             foreach (var type in OsuModule.GetTypes())
-            foreach (var method in type.GetRuntimeMethods())
+            foreach (var method in type.GetMethods(BindingFlags.Instance
+                                                   | BindingFlags.Static
+                                                   | BindingFlags.Public
+                                                   | BindingFlags.NonPublic))
             {
                 var instructions = method.GetMethodBody()?.GetILAsByteArray();
                 if (instructions == null) continue;
@@ -41,6 +44,7 @@ namespace OsuHook.OpcodeUtil
 
             foreach (var type in OsuModule.GetTypes())
             foreach (var method in type.GetConstructors(BindingFlags.Instance
+                                                        | BindingFlags.Static
                                                         | BindingFlags.Public
                                                         | BindingFlags.NonPublic))
             {
@@ -70,13 +74,13 @@ namespace OsuHook.OpcodeUtil
             var sequentialMatching = 0;
             foreach (var instruction in new OpCodeReader(ilInstructions).GetOpCodes())
             {
-                if (sequentialMatching == signature.Count)
-                    return true;
-
                 if (instruction == signature[sequentialMatching])
                     sequentialMatching++;
                 else
                     sequentialMatching = 0;
+
+                if (sequentialMatching == signature.Count)
+                    return true;
             }
 
             return false;

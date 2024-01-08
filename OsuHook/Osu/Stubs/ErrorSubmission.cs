@@ -1,3 +1,4 @@
+using OsuHook.OpcodeUtil;
 using static System.Reflection.Emit.OpCodes;
 
 namespace OsuHook.Osu.Stubs

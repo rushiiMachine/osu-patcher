@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using OsuHook.OpcodeUtil;
 
-namespace OsuHook.Osu.Stubs
+namespace OsuHook.OpcodeUtil
 {
     internal class LazySignature
     {
@@ -28,7 +27,7 @@ namespace OsuHook.Osu.Stubs
             {
                 var value = _lazy.Value;
 
-                if (_lazy.Value == null)
+                if (value == null)
                     throw new Exception($"Method was not found for signature of {_name}");
 
                 return value;
