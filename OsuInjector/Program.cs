@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Management;
 using HoLLy.ManagedInjector;
@@ -11,8 +11,7 @@ namespace OsuInjector
         {
             try
             {
-                var hookDllPath = Path.GetFullPath(typeof(Program).Assembly.Location + "\\..\\osu!.hook.dll");
-                Console.WriteLine(hookDllPath);
+                var hookDllPath = Path.GetFullPath(typeof(Program).Assembly.Location + @"\..\osu!.hook.dll");
 
                 if (!File.Exists(hookDllPath))
                     throw new Exception("Unable to find osu!.hook.dll in the current directory!");
@@ -25,7 +24,10 @@ namespace OsuInjector
             catch (Exception e)
             {
                 Console.Error.WriteLine(e);
-                Console.Read();
+
+                Console.WriteLine("\nPress any key to continue...");
+                Console.Write("\a"); // Bell sound
+                Console.ReadKey();
             }
         }
 

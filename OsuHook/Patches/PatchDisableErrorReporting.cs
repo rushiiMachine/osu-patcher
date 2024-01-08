@@ -1,46 +1,24 @@
 using System.Reflection;
-using System.Reflection.Emit;
 using HarmonyLib;
-using OsuHook.Signature;
+using OsuHook.Osu.Stubs;
+
+// ReSharper disable UnusedType.Global UnusedMember.Local
 
 namespace OsuHook.Patches
 {
     /// <summary>
-    ///     No-ops the entire method <c>osu.Helpers.ErrorSubmission:Submit(OsuError)</c>
-    ///     to prevent peppy getting spammed with errors caused by this patcher.
+    ///     Disable the error reporter to prevent sentry from being spammed with errors possibly caused by this patcher.
     /// </summary>
     [HarmonyPatch]
-    internal class PatchDisableErrorReporting
+    internal class PatchDisableErrorReporting : BasePatch
     {
-        // #=zhC91LB1xsJMwYkF0UQ==:#=zPqLxZPA=
-        private static readonly OpCode[] Signature =
-        {
-            OpCodes.Ldsfld,
-            OpCodes.Ldc_I4_0,
-            OpCodes.Ble_S,
-            OpCodes.Ldsfld,
-            OpCodes.Ldsfld,
-            OpCodes.Sub,
-            OpCodes.Ldc_I4,
-            OpCodes.Bge_S,
-            OpCodes.Ret,
-            OpCodes.Ldsfld,
-            OpCodes.Stsfld,
-            OpCodes.Ldarg_0,
-            OpCodes.Ldfld,
-            OpCodes.Ldarg_0
-        };
-
         [HarmonyTargetMethod]
-        private static MethodBase Target()
-        {
-            return Signatures.FindMethodBySignature(Signature);
-        }
+        private static MethodBase Target() => ErrorSubmission.Submit.Reference;
 
+        /// <summary>
+        ///     No-op the entire method
+        /// </summary>
         [HarmonyPrefix]
-        private static bool Before()
-        {
-            return false;
-        }
+        private static bool Before() => false;
     }
 }

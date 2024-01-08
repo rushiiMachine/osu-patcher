@@ -3,7 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
-using OsuHook.Signature;
+using OsuHook.OpcodeUtil;
+
+// ReSharper disable UnusedType.Global UnusedMember.Local
 
 namespace OsuHook.Patches
 {
@@ -21,7 +23,7 @@ namespace OsuHook.Patches
     ///     ]]></code>
     /// </summary>
     [HarmonyPatch]
-    internal class PatchAutoSaveRelaxScores
+    internal class PatchAutoSaveRelaxScores : BasePatch
     {
         // #=zG9n2xn5fBJ3KmhYrFhPv_ouHnledvs2AJ1Dwx_c=:#=zPWtjIx_tsaf1
         private static readonly OpCode[] Signature =
@@ -56,23 +58,14 @@ namespace OsuHook.Patches
             OpCodes.And,
             OpCodes.Ldc_I4_0,
             OpCodes.Cgt,
-            OpCodes.Brtrue // <-------------
+            OpCodes.Brtrue, // <-------------
         };
 
         [HarmonyTargetMethod]
-        private static MethodBase Target()
-        {
-            return Signatures.FindMethodBySignature(Signature);
-        }
+        private static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature);
 
         [HarmonyTranspiler]
-        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return Signatures.NoopAfterSignature(
-                instructions,
-                Signature.Take(Signature.Length - 24).ToArray(),
-                24
-            );
-        }
+        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
+            NoopAfterSignature(instructions, Signature.Take(Signature.Length - 24).ToArray(), 24);
     }
 }

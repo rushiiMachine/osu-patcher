@@ -29,7 +29,10 @@
         <PlatformTarget>x86</PlatformTarget>
     </PropertyGroup>
     <Target Name="BundleOsuHook" BeforeTargets="AfterBuild">
-        <MSBuild Projects="..\OsuHook\OsuHook.csproj" Properties="TargetFramework=net452"/>
+        <MSBuild Projects="..\OsuHook\OsuHook.csproj" Properties="TargetFramework=net452" Targets="Build"/>
+        <PropertyGroup>
+            <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+        </PropertyGroup>
         <ItemGroup>
             <OutputFiles Include="..\OsuHook\bin\$(Platform)\$(Configuration)\net452\**\*.*;"/>
         </ItemGroup>

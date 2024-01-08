@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace OsuHook.Signature
+namespace OsuHook.OpcodeUtil
 {
     /// <summary>
     ///     Sequentially reads all OpCodes from a method body's IL byte instructions.
@@ -12,7 +12,7 @@ namespace OsuHook.Signature
     {
         private static readonly OpCode[] OneByteOpcodes, TwoByteOpcodes;
 
-        private readonly byte[] _ilInstructions;
+        private readonly IReadOnlyList<byte> _ilInstructions;
         private int _position;
 
         static OpCodeReader()
@@ -35,7 +35,7 @@ namespace OsuHook.Signature
             }
         }
 
-        public OpCodeReader(byte[] ilInstructions)
+        public OpCodeReader(IReadOnlyList<byte> ilInstructions)
         {
             _ilInstructions = ilInstructions;
             _position = 0;
@@ -43,7 +43,7 @@ namespace OsuHook.Signature
 
         public IEnumerable<OpCode> GetOpCodes()
         {
-            while (_position < _ilInstructions.Length)
+            while (_position < _ilInstructions.Count)
             {
                 var op = ReadOpCode();
                 AdvanceThroughOperand(op);

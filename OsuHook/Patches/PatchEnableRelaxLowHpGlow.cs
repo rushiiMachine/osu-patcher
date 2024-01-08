@@ -3,7 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
-using OsuHook.Signature;
+using OsuHook.OpcodeUtil;
+
+// ReSharper disable UnusedType.Global UnusedMember.Local
 
 namespace OsuHook.Patches
 {
@@ -32,7 +34,7 @@ namespace OsuHook.Patches
     ///     ]]></code>
     /// </summary>
     [HarmonyPatch]
-    internal class PatchEnableRelaxLowHpGlow
+    internal class PatchEnableRelaxLowHpGlow : BasePatch
     {
         private static readonly OpCode[] Signature =
         {
@@ -47,23 +49,14 @@ namespace OsuHook.Patches
             OpCodes.Ldsfld, // ----------
             OpCodes.Brtrue, // No-oped (4 inst)
             OpCodes.Ldsfld,
-            OpCodes.Brtrue // ---------
+            OpCodes.Brtrue, // ---------
         };
 
         [HarmonyTargetMethod]
-        private static MethodBase Target()
-        {
-            return Signatures.FindMethodBySignature(Signature);
-        }
+        private static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature);
 
         [HarmonyTranspiler]
-        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return Signatures.NoopAfterSignature(
-                instructions,
-                Signature.Take(Signature.Length - 4).ToArray(),
-                4
-            );
-        }
+        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
+            NoopAfterSignature(instructions, Signature.Take(Signature.Length - 4).ToArray(), 4);
     }
 }
