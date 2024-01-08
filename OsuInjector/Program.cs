@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Management;
+using System.Text.RegularExpressions;
 using HoLLy.ManagedInjector;
 
 namespace OsuInjector
@@ -44,18 +45,17 @@ namespace OsuInjector
             {
                 foreach (var process in processes)
                 {
-                    var exeName = (string)process["Name"];
+                    var exe = (string)process["Name"];
+                    var pid = (uint)process["ProcessId"];
+                    var cli = (string)process["CommandLine"];
 
-                    if (exeName == "osu!.exe")
-                    {
-                        var commandLine = (string)process["CommandLine"];
-                        var pid = (uint)process["ProcessId"];
+                    if (exe != "osu!.exe") continue;
 
-                        if (!commandLine.Contains(" -devserver "))
-                            throw new Exception("Will not inject into osu! connected to Bancho!");
+                    // Make sure there's a -devserver xxxxx in cli args
+                    if (!new Regex(@"osu!\.exe +-devserver \w").IsMatch(cli))
+                        throw new Exception("Will not inject into osu! connected to Bancho!");
 
-                        return pid;
-                    }
+                    return pid;
                 }
             }
 
