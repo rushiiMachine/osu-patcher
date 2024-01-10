@@ -19,13 +19,12 @@ namespace OsuHook.Patches
         /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
         /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
         /// <param name="replaceAfterSignature">The amount of instructions to replace after the signature.</param>
-        /// <param name="replaceAll">No-op multiple times for every signature found.</param>
-        /// <returns></returns>
+        /// <param name="all">Match all instances of a signature.</param>
         internal static IEnumerable<CodeInstruction> NoopAfterSignature(
             IEnumerable<CodeInstruction> instructions,
             OpCode[] signature,
             uint replaceAfterSignature,
-            bool replaceAll = false)
+            bool all = false)
         {
             var replacementRemaining = replaceAfterSignature;
             var sequentialMatching = 0;
@@ -45,7 +44,7 @@ namespace OsuHook.Patches
                 {
                     if (signature.Length > 0)
                     {
-                        if (replaceAfterSignature <= 0 && replaceAll)
+                        if (replaceAfterSignature <= 0 && all)
                         {
                             replacementRemaining = replaceAfterSignature;
                             sequentialMatching = 0;
@@ -74,12 +73,11 @@ namespace OsuHook.Patches
         /// </summary>
         /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
         /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
-        /// <param name="replaceAll">No-op multiple times for every signature found.</param>
-        /// <returns></returns>
+        /// <param name="all">Match all instances of a signature.</param>
         internal static IEnumerable<CodeInstruction> NoopSignature(
             IEnumerable<CodeInstruction> instructions,
             IReadOnlyList<OpCode> signature,
-            bool replaceAll = false)
+            bool all = false)
         {
             var found = false;
             var curInstIdx = 0;
@@ -87,12 +85,10 @@ namespace OsuHook.Patches
 
             while (curInstIdx < allInstructions.Length)
             {
-                if (found && !replaceAll)
+                if (found && !all)
                 {
                     // Return the rest of the instructions
-                    yield return allInstructions[curInstIdx];
-
-                    curInstIdx++;
+                    yield return allInstructions[curInstIdx++];
                     continue;
                 }
 
@@ -124,10 +120,67 @@ namespace OsuHook.Patches
                 throw new Exception("Could not find the target signature in method!");
         }
 
+        /// <summary>
+        ///     Finds a certain IL signature and inserts instructions before it.
+        /// </summary>
+        /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
+        /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
+        /// <param name="newInstructions">The instructions to insert before a signature match.</param>
+        /// <param name="all">Match all instances of a signature.</param>
+        internal static IEnumerable<CodeInstruction> InsertBeforeSignature(
+            IEnumerable<CodeInstruction> instructions,
+            IReadOnlyList<OpCode> signature,
+            IReadOnlyList<CodeInstruction> newInstructions,
+            bool all = false)
+        {
+            var found = false;
+            var curInstIdx = 0;
+            var allInstructions = instructions.ToArray();
+
+            while (curInstIdx < allInstructions.Length)
+            {
+                if (found && !all)
+                {
+                    // Return the rest of the instructions
+                    yield return allInstructions[curInstIdx++];
+                    continue;
+                }
+
+                var match = signature
+                    .Select((op, idx) => new { opcode = op, index = idx })
+                    .All(v => v.opcode == allInstructions[curInstIdx + v.index].opcode);
+
+                if (!match)
+                {
+                    // Emit current instruction and try matching from next instruction
+                    yield return allInstructions[curInstIdx++];
+                }
+                else
+                {
+                    found = true;
+
+                    foreach (var newInstruction in newInstructions)
+                        yield return newInstruction;
+
+                    yield return allInstructions[curInstIdx++];
+                }
+            }
+
+            if (!found)
+                throw new Exception("Could not find the target signature in method!");
+        }
+
+        /// <summary>
+        ///     Finds a certain IL signature and inserts instructions after it.
+        ///     This only matches the signature once.
+        /// </summary>
+        /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
+        /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
+        /// <param name="newInstructions">The instructions to insert after a signature match.</param>
         internal static IEnumerable<CodeInstruction> InsertAfterSignature(
             IEnumerable<CodeInstruction> instructions,
-            CodeInstruction[] newInstructions,
-            OpCode[] signature)
+            IReadOnlyList<OpCode> signature,
+            IReadOnlyList<CodeInstruction> newInstructions)
         {
             var sequentialMatching = 0;
             var found = false;
@@ -136,7 +189,7 @@ namespace OsuHook.Patches
             {
                 if (!found)
                 {
-                    if (sequentialMatching == signature.Length)
+                    if (sequentialMatching == signature.Count)
                     {
                         found = true;
                         foreach (var newInstruction in newInstructions)
@@ -154,6 +207,9 @@ namespace OsuHook.Patches
 
                 yield return instruction;
             }
+
+            if (!found)
+                throw new Exception("Could not find the target signature in method!");
         }
 
         #endregion
