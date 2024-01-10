@@ -29,17 +29,18 @@
         <PlatformTarget>x86</PlatformTarget>
     </PropertyGroup>
     <Target Name="BundleOsuHook" BeforeTargets="AfterBuild">
-        <MSBuild Projects="..\OsuHook\OsuHook.csproj" Properties="TargetFramework=net452" Targets="Build"/>
+        <MSBuild Projects="..\OsuHook\OsuHook.csproj" Properties="TargetFramework=net462" Targets="Build"/>
         <PropertyGroup>
             <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
         </PropertyGroup>
         <ItemGroup>
-            <OutputFiles Include="..\OsuHook\bin\$(Platform)\$(Configuration)\net452\**\*.*;"/>
+            <OutputFiles Include="..\OsuHook\bin\$(Platform)\$(Configuration)\net462\**\*.*;"/>
         </ItemGroup>
         <Copy SourceFiles="%(OutputFiles.FullPath)" DestinationFolder="$(OutputPath)"/>
     </Target>
     <ItemGroup>
         <PackageReference Include="HoLLy.ManagedInjector" Version="1.0.0"/>
         <PackageReference Include="System.Management" Version="7.0.1"/>
+        <PackageReference Include="System.ValueTuple" Version="4.5.0"/>
     </ItemGroup>
 </Project>
