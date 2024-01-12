@@ -15,10 +15,14 @@ namespace OsuHook.OpcodeUtil
         /// </summary>
         /// <param name="name"><c>Class#Method</c> name of what this signature is matching.</param>
         /// <param name="signature">Sequential opcodes to search the target method with.</param>
-        public LazySignature(string name, IReadOnlyList<OpCode> signature)
+        /// <param name="isConstructor">If the target is a constructor, then look for constructors instead of regular methods.</param>
+        public LazySignature(string name, IReadOnlyList<OpCode> signature, bool isConstructor = false)
         {
             _name = name;
-            _lazy = new Lazy<MethodBase>(() => OpCodeMatcher.FindMethodBySignature(signature));
+            _lazy = new Lazy<MethodBase>(() =>
+                isConstructor
+                    ? (MethodBase)OpCodeMatcher.FindConstructorBySignature(signature)
+                    : OpCodeMatcher.FindMethodBySignature(signature));
         }
 
         public MethodBase Reference
