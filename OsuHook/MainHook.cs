@@ -18,6 +18,7 @@ namespace OsuHook
         public static int Initialize(string _)
         {
             ConsoleHook.Initialize();
+            ExceptionHook.Initialize();
 
             try
             {
