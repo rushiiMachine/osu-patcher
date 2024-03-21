@@ -26,8 +26,12 @@
 
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="all"/>
-        <ProjectReference Include="../Osu.Stubs/Osu.Stubs.csproj"/>
-        <ProjectReference Include="../Osu.Utils/Osu.Utils.csproj"/>
+        <ProjectReference Include="../Osu.Stubs/Osu.Stubs.csproj">
+            <SetTargetFramework>TargetFramework=net452</SetTargetFramework>
+        </ProjectReference>
+        <ProjectReference Include="../Osu.Utils/Osu.Utils.csproj">
+            <SetTargetFramework>TargetFramework=net452</SetTargetFramework>
+        </ProjectReference>
     </ItemGroup>
 
     <!-- I have to do this stupid shit because NuGet doesn't respect ProjectReference.SetTargetFramework for transitive dependencies -->
