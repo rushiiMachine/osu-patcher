@@ -1,3 +1,7 @@
+<p align="center">
+  <img align="center" width="400" alt="osu! logo" src=".github/assets/logo.png">
+</p>
+
 # osu-patcher (WIP)
 
 Enable several features that peppy goddamn disabled while playing with the Relax/Autopilot mods.

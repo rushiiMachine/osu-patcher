@@ -9,6 +9,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>11</LangVersion>
         <Nullable>enable</Nullable>
+        <NoWarn>$(NoWarn);NU1702</NoWarn> <!-- ProjectReferences used here are expected to not match target framework -->
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugType>none</DebugType>
