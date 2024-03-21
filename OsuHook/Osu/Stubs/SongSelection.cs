@@ -61,7 +61,7 @@ namespace OsuHook.Osu.Stubs
         ///     Original: <c>beatmapTreeManager</c> of type <see cref="BeatmapTreeManager" />
         ///     b20240102.2: <c>#=zj0IgvXxTqseooUEFmQ==</c>
         /// </summary>
-        public static FieldInfo beatmapTreeManager { get; private set; }
+        public static FieldInfo beatmapTreeManager { get; private set; } = null!;
 
         // abusing harmony to get the instructions i need
         // TODO: write reflection wrapper over the private harmony utils to load CodeInstructions directly 

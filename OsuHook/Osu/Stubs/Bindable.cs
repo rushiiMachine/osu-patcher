@@ -13,6 +13,6 @@ namespace OsuHook.Osu.Stubs
         ///     b20240102.2: <c>#=zHO4Uaog=</c>
         ///     This field reference is populated by <see cref="SongSelection.PatchObtainReferences" />
         /// </summary>
-        public static MethodBase Value_get;
+        public static MethodBase Value_get = null!;
     }
 }

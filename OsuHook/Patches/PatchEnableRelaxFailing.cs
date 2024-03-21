@@ -39,7 +39,7 @@ namespace OsuHook.Patches
         };
 
         [HarmonyTargetMethod]
-        private static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature);
+        private static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature)!;
 
         [HarmonyTranspiler]
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>

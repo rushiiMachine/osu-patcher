@@ -42,7 +42,7 @@ namespace OsuHook.Osu.Stubs
         ///     The compiler generated backing field for the <c>ShowStoryboard</c> property.
         ///     See: <see cref="set_ShowStoryboard" />
         /// </summary>
-        public static FieldInfo ShowStoryboard_backing { get; private set; }
+        public static FieldInfo ShowStoryboard_backing { get; private set; } = null!;
 
         [HarmonyPatch]
         private class PatchObtainShowStoryboard_backing

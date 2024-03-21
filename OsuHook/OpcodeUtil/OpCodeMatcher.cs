@@ -13,7 +13,7 @@ namespace OsuHook.OpcodeUtil
         /// </summary>
         /// <param name="signature">A set of sequential OpCodes to match.</param>
         /// <returns>The found method or null if none found.</returns>
-        public static MethodInfo FindMethodBySignature(IReadOnlyList<OpCode> signature)
+        public static MethodInfo? FindMethodBySignature(IReadOnlyList<OpCode> signature)
         {
             if (signature.Count <= 0) return null;
 
@@ -38,7 +38,7 @@ namespace OsuHook.OpcodeUtil
         /// </summary>
         /// <param name="signature">A set of sequential OpCodes to match.</param>
         /// <returns>The found constructor (method) or null if none found.</returns>
-        public static ConstructorInfo FindConstructorBySignature(IReadOnlyList<OpCode> signature)
+        public static ConstructorInfo? FindConstructorBySignature(IReadOnlyList<OpCode> signature)
         {
             if (signature.Count <= 0) return null;
 

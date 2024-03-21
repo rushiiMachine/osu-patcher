@@ -18,7 +18,7 @@ namespace OsuHook.Osu
             string message,
             NotificationColor color,
             int duration = 5000,
-            Action action = null)
+            Action? action = null)
         {
             var xnaColor = color switch
             {

@@ -10,7 +10,7 @@ namespace OsuHook
     public class MainHook
     {
         private const string GithubUrl = "https://github.com/rushiiMachine/osu-patcher";
-        private static Harmony _harmony;
+        private static Harmony _harmony = null!;
 
         /// <summary>
         ///     Entry point into the hook called by the injector.

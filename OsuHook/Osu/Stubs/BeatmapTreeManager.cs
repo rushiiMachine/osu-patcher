@@ -13,6 +13,6 @@ namespace OsuHook.Osu.Stubs
         ///     b20240102.2: <c>#=zbF4rnAiPRGJl</c>
         ///     This field reference is populated by <see cref="SongSelection.PatchObtainReferences" />
         /// </summary>
-        public static FieldInfo CurrentGroupMode;
+        public static FieldInfo CurrentGroupMode = null!;
     }
 }

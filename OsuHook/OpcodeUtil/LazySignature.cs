@@ -7,7 +7,7 @@ namespace OsuHook.OpcodeUtil
 {
     internal class LazySignature
     {
-        private readonly Lazy<MethodBase> _lazy;
+        private readonly Lazy<MethodBase?> _lazy;
         private readonly string _name;
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace OsuHook.OpcodeUtil
         public LazySignature(string name, IReadOnlyList<OpCode> signature)
         {
             _name = name;
-            _lazy = new Lazy<MethodBase>(() => OpCodeMatcher.FindMethodBySignature(signature));
+            _lazy = new Lazy<MethodBase?>(() => OpCodeMatcher.FindMethodBySignature(signature));
         }
 
         public MethodBase Reference
