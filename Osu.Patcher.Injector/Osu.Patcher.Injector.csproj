@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <AssemblyName>osu!.patcher</AssemblyName>
+        <RootNamespace>Osu.Patcher.Injector</RootNamespace>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>11</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="HoLLy.ManagedInjector" Version="1.0.0"/>
+        <PackageReference Include="System.Management" Version="7.0.1"/>
+        <ProjectReference Include="../Osu.Patcher.Hook/Osu.Patcher.Hook.csproj">
+            <SetTargetFramework>TargetFramework=net452</SetTargetFramework>
+        </ProjectReference>
+    </ItemGroup>
+</Project>
