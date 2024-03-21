@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-        <ProjectGuid>{5F7A12A3-C211-4318-94FD-92651DD730A3}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>OsuHook</RootNamespace>
         <AssemblyName>osu!.hook</AssemblyName>
-        <TargetFramework>net462</TargetFramework>
+        <TargetFramework>net452</TargetFramework>
         <LangVersion>8</LangVersion>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\x86\Debug\</OutputPath>
-        <PlatformTarget>x86</PlatformTarget>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
-        <OutputPath>bin\x86\Release\</OutputPath>
-        <PlatformTarget>x86</PlatformTarget>
     </PropertyGroup>
+
+    <!-- I have to do this stupid shit because NuGet doesn't respect ProjectReference.SetTargetFramework for transitive dependencies -->
+    <!-- https://github.com/NuGet/Home/issues/12436 -->
+    <!-- https://github.com/NuGet/Home/issues/5986#issuecomment-732401471 -->
     <ItemGroup>
-        <PackageReference Include="Lib.Harmony" Version="2.3.0-prerelease.4"/>
+        <PackageReference Include="Lib.Harmony" Version="2.3.1.1" PrivateAssets="all" GeneratePathProperty="true"/>
+        <None Include="$(PkgLib_Harmony)\lib\net452\0Harmony.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 </Project>
