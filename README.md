@@ -2,34 +2,40 @@
   <img align="center" width="400" alt="osu! logo" src=".github/assets/logo.png">
 </p>
 
-# osu-patcher (WIP)
+# osu! patcher
 
-Enable several features that peppy goddamn disabled while playing with the Relax/Autopilot mods.
+Apply several fixes to osu! make playing Relax more enjoyable.
 
+This is for use in offline play or private servers that allow modifications **only**.
+Use at your own risk! Modifications are disallowed on most servers, even though this project this 
+*does not provide an unfair advantage*.
 
-This is for use in offline play or private servers <ins>that allow modifications **only**</ins>. **Use at your own discretion!!**\
-Modifications are disallowed on most servers, even though this project this *does not provide an unfair advantage*.
+Using this on official Bancho servers WILL get you banned.
 
 ## Features
 
-- **Show misses on hit-objects while playing Relax.**
-- Automatically save Relax scores locally
-- Enable failing while playing Relax.
-- ~~Show the real score while playing Relax and on local scores. (Reverts 0.0x score multiplier client-side)~~ soon™️
-- ~~Remove Sudden Death/Perfect mod incompatibility with Relax client side~~ soon™️
+- Show misses on hit objects while playing Relax.
+- Save all Relax scores to local leaderboards automatically.
+- Allow failing with Relax enabled (and low hp glow when shaders are on!).
+- Reenable combobreak sounds with Relax enabled.
+- Other misc fixes
 
-<sup>Relax refers to Relax *or* Autopilot</sup>
+<sup>Note: Relax refers to Relax *or* Autopilot</sup>
 
 ## Usage
 
-soon™️ once I get actions working
+Until I have a release ready, then go to the [latest actions build](ehttps://github.com/rushiiMachine/osu-patcher/actions?query=branch%3Amaster) 
+for the `master` branch and download the attached artifact to extract. No automatic updater is included.
+
+Your antivirus may detect it as malware, however this is completely expected as it contains code to inject 
+into processes. If you aren't convinced it isn't a false positive, feel free to build from source code.
 
 ## Compiling
 
-1. Install the .NET SDK in addition to the .NET Framework 4.6.2 developer pack.
+1. Install the .NET SDK 8 in addition to the .NET Framework 4.5.2 developer pack.
 2. Run `dotnet restore`
-3. Run `dotnet build OsuInjector -c Release /p:Platform=x86` !!! Make sure to not use a Unix shell
-4. Output will be in `OsuInjector\bin\x86\Release\net462\` (osu!.patcher.exe)
+3. Run `dotnet build Osu.Patcher.Injector -c Release`
+4. Output will be located in `./Osu.Patcher.Injector/bin/Release/net6.0/`
 
 ## How
 
@@ -40,11 +46,11 @@ obfuscation key nor the obfuscated names, it should work on any version even if 
 
 ## is this okay?
 
-This was initially made after the Akatsuki private server team's patcher broke for multiple months and didnt provide
-any alternative to fix the issues listed [above](#features). This project does not and never intends to bypass the
-anti-cheat built into osu! (to prevent modifications), and for that reason this project is only usable when osu! is
+This was initially made after the Akatsuki private server's patcher broke for multiple months and no alternative
+existed to fix the issues listed above. This project does not and never intends to bypass the
+anti-cheat built into osu! (to allow modifications), and for that reason this project is only usable when osu! is
 launched with a custom `-devserver` (for offline play, something like `-devserver example.com`).
 
-I like improving the games I like (ref: multiple PRs to lazer), and given stable is essentially dead in terms of
-bug-fixes and features (cough cough [#features](#features)) I decided to write a private utility to make the game I 
-like better. I am not a cheat developer, end of story.
+I like improving the games I like (having submitted multiple PRs to osu!lazer as well), and given stable is essentially
+dead in terms of bug-fixes and features I decided to write a utility to make the game I like better.
+This is not a cheat, I don't make cheats.
