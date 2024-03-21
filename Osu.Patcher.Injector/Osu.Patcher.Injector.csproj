@@ -2,11 +2,17 @@
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+        <ApplicationVersion>1.0.0</ApplicationVersion>
         <AssemblyName>osu!.patcher</AssemblyName>
         <RootNamespace>Osu.Patcher.Injector</RootNamespace>
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>11</LangVersion>
         <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>none</DebugType>
+        <Optimize>true</Optimize>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="HoLLy.ManagedInjector" Version="1.0.0"/>
