@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches-ignore: [ "release" ]
+    paths-ignore: [ "**.md" ]
+  pull_request:
+    paths-ignore: [ "**.md" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x.x
+      
+      - name: Setup .NET Framework
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build
+        run: dotnet build Osu.Patcher.Injector
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: osu!patcher-debug
+          if-no-files-found: error
+          path: .\Osu.Patcher.Injector\bin\Debug\net6.0\**
