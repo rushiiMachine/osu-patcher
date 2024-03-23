@@ -19,8 +19,12 @@ public static class MethodReader
 
     public static IEnumerable<IlInstruction> GetInstructions(MethodBase method)
     {
-        // List<HarmonyLib.ILInstruction>
-        var instructions = (List<object>)MethodGetInstructions.Invoke(null, new object?[] { null, method });
+        // List<HarmonyLib.ILInstruction>, HarmonyLib.ILInstruction is internal
+        var instructions = (IEnumerable<object>)MethodGetInstructions.Invoke(null, new object?[]
+        {
+            /* ILGenerator generator = */ null,
+            /* MethodBase method = */ method,
+        });
 
         return instructions.Select(inst => new IlInstruction
         {
