@@ -33,8 +33,8 @@ public static class Notifications
 
         var voidDelegate = VoidDelegate.MakeInstance(action ?? delegate { });
 
-        NotificationManager.ShowMessage.Reference
-            .Invoke(null, new[] { message, xnaColor, duration, voidDelegate });
+        NotificationManager.ShowMessage
+            .Invoke(parameters: new[] { message, xnaColor, duration, voidDelegate });
     }
 }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
+using Osu.Stubs.Utils;
 
 namespace Osu.Stubs.Opcode;
 
@@ -20,7 +21,7 @@ public static class MethodReader
     public static IEnumerable<IlInstruction> GetInstructions(MethodBase method)
     {
         // List<HarmonyLib.ILInstruction>, HarmonyLib.ILInstruction is internal
-        var instructions = (IEnumerable<object>)MethodGetInstructions.Invoke(null, new object?[]
+        var instructions = MethodGetInstructions.Invoke<IEnumerable<object>>(null, new object?[]
         {
             /* ILGenerator generator = */ null,
             /* MethodBase method = */ method,
@@ -28,7 +29,7 @@ public static class MethodReader
 
         return instructions.Select(inst => new IlInstruction
         {
-            Opcode = (OpCode)FieldOpcode.GetValue(inst),
+            Opcode = FieldOpcode.GetValue<OpCode>(inst),
             Operand = FieldOperand.GetValue(inst),
         });
     }

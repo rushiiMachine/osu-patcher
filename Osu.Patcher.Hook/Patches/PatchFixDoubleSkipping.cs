@@ -26,23 +26,18 @@ internal class PatchFixDoubleSkipping : BasePatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    private static MethodBase Target() => Player.AllowDoubleSkip_get.Reference;
+    private static MethodBase Target() => Player.GetAllowDoubleSkip.Reference;
 
     /// <summary>
-    ///     Prefix patch to check if storyboard is enabled.
+    ///     Prefix patch to disable double skipping if the storyboard is disabled.
     /// </summary>
-    [UsedImplicitly]
     [HarmonyPrefix]
+    [UsedImplicitly]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     private static bool Before(ref bool __result)
     {
-        if (!(bool)EventManager.ShowStoryboard_backing.Reference.GetValue(null))
-        {
-            __result = false;
-
-            // Prevent original function from executing
-            return false;
-        }
+        if (!EventManager.ShowStoryboard.Get())
+            return __result = false;
 
         return true;
     }

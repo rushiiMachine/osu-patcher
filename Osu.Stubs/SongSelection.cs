@@ -5,8 +5,6 @@ using JetBrains.Annotations;
 using Osu.Stubs.Opcode;
 using static System.Reflection.Emit.OpCodes;
 
-// ReSharper disable InconsistentNaming UnusedType.Local UnusedType.Global UnusedMember.Local
-
 namespace Osu.Stubs;
 
 /// <summary>
@@ -20,7 +18,7 @@ public static class SongSelection
     ///     Original: <c>chooseBestSortMode(TreeGroupMode mode)</c>
     ///     b20240102.2: <c>#=zWDJY2KbbLKhn7OSo1w==</c>
     /// </summary>
-    public static readonly LazyMethod choseBestSortMode = new(
+    public static readonly LazyMethod ChoseBestSortMode = new(
         "SongSelection#chooseBestSortMode",
         new[]
         {
@@ -42,7 +40,7 @@ public static class SongSelection
     ///     b20240102.2: <c>#=zAmaE6G1Q0ysoWbGTpb40gD4dZN45</c>
     /// </summary>
     [UsedImplicitly]
-    public static readonly LazyMethod beatmapTreeManager_OnRightClicked = new(
+    public static readonly LazyMethod BeatmapTreeManagerOnRightClicked = new(
         "SongSelection#beatmapTreeManager_OnRightClicked",
         new[]
         {
@@ -59,11 +57,11 @@ public static class SongSelection
     );
 
     /// <summary>
-    ///     Original: <c>beatmapTreeManager</c> of type <see cref="BeatmapTreeManager" />
+    ///     Original: <c>beatmapTreeManager</c> of type <see cref="Stubs.BeatmapTreeManager" />
     ///     b20240102.2: <c>#=zj0IgvXxTqseooUEFmQ==</c>
     /// </summary>
     [UsedImplicitly]
-    public static readonly LazyField beatmapTreeManager = new(
+    public static readonly LazyField<object> BeatmapTreeManager = new(
         "SongSelection#beatmapTreeManager",
         () => FindReferences().BeatmapTreeManager
     );
@@ -71,7 +69,7 @@ public static class SongSelection
     internal static FoundReferences FindReferences()
     {
         var instructions = MethodReader
-            .GetInstructions(beatmapTreeManager_OnRightClicked.Reference)
+            .GetInstructions(BeatmapTreeManagerOnRightClicked.Reference)
             .ToArray();
 
         using var loadFieldInstructions = instructions
@@ -92,10 +90,10 @@ public static class SongSelection
             CurrentGroupMode = currentGroupModeField,
         };
     }
+}
 
-    internal struct FoundReferences
-    {
-        public FieldInfo BeatmapTreeManager;
-        public FieldInfo CurrentGroupMode;
-    }
+internal struct FoundReferences
+{
+    public FieldInfo BeatmapTreeManager;
+    public FieldInfo CurrentGroupMode;
 }

@@ -18,9 +18,9 @@ public static class Bindable
     ///     b20240102.2: <c>#=zHO4Uaog=</c>
     /// </summary>
     [UsedImplicitly]
-    public static readonly LazyMethod GetValue = new("Bindable#Value.get", () =>
+    public static readonly LazyMethod<object> GetValue = new("Bindable#Value.get", () =>
     {
-        var instructions = MethodReader.GetInstructions(SongSelection.beatmapTreeManager_OnRightClicked.Reference);
+        var instructions = MethodReader.GetInstructions(SongSelection.BeatmapTreeManagerOnRightClicked.Reference);
 
         // Get reference to Bindable:Value.get (property getter)
         return (MethodBase)instructions

@@ -4,8 +4,6 @@ using JetBrains.Annotations;
 using Osu.Stubs.Opcode;
 using static System.Reflection.Emit.OpCodes;
 
-// ReSharper disable InconsistentNaming UnusedType.Global UnusedType.Local UnusedMember.Local
-
 namespace Osu.Stubs;
 
 /// <summary>
@@ -21,7 +19,7 @@ public static class EventManager
     /// </summary>
     /// <returns></returns>
     [UsedImplicitly]
-    public static readonly LazyMethod set_ShowStoryboard = new(
+    public static readonly LazyMethod SetShowStoryboard = new(
         "EventManager#ShowStoryboard.set",
         new[]
         {
@@ -41,16 +39,16 @@ public static class EventManager
 
     /// <summary>
     ///     The compiler generated backing field for the <c>ShowStoryboard</c> property.
-    ///     See: <see cref="set_ShowStoryboard" />
+    ///     See: <see cref="SetShowStoryboard" />
     /// </summary>
     [UsedImplicitly]
-    public static LazyField ShowStoryboard_backing = new(
+    public static LazyField<bool> ShowStoryboard = new(
         "EventManager#ShowStoryboard.backing",
         () =>
         {
             // Find a single StoreField instruction in the setter for this property
             var instruction = MethodReader
-                .GetInstructions(set_ShowStoryboard.Reference)
+                .GetInstructions(SetShowStoryboard.Reference)
                 .Single(inst => inst.Opcode == Stsfld);
 
             return (FieldInfo)instruction.Operand;

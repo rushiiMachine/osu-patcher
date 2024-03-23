@@ -14,7 +14,7 @@ public static class BeatmapTreeManager
     ///     Original: <c>CurrentGroupMode</c> of type <c><![CDATA[ Bindable<TreeGroupMode> ]]></c>
     ///     b20240102.2: <c>#=zbF4rnAiPRGJl</c>
     /// </summary>
-    public static readonly LazyField CurrentGroupMode = new(
+    public static readonly LazyField<object> CurrentGroupMode = new(
         "BeatmapTreeManager#CurrentGroupMode",
         () => SongSelection.FindReferences().CurrentGroupMode
     );

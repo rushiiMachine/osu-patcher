@@ -10,9 +10,9 @@ using XnaColor = Object;
 /// </summary>
 public static class Color
 {
-    public static XnaColor Red => GetColor("Red");
-    public static XnaColor Orange => GetColor("Orange");
-    public static XnaColor GhostWhite => GetColor("GhostWhite");
+    public static readonly XnaColor Red = GetColor("Red");
+    public static readonly XnaColor Orange = GetColor("Orange");
+    public static readonly XnaColor GhostWhite = GetColor("GhostWhite");
 
     private static XnaColor GetColor(string name)
     {

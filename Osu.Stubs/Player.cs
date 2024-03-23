@@ -2,23 +2,21 @@ using JetBrains.Annotations;
 using Osu.Stubs.Opcode;
 using static System.Reflection.Emit.OpCodes;
 
-// ReSharper disable InconsistentNaming
-
 namespace Osu.Stubs;
 
 /// <summary>
 ///     Original: <c>osu.GameModes.Play.Player</c>
-///     b20240102.2: <c>#=znsd474wIu4GAJ8swgEdrqaxwLN4O</c>
+///     b20240124: <c>#=zOTWUr4vq60U15SRmD_JItyatbhdR</c>
 /// </summary>
 [UsedImplicitly]
 public static class Player
 {
     /// <summary>
-    ///     Original: <c>AllowDoubleSkip</c> (property getter)
-    ///     b20240102.2: <c>#=zq3ahHKSwJLrHTBaQyw==</c>
+    ///     Original: <c>AllowDoubleSkip.get</c> (property getter)
+    ///     b20240124: <c>#=zp29IlAJ43g4WRArPQA==</c>
     /// </summary>
     [UsedImplicitly]
-    public static readonly LazyMethod AllowDoubleSkip_get = new(
+    public static readonly LazyMethod GetAllowDoubleSkip = new(
         "Player#AllowDoubleSkip.get",
         new[]
         {

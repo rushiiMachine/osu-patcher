@@ -32,9 +32,9 @@ public class PatchFixNoGroupSorting : BasePatch
         int currentSortMode,
         int newSortMode)
     {
-        var beatmapTreeManager = SongSelection.beatmapTreeManager.Reference.GetValue(@this);
-        var currentGroupModeBindable = BeatmapTreeManager.CurrentGroupMode.Reference.GetValue(beatmapTreeManager);
-        var currentGroupMode = (int)Bindable.GetValue.Reference.Invoke(currentGroupModeBindable, new object[0]);
+        var beatmapTreeManager = SongSelection.BeatmapTreeManager.Get(@this);
+        var currentGroupModeBindable = BeatmapTreeManager.CurrentGroupMode.Get(beatmapTreeManager);
+        var currentGroupMode = Bindable.GetValue.Invoke<int>(currentGroupModeBindable);
 
         // We only care if the grouping method changes
         if (currentGroupMode == newGroupMode)
@@ -53,7 +53,7 @@ public class PatchFixNoGroupSorting : BasePatch
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    private static MethodBase Target() => SongSelection.choseBestSortMode.Reference;
+    private static MethodBase Target() => SongSelection.ChoseBestSortMode.Reference;
 
     [UsedImplicitly]
     [HarmonyTranspiler]

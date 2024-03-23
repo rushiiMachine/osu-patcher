@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using Osu.Stubs.Utils;
 
 namespace Osu.Stubs.Opcode;
 
@@ -24,7 +25,7 @@ internal class OpCodeReader
 
         foreach (var field in fields)
         {
-            var opcode = (OpCode)field.GetValue(null);
+            var opcode = field.GetValue<OpCode>(null);
             if (opcode.OpCodeType == OpCodeType.Nternal)
                 continue;
 
