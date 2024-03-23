@@ -11,8 +11,6 @@ namespace Osu.Patcher.Hook.Patches;
 /// </summary>
 public abstract class BasePatch
 {
-    #region Patching Utils
-
     /// <summary>
     ///     Finds and no-ops everything after a certain IL bytecode signature.
     /// </summary>
@@ -211,6 +209,4 @@ public abstract class BasePatch
         if (!found)
             throw new Exception("Could not find the target signature in method!");
     }
-
-    #endregion
 }
