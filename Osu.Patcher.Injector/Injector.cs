@@ -2,7 +2,6 @@
 using System.IO;
 using System.Management;
 using System.Runtime.Versioning;
-using System.Text.RegularExpressions;
 using HoLLy.ManagedInjector;
 
 namespace Osu.Patcher.Injector;
@@ -16,8 +15,6 @@ internal static class Injector
         {
             using var proc = new InjectableProcess(GetOsuPid());
             var dllPath = Path.GetFullPath(typeof(Injector).Assembly.Location + @"\..\osu!.hook.dll");
-
-            Console.WriteLine(dllPath);
 
             proc.Inject(dllPath, "Osu.Patcher.Hook.Hook", "Initialize");
         }
@@ -50,7 +47,8 @@ internal static class Injector
             if (exe != "osu!.exe") continue;
 
             // Make sure there's a "-devserver xyz" in cli args
-            if (!new Regex(@"osu!\.exe +-devserver \w").IsMatch(cli))
+            var args = cli.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (args is not [_, "-devserver", { Length: > 3 }])
                 throw new Exception("Will not inject into osu! connected to Bancho!");
 
             return pid;
