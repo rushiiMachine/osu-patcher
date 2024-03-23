@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
@@ -125,5 +127,16 @@ public class PatchFixNoGroupSorting : BasePatch
         );
 
         return instructions;
+    }
+
+    [UsedImplicitly]
+    [HarmonyFinalizer]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    private static void Finalizer(Exception? __exception)
+    {
+        if (__exception != null)
+        {
+            Console.WriteLine($"Exception due to {nameof(PatchFixNoGroupSorting)}: {__exception}");
+        }
     }
 }

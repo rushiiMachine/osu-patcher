@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -52,4 +53,15 @@ internal class PatchFixDoubleSkipping : BasePatch
             inst => inst.OperandIs(10000),
             inst => inst.operand = 0
         );
+
+    [UsedImplicitly]
+    [HarmonyFinalizer]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    private static void Finalizer(Exception? __exception)
+    {
+        if (__exception != null)
+        {
+            Console.WriteLine($"Exception due to {nameof(PatchFixDoubleSkipping)}: {__exception}");
+        }
+    }
 }

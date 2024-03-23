@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -49,4 +51,15 @@ internal class PatchEnableRelaxMisses : BasePatch
     [HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
         NoopAfterSignature(instructions, Signature.Take(Signature.Length - 4).ToArray(), 4);
+
+    [UsedImplicitly]
+    [HarmonyFinalizer]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    private static void Finalizer(Exception? __exception)
+    {
+        if (__exception != null)
+        {
+            Console.WriteLine($"Exception due to {nameof(PatchEnableRelaxMisses)}: {__exception}");
+        }
+    }
 }
