@@ -12,6 +12,48 @@ namespace Osu.Stubs;
 public class GameBase
 {
     /// <summary>
+    ///     Original: <c>get_ModeCanReload()</c>
+    ///     b20240123: <c>#=zL6aRJUMxZO5fmlF9KQ==</c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyMethod<bool> GetModeCanReload = new(
+        "GameBase#get_ModeCanReload()",
+        new[]
+        {
+            Ldc_I4_7,
+            Bgt_S,
+            Ldloc_0,
+            Ldc_I4_2,
+            Beq_S,
+            Ldloc_0,
+            Ldc_I4_7,
+            Beq_S,
+            Br_S,
+        }
+    );
+
+    // /// <summary>
+    // ///     Original: <c>loadQueuedMode(int disposalDelay)</c>
+    // ///     b20240123: <c>#=zCDewMhQMM5f_</c>
+    // /// </summary>
+    // [UsedImplicitly]
+    // public static readonly LazyMethod LoadQueuedMode = new(
+    //     "GameBase#loadQueuedMode(...)",
+    //     new[]
+    //     {
+    //         Initobj,
+    //         Ldloc_S,
+    //         Ldloca_S,
+    //         Initobj,
+    //         Ldloc_S,
+    //         Ldc_I4_0,
+    //         Ldc_I4_0,
+    //         Call,
+    //         Ldnull,
+    //     }
+    // );
+
+    /// <summary>
     ///     Original: <c>softHandle(Exception e)</c>
     ///     b20240123: <c>#=z8BJOiJxSLUwM</c>
     /// </summary>
