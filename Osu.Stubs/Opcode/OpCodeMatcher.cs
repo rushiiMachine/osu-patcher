@@ -10,8 +10,9 @@ public static class OpCodeMatcher
     ///     Search for a method inside the osu! assembly by an IL OpCode signature.
     /// </summary>
     /// <param name="signature">A set of sequential OpCodes to match.</param>
+    /// <param name="entireMethod">Whether the signature is the entire method to search for.</param>
     /// <returns>The found method or null if none found.</returns>
-    public static MethodInfo? FindMethodBySignature(IReadOnlyList<OpCode> signature)
+    public static MethodInfo? FindMethodBySignature(IReadOnlyList<OpCode> signature, bool entireMethod = false)
     {
         if (signature.Count <= 0) return null;
 
@@ -24,7 +25,7 @@ public static class OpCodeMatcher
             var instructions = method.GetMethodBody()?.GetILAsByteArray();
             if (instructions == null) continue;
 
-            if (InstructionsMatchesSignature(instructions, signature))
+            if (InstructionsMatchesSignature(instructions, signature, entireMethod))
                 return method;
         }
 
@@ -49,7 +50,7 @@ public static class OpCodeMatcher
             var instructions = method.GetMethodBody()?.GetILAsByteArray();
             if (instructions == null) continue;
 
-            if (InstructionsMatchesSignature(instructions, signature))
+            if (InstructionsMatchesSignature(instructions, signature, false))
                 return method;
         }
 
@@ -64,18 +65,21 @@ public static class OpCodeMatcher
     ///     for example.
     /// </param>
     /// <param name="signature">A set of sequential OpCodes to search for in instructions.</param>
+    /// <param name="entireMethod">Whether the signature should be the entire method.</param>
     /// <returns></returns>
     private static bool InstructionsMatchesSignature(
         IReadOnlyList<byte> ilInstructions,
-        IReadOnlyList<OpCode> signature)
+        IReadOnlyList<OpCode> signature,
+        bool entireMethod)
     {
         var sequentialMatching = 0;
         foreach (var instruction in new OpCodeReader(ilInstructions).GetOpCodes())
         {
             if (instruction == signature[sequentialMatching])
                 sequentialMatching++;
-            else
+            else if (!entireMethod)
                 sequentialMatching = 0;
+            else return false;
 
             if (sequentialMatching == signature.Count)
                 return true;

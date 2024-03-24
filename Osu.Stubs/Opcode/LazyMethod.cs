@@ -18,10 +18,11 @@ public class LazyMethod
     /// </summary>
     /// <param name="name"><c>Class#Method</c> name of what this signature is matching.</param>
     /// <param name="signature">Sequential opcodes to search the target method with.</param>
-    internal LazyMethod(string name, IReadOnlyList<OpCode> signature)
+    /// <param name="entireMethod">Whether the signature is the entire method.</param>
+    internal LazyMethod(string name, IReadOnlyList<OpCode> signature, bool entireMethod = false)
     {
         _name = name;
-        _lazy = new Lazy<MethodBase?>(() => OpCodeMatcher.FindMethodBySignature(signature));
+        _lazy = new Lazy<MethodBase?>(() => OpCodeMatcher.FindMethodBySignature(signature, entireMethod));
     }
 
     /// <summary>

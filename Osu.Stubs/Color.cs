@@ -1,9 +1,8 @@
-using System;
 using Osu.Stubs.Opcode;
 
 namespace Osu.Stubs;
 
-using XnaColor = Object;
+using XnaColor = object;
 
 /// <summary>
 ///     Original: <c>Microsoft.Xna.Framework.Graphics.Color</c>
