@@ -5,7 +5,7 @@
         <RootNamespace>Osu.Stubs</RootNamespace>
         <AssemblyName>osu!.stubs</AssemblyName>
         <TargetFramework>net452</TargetFramework>
-        <LangVersion>11</LangVersion>
+        <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

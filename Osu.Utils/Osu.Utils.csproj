@@ -5,7 +5,7 @@
         <RootNamespace>Osu.Utils</RootNamespace>
         <AssemblyName>osu!.utils</AssemblyName>
         <TargetFramework>net452</TargetFramework>
-        <LangVersion>10</LangVersion>
+        <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
