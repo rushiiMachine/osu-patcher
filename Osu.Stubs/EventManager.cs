@@ -17,7 +17,6 @@ public static class EventManager
     ///     Original: <c>set_ShowStoryboard</c> (property setter)
     ///     b20240102.2: <c>#=zKZugEelWoTXb</c>
     /// </summary>
-    /// <returns></returns>
     [UsedImplicitly]
     public static readonly LazyMethod SetShowStoryboard = new(
         "EventManager#ShowStoryboard.set",
