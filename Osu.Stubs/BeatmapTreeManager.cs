@@ -4,7 +4,7 @@ using Osu.Stubs.Opcode;
 namespace Osu.Stubs;
 
 /// <summary>
-///     Original: <c>osu.GameplayElements.Beatmaps:BeatmapTreeManager</c>
+///     Original: <c>osu.GameplayElements.Beatmaps.BeatmapTreeManager</c>
 ///     b20240102.2: <c>#=zV51QPv13Z_vZJRxEY28cvGye77gU6YZQsv_F5muuWuN62V5sIQ==</c>
 /// </summary>
 [UsedImplicitly]
