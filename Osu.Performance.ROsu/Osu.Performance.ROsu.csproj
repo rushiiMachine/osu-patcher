@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net452</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <CompileNative Include="src\**.rs"/>
+    </ItemGroup>
+    <PropertyGroup>
+        <NativeTarget>i686-pc-windows-msvc</NativeTarget>
+    </PropertyGroup>
+    <Target Name="BuildNative"
+            BeforeTargets="BeforeBuild"
+            Inputs="@(CompileNative);cargo.toml;cargo.lock"
+            Outputs=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.dll">
+        <Exec Command="cargo build --color=never --message-format=human --target $(NativeTarget)" Condition="'$(Configuration)' == 'Debug'"/>
+        <Exec Command="cargo build --color=never --message-format=human --target $(NativeTarget) --release" Condition="'$(Configuration)' == 'Release'"/>
+        <ItemGroup>
+            <ROsuOutput Include=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.dll"/>
+            <ROsuOutput Include=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.pdb" Condition="'$(Configuration)' == 'Debug'"/>
+            <Content Include="@(ROsuOutput)">
+                <TargetPath>%(Filename)%(Extension)</TargetPath>
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </Content>
+        </ItemGroup>
+    </Target>
+</Project>

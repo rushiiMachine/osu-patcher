@@ -1,0 +1,3 @@
+[build]
+# osu! is a 32 bit process and we only support windows
+target = "i686-pc-windows-msvc"

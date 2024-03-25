@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Stubs", "Osu.Stubs\Osu.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Utils", "Osu.Utils\Osu.Utils.csproj", "{9FA3B15D-8421-4E04-BA84-85331845A01D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Performance", "Osu.Performance\Osu.Performance.csproj", "{79B81600-142A-4DF7-B1B1-09D18ABE4537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Performance.ROsu", "Osu.Performance.ROsu\Osu.Performance.ROsu.csproj", "{E97D5D8F-81D5-4E37-8BE8-5B1DCEDE9A14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -29,5 +33,13 @@ Global
 		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Debug|x86.Build.0 = Debug|Any CPU
 		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Release|x86.ActiveCfg = Release|Any CPU
 		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Release|x86.Build.0 = Release|Any CPU
+		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Debug|x86.Build.0 = Debug|Any CPU
+		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Release|x86.ActiveCfg = Release|Any CPU
+		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Release|x86.Build.0 = Release|Any CPU
+		{E97D5D8F-81D5-4E37-8BE8-5B1DCEDE9A14}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E97D5D8F-81D5-4E37-8BE8-5B1DCEDE9A14}.Debug|x86.Build.0 = Debug|Any CPU
+		{E97D5D8F-81D5-4E37-8BE8-5B1DCEDE9A14}.Release|x86.ActiveCfg = Release|Any CPU
+		{E97D5D8F-81D5-4E37-8BE8-5B1DCEDE9A14}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

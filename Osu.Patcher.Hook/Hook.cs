@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Performance.ROsu;
 using Osu.Utils;
 
 namespace Osu.Patcher.Hook;
@@ -22,6 +23,7 @@ public static class Hook
 
         try
         {
+            Console.WriteLine(Test.test());
             _harmony = new Harmony("osu!patcher");
             InitializePatches(_harmony);
 
