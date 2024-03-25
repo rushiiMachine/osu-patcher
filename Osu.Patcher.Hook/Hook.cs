@@ -23,7 +23,6 @@ public static class Hook
 
         try
         {
-            Console.WriteLine(Test.test());
             _harmony = new Harmony("osu!patcher");
             InitializePatches(_harmony);
 
@@ -33,6 +32,33 @@ public static class Hook
                 5000,
                 () => { Process.Start(GithubUrl); }
             );
+
+            var difficulty = new OsuDifficultyAttributes
+            {
+                Stars = 727.727,
+                MaxCombo = 2500,
+                SpeedNoteCount = 10,
+                ApproachRate = 11,
+                OverallDifficulty = 11,
+                HealthRate = 10,
+                AimSkill = 10,
+                SpeedSkill = 100,
+                FlashlightSkill = 0,
+                SliderSkill = 20,
+                CircleCount = 2000,
+                SliderCount = 250,
+                SpinnerCount = 250,
+            };
+            var score = new OsuScoreState
+            {
+                ScoreMaxCombo = 2499,
+                Score300s = 2499,
+                Score100s = 1,
+                Score50s = 0,
+                ScoreMisses = 0,
+            };
+            
+            Console.WriteLine(new OsuPerformance(difficulty).CalculateScore(score).TotalPP);
         }
         catch (Exception e)
         {

@@ -3,6 +3,8 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net452</TargetFramework>
+        <LangVersion>12</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugType>none</DebugType>
@@ -13,16 +15,20 @@
     </ItemGroup>
     <PropertyGroup>
         <NativeTarget>i686-pc-windows-msvc</NativeTarget>
+        <CargoBuild>cargo build --color=never --message-format=human --target $(NativeTarget)</CargoBuild>
+        <CargoOutput>.\target\$(NativeTarget)\$(Configuration.ToLower())</CargoOutput>
     </PropertyGroup>
     <Target Name="BuildNative"
             BeforeTargets="BeforeBuild"
             Inputs="@(CompileNative);cargo.toml;cargo.lock"
             Outputs=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.dll">
-        <Exec Command="cargo build --color=never --message-format=human --target $(NativeTarget)" Condition="'$(Configuration)' == 'Debug'"/>
-        <Exec Command="cargo build --color=never --message-format=human --target $(NativeTarget) --release" Condition="'$(Configuration)' == 'Release'"/>
+
+        <Exec Condition="'$(Configuration)' == 'Debug'" Command="$(CargoBuild)"/>
+        <Exec Condition="'$(Configuration)' == 'Release'" Command="$(CargoBuild) --release"/>
+
         <ItemGroup>
-            <ROsuOutput Include=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.dll"/>
-            <ROsuOutput Include=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.pdb" Condition="'$(Configuration)' == 'Debug'"/>
+            <ROsuOutput Include="$(CargoOutput)\rosu.dll"/>
+            <ROsuOutput Include="$(CargoOutput)\rosu.pdb" Condition="'$(Configuration)' == 'Debug'"/>
             <Content Include="@(ROsuOutput)">
                 <TargetPath>%(Filename)%(Extension)</TargetPath>
                 <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
