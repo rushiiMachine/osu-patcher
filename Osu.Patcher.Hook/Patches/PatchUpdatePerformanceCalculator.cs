@@ -34,37 +34,40 @@ public static class PatchUpdatePerformanceCalculator
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    private static MethodBase Target() => ScoreProcessor.AddScoreChange.Reference;
+    private static MethodBase Target() => Ruleset.OnIncreaseScoreHit.Reference;
 
     [UsedImplicitly]
     [HarmonyPostfix]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void After([HarmonyArgument(0)] object scoreChange, object __instance)
+    private static void After(
+        object __instance, // is Ruleset
+        [HarmonyArgument(0)] int increaseScoreType,
+        [HarmonyArgument(2)] bool increaseCombo)
     {
-        const int HitScoreMask = IncreaseScoreType.Osu300 | IncreaseScoreType.Osu100 | IncreaseScoreType.Osu50;
+        const int HitScoreMask = IncreaseScoreType.Osu300 |
+                                 IncreaseScoreType.Osu100 |
+                                 IncreaseScoreType.Osu50 |
+                                 IncreaseScoreType.MissBit;
 
-        var maxCombo = ScoreProcessor.MaximumCombo.Get(__instance);
-        var hitScoreResult = ScoreChange.HitValue.Get(scoreChange);
-
-        // Console.WriteLine($"IncreaseScoreHit: {hitScoreResult} {hitScoreResult & HitScoreMask}");
-        OsuJudgementResult? judgement = (hitScoreResult & HitScoreMask) switch
+        var judgement = (increaseScoreType & HitScoreMask) switch
         {
-            IncreaseScoreType.Osu300 => OsuJudgementResult.Result300,
-            IncreaseScoreType.Osu100 => OsuJudgementResult.Result100,
-            IncreaseScoreType.Osu50 => OsuJudgementResult.Result50,
-            _ => null,
+            IncreaseScoreType.Osu300 => OsuJudgement.Result300,
+            IncreaseScoreType.Osu100 => OsuJudgement.Result100,
+            IncreaseScoreType.Osu50 => OsuJudgement.Result50,
+            IncreaseScoreType.MissBit => OsuJudgement.ResultMiss,
+            _ => OsuJudgement.None,
         };
 
-        if (hitScoreResult < 0)
-        {
-            judgement = OsuJudgementResult.ResultMiss;
-        }
-        else if (!judgement.HasValue)
-        {
-            return;
-        }
+        // If this can't increase the max combo and it doesn't change the judgement counts
+        // then skip this since it can't alter the pp values.
+        // TODO: fix issue in rosu-ffi
+        // if (!increaseCombo && judgement == OsuJudgement.None) return;
+        if (judgement == OsuJudgement.None) return;
 
-        _performance.AddJudgement(judgement.Value, (ulong)maxCombo);
+        var CurrentScore = Ruleset.CurrentScore.Get(__instance);
+        var MaxCombo = Score.MaxCombo.Get(CurrentScore);
+
+        _performance.AddJudgement(judgement, (uint)MaxCombo);
     }
 
     [UsedImplicitly]
@@ -82,6 +85,7 @@ public static class PatchUpdatePerformanceCalculator
 [HarmonyPatch]
 internal class PatchClearPerformanceCalculator
 {
+    // TODO Ruleset#ResetScore(bool)
     [HarmonyTargetMethod]
     private static MethodBase Target() => ScoreProcessor.Clear.Reference;
 

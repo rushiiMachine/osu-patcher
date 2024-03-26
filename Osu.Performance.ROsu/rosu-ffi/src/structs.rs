@@ -40,7 +40,9 @@ pub struct FFIOsuPerformanceAttributes {
 }
 
 #[repr(u8)]
-pub enum OsuJudgementResult {
+#[allow(unused)]
+pub enum OsuJudgement {
+    None = 0,
     Result300 = 1,
     Result100 = 2,
     Result50 = 3,

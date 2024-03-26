@@ -46,8 +46,9 @@ public struct OsuPerformanceInfo
 }
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public enum OsuJudgementResult : byte
+public enum OsuJudgement : byte
 {
+    None = 0,
     Result300 = 1,
     Result100 = 2,
     Result50 = 3,

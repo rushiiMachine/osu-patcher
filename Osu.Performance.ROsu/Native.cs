@@ -5,15 +5,14 @@ namespace Osu.Performance.ROsu;
 
 internal static class Native
 {
-    [DllImport("rosu.dll", EntryPoint = "calculate_osu_performance")]
-    internal static extern double CalculateOsuPerformance(
+    [DllImport("rosu.ffi.dll", EntryPoint = "calculate_osu_performance")]
+    internal static extern OsuPerformanceInfo CalculateOsuPerformance(
         ref OsuDifficultyAttributes difficulty,
         ref OsuScoreState score,
-        uint mods,
-        out OsuPerformanceInfo calculatedPerformance
+        uint mods
     );
 
-    [DllImport("rosu.dll",
+    [DllImport("rosu.ffi.dll",
         EntryPoint = "initialize_osu_performance_gradual",
         CharSet = CharSet.Ansi,
         SetLastError = true)]
@@ -22,15 +21,15 @@ internal static class Native
         uint mods
     );
 
-    [DllImport("rosu.dll", EntryPoint = "calculate_osu_performance_gradual")]
+    [DllImport("rosu.ffi.dll", EntryPoint = "calculate_osu_performance_gradual")]
     internal static extern double CalculateGradualOsuPerformance(
         IntPtr state, // This is not thread safe!
-        OsuJudgementResult newJudgement,
+        OsuJudgement judgement,
         ulong maxCombo
     );
 
     // This is not thread safe!
-    [DllImport("rosu.dll", EntryPoint = "dispose_osu_performance_gradual")]
+    [DllImport("rosu.ffi.dll", EntryPoint = "dispose_osu_performance_gradual")]
     internal static extern void DisposeGradualOsuPerformance(
         IntPtr state // This is not thread safe!
     );

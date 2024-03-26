@@ -2,9 +2,9 @@ use std::ffi::{c_char, CStr};
 use std::fs::File;
 
 use rosu_pp::{Beatmap, OsuPP};
-use rosu_pp::osu::{OsuDifficultyAttributes, OsuOwnedGradualPerformance, OsuScoreState};
+use rosu_pp::osu::{OsuDifficultyAttributes, OsuOwnedGradualPerformance, OsuPerformanceAttributes, OsuScoreState};
 
-use crate::structs::{FFIOsuDifficultyAttributes, FFIOsuPerformanceAttributes, FFIOsuScoreState, OsuJudgementResult};
+use crate::structs::{FFIOsuDifficultyAttributes, FFIOsuPerformanceAttributes, FFIOsuScoreState, OsuJudgement};
 
 mod structs;
 
@@ -13,8 +13,7 @@ extern "C" fn calculate_osu_performance(
     difficulty: &FFIOsuDifficultyAttributes,
     state: &FFIOsuScoreState,
     mods: u32,
-    performance_out: &mut FFIOsuPerformanceAttributes,
-) {
+) -> FFIOsuPerformanceAttributes {
     let difficulty: OsuDifficultyAttributes = difficulty.into();
     let state: OsuScoreState = state.into();
 
@@ -25,7 +24,7 @@ extern "C" fn calculate_osu_performance(
         .state(state)
         .calculate();
 
-    *performance_out = (&performance).into();
+    (&performance).into()
 }
 
 #[no_mangle]
@@ -49,22 +48,28 @@ extern "C" fn initialize_osu_performance_gradual(
 #[no_mangle]
 extern "C" fn calculate_osu_performance_gradual(
     state: &mut OsuGradualPerformanceState,
-    new_judgement: OsuJudgementResult,
+    new_judgement: OsuJudgement,
     max_combo: u64,
 ) -> f64 {
     state.score.max_combo = max_combo as usize;
 
     match new_judgement {
-        OsuJudgementResult::Result300 => state.score.n300 += 1,
-        OsuJudgementResult::Result100 => state.score.n100 += 1,
-        OsuJudgementResult::Result50 => state.score.n50 += 1,
-        OsuJudgementResult::ResultMiss => state.score.n_misses += 1,
+        OsuJudgement::None => {}
+        OsuJudgement::Result300 => state.score.n300 += 1,
+        OsuJudgement::Result100 => state.score.n100 += 1,
+        OsuJudgement::Result50 => state.score.n50 += 1,
+        OsuJudgement::ResultMiss => state.score.n_misses += 1,
     }
 
-    let performance = state.performance.next(state.score.clone())
-        .unwrap(); // TODO: handle errors
+    let performance: Option<OsuPerformanceAttributes> = if matches!(new_judgement, OsuJudgement::None) {
+        // TODO: fork and add method to not advance gradual difficulty
+        panic!("Can't handle OsuJudgement::None");
+    } else {
+        state.performance.next(state.score.clone())
+    };
 
-    return performance.pp;
+    // TODO: handle errors
+    return performance.unwrap().pp;
 }
 
 #[no_mangle]

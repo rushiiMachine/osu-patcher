@@ -8,8 +8,8 @@ namespace Osu.Performance.ROsu;
 [UsedImplicitly]
 public class OsuPerformance : IDisposable
 {
-    private readonly ConcurrentQueue<PendingCalculation> _queue;
     private readonly Thread _calculatingThread;
+    private readonly ConcurrentQueue<PendingCalculation> _queue;
     private readonly IntPtr _state;
     private volatile int _closed;
 
@@ -41,10 +41,13 @@ public class OsuPerformance : IDisposable
     /// <summary>
     ///     Queues a judgement to be processed later.
     /// </summary>
-    /// <param name="judgement">The final hit result of an object (slider ticks, etc. don't count)</param>
+    /// <param name="judgement">
+    ///     The final hit result of an object. If this is a slider tick, spinner tick, etc., then this
+    ///     should be the <c>None</c> enum variant.
+    /// </param>
     /// <param name="maxCombo">The currently highest max combo in the score.</param>
     [UsedImplicitly]
-    public void AddJudgement(OsuJudgementResult judgement, ulong maxCombo)
+    public void AddJudgement(OsuJudgement judgement, uint maxCombo)
     {
         if (_closed > 0) return;
 
@@ -63,10 +66,11 @@ public class OsuPerformance : IDisposable
 
             while (_queue.TryDequeue(out var item))
             {
-                var pp = Native.CalculateGradualOsuPerformance(_state, item.Judgement, item.MaxCombo);
+                var performance = Native.CalculateGradualOsuPerformance(_state, item.Judgement, item.MaxCombo);
+                var clamped = Math.Min(0, performance);
 
-                OnNewCalculation?.Invoke(pp);
-                
+                OnNewCalculation?.Invoke(clamped);
+
                 if (_closed > 0) return;
             }
 
@@ -83,15 +87,15 @@ public class OsuPerformance : IDisposable
     /// <param name="score">A completed (or failed) score's info on the associated map.</param>
     /// <param name="mods">The set of mods that were used on this score.</param>
     [UsedImplicitly]
-    public static OsuPerformanceInfo CalculateScore(OsuDifficultyAttributes difficulty, OsuScoreState score, uint mods)
-    {
-        Native.CalculateOsuPerformance(ref difficulty, ref score, mods, out var performance);
-        return performance;
-    }
+    public static OsuPerformanceInfo CalculateScore(
+        OsuDifficultyAttributes difficulty,
+        OsuScoreState score,
+        uint mods
+    ) => Native.CalculateOsuPerformance(ref difficulty, ref score, mods);
 
     private struct PendingCalculation
     {
-        public OsuJudgementResult Judgement;
+        public OsuJudgement Judgement;
         public ulong MaxCombo;
     }
 }

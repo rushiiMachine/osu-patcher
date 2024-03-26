@@ -11,10 +11,12 @@ namespace Osu.Stubs;
 public class IncreaseScoreType
 {
     // TODO: reverse engineer all enum values
+    public const int MissBit = 1 << 31; // No clue if this is right 
 
-    public const int Osu50 = 256;
-    public const int Osu100 = 512;
-    public const int Osu300 = 1024;
+    public const int Miss = -131072;
+    public const int Osu50 = 1 << 8;
+    public const int Osu100 = 1 << 9;
+    public const int Osu300 = 1 << 10;
 
     // Used as the first parameter in the constructor for ScoreChange
     [UsedImplicitly]
