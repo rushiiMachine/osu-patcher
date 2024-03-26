@@ -1,9 +1,7 @@
 using System;
 using System.Diagnostics;
-using System.Threading;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Performance.ROsu;
 using Osu.Utils;
 
 namespace Osu.Patcher.Hook;

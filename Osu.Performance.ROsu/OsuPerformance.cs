@@ -67,7 +67,7 @@ public class OsuPerformance : IDisposable
             while (_queue.TryDequeue(out var item))
             {
                 var performance = Native.CalculateGradualOsuPerformance(_state, item.Judgement, item.MaxCombo);
-                var clamped = Math.Min(0, performance);
+                var clamped = Math.Max(0, performance);
 
                 OnNewCalculation?.Invoke(clamped);
 

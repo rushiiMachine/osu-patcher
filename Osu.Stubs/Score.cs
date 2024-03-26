@@ -44,12 +44,24 @@ public class Score
     ///     Original: <c>Score(string input, Beatmap beatmap)</c>
     ///     b20240123: <c>#=zwswDPw49w3ZrQEjyKFYhq9$8W6WDMiSHDDrNV7k=</c>
     /// </summary>
-    private static readonly LazyMethod ConstructorFromReplayAndMap = new(
+    [UsedImplicitly]
+    public static readonly LazyMethod ConstructorFromReplayAndMap = new(
         "Score#<init>(string, Beatmap)",
         () => RuntimeType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
             .Single(ctor => ctor.GetParameters()
                 .GetOrDefault(0, null)?
                 .ParameterType == typeof(string)) // Find the only constructor with a "string" as the first parameter
+    );
+
+    /// <summary>
+    ///     Original: <c>Beatmap</c>
+    ///     b20240123: <c>#=zhcWn5UkrdlUu</c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyField<object?> Beatmap = new(
+        "Score#Beatmap",
+        () => RuntimeType.GetRuntimeFields()
+            .Single(inst => inst.FieldType == Stubs.Beatmap.RuntimeType)
     );
 
     /// <summary>

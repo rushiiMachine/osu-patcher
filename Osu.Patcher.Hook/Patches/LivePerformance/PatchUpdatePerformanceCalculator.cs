@@ -1,34 +1,39 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance.ROsu;
 using Osu.Stubs;
+using Osu.Stubs.Opcode;
 
-namespace Osu.Patcher.Hook.Patches;
+namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
 [HarmonyPatch]
 [UsedImplicitly]
 public static class PatchUpdatePerformanceCalculator
 {
-    private static OsuPerformance _performance = new(
-        @"C:\osu!\Songs\1099140 Laszlo - Linus tech tips intro\Laszlo - Linus tech tips intro (Sytho) [Tragic love Ultra].osu",
-        0
-    );
+    private static OsuPerformance? _performance;
 
-    static PatchUpdatePerformanceCalculator()
+    internal static void ResetCalculator()
     {
-        _performance.OnNewCalculation += Console.WriteLine;
-    }
+        _performance?.Dispose();
+        _performance = null;
 
-    public static void ResetCalculator()
-    {
-        _performance.Dispose();
-        _performance = new OsuPerformance(
-            @"C:\osu!\Songs\1099140 Laszlo - Linus tech tips intro\Laszlo - Linus tech tips intro (Sytho) [Tragic love Ultra].osu",
-            0
-        );
+        var currentScore = Player.CurrentScore.Get();
+        if (currentScore == null) return;
+
+        var beatmap = Score.Beatmap.Get(currentScore);
+        if (beatmap == null) return;
+
+        var beatmapSubPath = Beatmap.GetBeatmapPath(beatmap);
+        if (beatmapSubPath == null) return;
+
+        var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
+        var beatmapPath = Path.Combine(osuDir, "Songs", beatmapSubPath);
+
+        _performance = new OsuPerformance(beatmapPath, 0);
         _performance.OnNewCalculation += Console.WriteLine;
     }
 
@@ -44,6 +49,8 @@ public static class PatchUpdatePerformanceCalculator
         [HarmonyArgument(0)] int increaseScoreType,
         [HarmonyArgument(2)] bool increaseCombo)
     {
+        if (_performance == null) return;
+
         const int HitScoreMask = IncreaseScoreType.Osu300 |
                                  IncreaseScoreType.Osu100 |
                                  IncreaseScoreType.Osu50 |
@@ -79,20 +86,5 @@ public static class PatchUpdatePerformanceCalculator
         {
             Console.WriteLine($"Exception due to {nameof(PatchUpdatePerformanceCalculator)}: {__exception}");
         }
-    }
-}
-
-[HarmonyPatch]
-internal class PatchClearPerformanceCalculator
-{
-    // TODO Ruleset#ResetScore(bool)
-    [HarmonyTargetMethod]
-    private static MethodBase Target() => ScoreProcessor.Clear.Reference;
-
-    [HarmonyPostfix]
-    private static void After()
-    {
-        Console.WriteLine("Clearing performance calculator!");
-        PatchUpdatePerformanceCalculator.ResetCalculator();
     }
 }

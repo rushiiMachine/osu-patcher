@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Osu.Stubs.Opcode;
 
-internal static class OsuAssembly
+public static class OsuAssembly
 {
     private static readonly Module Module;
 
@@ -14,13 +15,18 @@ internal static class OsuAssembly
     /// </summary>
     static OsuAssembly()
     {
-        var osuAssembly = AppDomain.CurrentDomain.GetAssemblies()
+        var assembly = AppDomain.CurrentDomain.GetAssemblies()
             .SingleOrDefault(assembly => assembly.GetName().Name == "osu!");
+        var module = assembly?.GetModules()?.SingleOrDefault();
 
-        Module = osuAssembly?.GetModules().SingleOrDefault()
-                 ?? throw new Exception("Unable to find a loaded osu! assembly! " +
-                                        "Is this loaded into the correct process?");
+        if (assembly == null || module == null)
+            throw new Exception("Unable to find a loaded osu! assembly! Is this loaded into the correct process?");
+
+        Assembly = assembly;
+        Module = module;
     }
+
+    public static Assembly Assembly { [UsedImplicitly] get; private set; }
 
     /// <summary>
     ///     Retrieve all the types located in the osu! assembly.

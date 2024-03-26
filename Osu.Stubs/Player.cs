@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Osu.Stubs.Opcode;
 using static System.Reflection.Emit.OpCodes;
@@ -33,4 +36,19 @@ public static class Player
             Br_S,
         }
     );
+
+    /// <summary>
+    ///     Original: <c>currentScore</c>
+    ///     b20240124: <c>#=zF6h5l4j0$TfX</c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyField<object?> CurrentScore = new(
+        "Player#currentScore",
+        () => RuntimeType
+            .GetFields(BindingFlags.Static | BindingFlags.NonPublic)
+            .Single(field => field.FieldType == Score.RuntimeType)
+    );
+
+    [UsedImplicitly]
+    public static Type RuntimeType => GetAllowDoubleSkip.Reference.DeclaringType!;
 }

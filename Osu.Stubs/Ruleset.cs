@@ -54,6 +54,31 @@ public static class Ruleset
     );
 
     /// <summary>
+    ///     Original: <c>ResetScore(bool storeStatistics)</c>
+    ///     b20240123: <c>#=zLIXqTYl0LIQz</c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyMethod ResetScore = new(
+        "Ruleset#ResetScore(...)",
+        new[]
+        {
+            Ldfld,
+            Ldarg_1,
+            Callvirt,
+            Ldarg_0,
+            Ldfld,
+            Brtrue_S,
+            Ret,
+            Ldarg_0,
+            Ldfld,
+            Brfalse_S,
+            Ldarg_0,
+            Ldfld,
+            Callvirt,
+        }
+    );
+
+    /// <summary>
     ///     Original: <c>CurrentScore</c>
     ///     b20240123: <c>#=zk4sdboE=</c>
     /// </summary>
