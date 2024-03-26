@@ -1,12 +1,12 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Reflection;
+using System.Threading;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance.ROsu;
 using Osu.Stubs;
-using Osu.Stubs.Opcode;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
@@ -16,26 +16,31 @@ public static class PatchUpdatePerformanceCalculator
 {
     private static OsuPerformance? _performance;
 
-    internal static void ResetCalculator()
+    internal static void ResetCalculator() => new Thread(() =>
     {
+        Debug.WriteLine("Resetting performance calculator");
+
         _performance?.Dispose();
         _performance = null;
 
         var currentScore = Player.CurrentScore.Get();
         if (currentScore == null) return;
 
+        var modsObfuscated = Score.EnabledMods.Get(currentScore);
+        var mods = Score.EnabledModsGetValue.Invoke(modsObfuscated);
+
+        // Clear relax mod for now (live pp calculations for relax are fucking garbage)
+        mods &= ~(1 << 7);
+
         var beatmap = Score.Beatmap.Get(currentScore);
         if (beatmap == null) return;
 
-        var beatmapSubPath = Beatmap.GetBeatmapPath(beatmap);
-        if (beatmapSubPath == null) return;
+        var beatmapPath = Beatmap.GetBeatmapPath(beatmap);
+        if (beatmapPath == null) return;
 
-        var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
-        var beatmapPath = Path.Combine(osuDir, "Songs", beatmapSubPath);
-
-        _performance = new OsuPerformance(beatmapPath, 0);
+        _performance = new OsuPerformance(beatmapPath, (uint)mods);
         _performance.OnNewCalculation += Console.WriteLine;
-    }
+    }).Start();
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -51,17 +56,12 @@ public static class PatchUpdatePerformanceCalculator
     {
         if (_performance == null) return;
 
-        const int HitScoreMask = IncreaseScoreType.Osu300 |
-                                 IncreaseScoreType.Osu100 |
-                                 IncreaseScoreType.Osu50 |
-                                 IncreaseScoreType.MissBit;
-
-        var judgement = (increaseScoreType & HitScoreMask) switch
+        var judgement = (increaseScoreType & ~IncreaseScoreType.OsuComboModifiers) switch
         {
             IncreaseScoreType.Osu300 => OsuJudgement.Result300,
             IncreaseScoreType.Osu100 => OsuJudgement.Result100,
             IncreaseScoreType.Osu50 => OsuJudgement.Result50,
-            IncreaseScoreType.MissBit => OsuJudgement.ResultMiss,
+            IncreaseScoreType.OsuMiss => OsuJudgement.ResultMiss,
             _ => OsuJudgement.None,
         };
 

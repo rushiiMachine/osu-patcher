@@ -28,7 +28,7 @@
             <ROsuOutput Include="$(CargoOutput)\rosu.pdb" Condition="'$(Configuration)' == 'Debug'"/>
             <Content Include="@(ROsuOutput)">
                 <TargetPath>rosu.ffi%(Extension)</TargetPath>
-                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+                <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             </Content>
         </ItemGroup>
     </Target>

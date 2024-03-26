@@ -27,6 +27,7 @@
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="all"/>
         <ProjectReference Include="../Osu.Performance.ROsu/Osu.Performance.ROsu.csproj">
+            <Targets>Build;BuildNative</Targets>
             <SetTargetFramework>TargetFramework=net452</SetTargetFramework>
         </ProjectReference>
     </ItemGroup>

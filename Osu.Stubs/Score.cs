@@ -88,6 +88,22 @@ public class Score
         }
     );
 
+    // Is of type Obfuscated<Mods>
+    [UsedImplicitly]
+    public static readonly LazyField<object> EnabledMods = new(
+        "Score#EnabledMods",
+        () => RuntimeType.GetDeclaredFields()
+            .Single(field =>
+                field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == Obfuscated.RuntimeType)
+    );
+
+    // Generic method Obfuscated<T>.get_Value() bound to the type parameter of 
+    [UsedImplicitly]
+    public static readonly LazyMethod<int> EnabledModsGetValue = new(
+        "Obfuscated<Mods>#get_Value()",
+        () => Obfuscated.BindGetValue(EnabledMods.Reference.FieldType.GetGenericArguments().First())
+    );
+
     [UsedImplicitly]
     public static Type RuntimeType => GetAccuracy.Reference.DeclaringType!;
 }

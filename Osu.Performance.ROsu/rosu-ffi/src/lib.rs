@@ -68,8 +68,9 @@ extern "C" fn calculate_osu_performance_gradual(
         state.performance.next(state.score.clone())
     };
 
-    // TODO: handle errors
-    return performance.unwrap().pp;
+    return performance
+        .map(|attrs| attrs.pp)
+        .unwrap_or(-1.0);
 }
 
 #[no_mangle]

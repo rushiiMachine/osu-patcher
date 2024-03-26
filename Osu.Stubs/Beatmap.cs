@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs.Opcode;
+using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
@@ -17,6 +17,30 @@ namespace Osu.Stubs;
 [UsedImplicitly]
 public static class Beatmap
 {
+    /// <summary>
+    ///     Original: Unknown, best guess: <c>SetContainingFolder(string absoluteDirPath)</c>
+    ///     b20240123: <c>#=zQwzJucCIbIUZrSZR8Q==</c>
+    /// </summary>
+    private static readonly LazyMethod SetContainingFolder = new(
+        "Beatmap#SetContainingFolder(...)",
+        new[]
+        {
+            Callvirt,
+            Starg_S,
+            Ldarg_0,
+            Ldarg_1,
+            Ldc_I4_1,
+            Newarr,
+            Dup,
+            Ldc_I4_0,
+            Ldsfld,
+            Stelem_I2,
+            Callvirt,
+            Stfld, // Reference to ContainingFolder
+            Ret,
+        }
+    );
+
     /// <summary>
     ///     Original: <c>Filename</c>
     ///     b20240123: <c>#=zdZI_NOQ=</c>
@@ -33,32 +57,28 @@ public static class Beatmap
                 .Skip(1)
                 .First();
 
-            Debug.Assert(storeInstruction.Opcode == OpCodes.Stfld);
+            Debug.Assert(storeInstruction.Opcode == Stfld);
 
             return (FieldInfo)storeInstruction.Operand;
         }
     );
 
     /// <summary>
-    ///     Original: <c>ContainingFolderAbsolute</c>
+    ///     Original: Unknown, best guess: <c>ContainingFolder</c> (not absolute)
     ///     b20240123: <c>#=zDmW9P6igScNm</c>
     /// </summary>
     [UsedImplicitly]
-    public static readonly LazyField<string?> ContainingFolderAbsolute = new(
-        "Beatmap#ContainingFolderAbsolute",
+    public static readonly LazyField<string?> ContainingFolder = new(
+        "Beatmap#ContainingFolder",
         () =>
         {
-            // TODO: find this field properly
-            return RuntimeType.Field("#=zDmW9P6igScNm");
+            // Last Stfld is a reference to ContainingFolder
+            var storeInstruction = MethodReader
+                .GetInstructions(SetContainingFolder.Reference)
+                .Reverse()
+                .First(inst => inst.Opcode == Stfld);
 
-            // // Second Stfld is a reference to ContainingFolderAbsolute
-            // var storeInstruction = MethodReader
-            //     .GetInstructions(PrimaryConstructor)
-            //     .Where(inst => inst.Opcode == OpCodes.Stfld)
-            //     .Skip(1)
-            //     .First();
-            //
-            // return (FieldInfo)storeInstruction.Operand;
+            return (FieldInfo)storeInstruction.Operand;
         }
     );
 
@@ -77,7 +97,7 @@ public static class Beatmap
         .ParameterType;
 
     /// <summary>
-    ///     Utility wrapper to get the full beatmap path of a <c>Beatmap</c> object
+    ///     Utility wrapper to get the full beatmap path of a <c>Beatmap</c>.
     /// </summary>
     /// <param name="beatmap">An instance of <c>Beatmap</c> that was initialized with the filepath.</param>
     /// <returns>The absolute path, or null if this isn't a file-backed Beatmap.</returns>
@@ -85,13 +105,11 @@ public static class Beatmap
     public static string? GetBeatmapPath(object beatmap)
     {
         var filename = Filename.Get(beatmap);
-        var directory = ContainingFolderAbsolute.Get(beatmap);
+        var folder = ContainingFolder.Get(beatmap);
+        if (filename == null || folder == null) return null;
 
-        if (filename != null && directory != null)
-        {
-            return Path.Combine(directory, filename);
-        }
+        var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
 
-        return null;
+        return Path.Combine(osuDir, "Songs", folder, filename);
     }
 }

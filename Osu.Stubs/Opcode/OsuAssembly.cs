@@ -26,7 +26,7 @@ public static class OsuAssembly
         Module = module;
     }
 
-    public static Assembly Assembly { [UsedImplicitly] get; private set; }
+    internal static Assembly Assembly { [UsedImplicitly] get; private set; }
 
     /// <summary>
     ///     Retrieve all the types located in the osu! assembly.
