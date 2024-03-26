@@ -1,3 +1,4 @@
+#if DEBUG
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -7,8 +8,6 @@ using JetBrains.Annotations;
 using Osu.Stubs;
 
 namespace Osu.Patcher.Hook.Patches;
-
-#if DEBUG
 
 /// <summary>
 ///     Hook <c>osu_common.Helpers.Logger:Log</c> to print the live log to our console.
@@ -49,5 +48,4 @@ public static class PatchDebugLogger
         Debug,
     }
 }
-
 #endif

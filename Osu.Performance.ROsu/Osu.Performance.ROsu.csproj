@@ -9,22 +9,28 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugType>none</DebugType>
     </PropertyGroup>
-
     <ItemGroup>
-        <CompileNative Include="src\**.rs"/>
+        <Reference Include="System.Collections.Concurrent"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="all"/>
     </ItemGroup>
+
     <PropertyGroup>
         <NativeTarget>i686-pc-windows-msvc</NativeTarget>
         <CargoBuild>cargo build --color=never --message-format=human --target $(NativeTarget)</CargoBuild>
-        <CargoOutput>.\target\$(NativeTarget)\$(Configuration.ToLower())</CargoOutput>
+        <CargoOutput>.\rosu-ffi\target\$(NativeTarget)\$(Configuration.ToLower())</CargoOutput>
     </PropertyGroup>
+    <ItemGroup>
+        <CompileNative Include=".\rosu-ffi\src\**\*.rs"/>
+        <CompileNative Include=".\rosu-ffi\src\Cargo.toml"/>
+        <CompileNative Include=".\rosu-ffi\src\Cargo.lock"/>
+    </ItemGroup>
     <Target Name="BuildNative"
             BeforeTargets="BeforeBuild"
-            Inputs="@(CompileNative);cargo.toml;cargo.lock"
-            Outputs=".\target\$(NativeTarget)\$(Configuration.ToLower())\rosu.dll">
+            Inputs="@(CompileNative)"
+            Outputs="$(CargoOutput)\rosu.dll;$(CargoOutput)\rosu.pdb">
 
-        <Exec Condition="'$(Configuration)' == 'Debug'" Command="$(CargoBuild)"/>
-        <Exec Condition="'$(Configuration)' == 'Release'" Command="$(CargoBuild) --release"/>
+        <Exec WorkingDirectory="rosu-ffi" Condition="'$(Configuration)' == 'Debug'" Command="$(CargoBuild)"/>
+        <Exec WorkingDirectory="rosu-ffi" Condition="'$(Configuration)' == 'Release'" Command="$(CargoBuild) --release"/>
 
         <ItemGroup>
             <ROsuOutput Include="$(CargoOutput)\rosu.dll"/>

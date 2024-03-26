@@ -2,41 +2,49 @@ use rosu_pp::osu::{OsuDifficultyAttributes, OsuPerformanceAttributes, OsuScoreSt
 
 #[repr(C)]
 pub struct FFIOsuDifficultyAttributes {
-    stars: f64,
-    max_combo: u64,
-    speed_note_count: f64,
+    pub stars: f64,
+    pub max_combo: u64,
+    pub speed_note_count: f64,
 
-    approach_rate: f64,
-    overall_difficulty: f64,
-    health_rate: f64,
+    pub approach_rate: f64,
+    pub overall_difficulty: f64,
+    pub health_rate: f64,
 
-    aim_skill: f64,
-    speed_skill: f64,
-    flashlight_skill: f64,
-    slider_skill: f64,
+    pub aim_skill: f64,
+    pub speed_skill: f64,
+    pub flashlight_skill: f64,
+    pub slider_skill: f64,
 
-    circle_count: u64,
-    slider_count: u64,
-    spinner_count: u64,
+    pub circle_count: u64,
+    pub slider_count: u64,
+    pub spinner_count: u64,
 }
 
 #[repr(C)]
 pub struct FFIOsuScoreState {
-    max_combo: u64,
-    count_300: u64,
-    count_100: u64,
-    count_50: u64,
-    count_0: u64,
+    pub max_combo: u64,
+    pub count_300: u64,
+    pub count_100: u64,
+    pub count_50: u64,
+    pub count_0: u64,
 }
 
 #[repr(C)]
 pub struct FFIOsuPerformanceAttributes {
-    pp_total: f64,
-    pp_aim: f64,
-    pp_speed: f64,
-    pp_accuracy: f64,
-    pp_flashlight: f64,
-    effective_miss_count: f64,
+    pub pp_total: f64,
+    pub pp_aim: f64,
+    pub pp_speed: f64,
+    pub pp_accuracy: f64,
+    pub pp_flashlight: f64,
+    pub effective_miss_count: f64,
+}
+
+#[repr(u8)]
+pub enum OsuJudgementResult {
+    Result300 = 1,
+    Result100 = 2,
+    Result50 = 3,
+    ResultMiss = 4,
 }
 
 impl From<&FFIOsuDifficultyAttributes> for OsuDifficultyAttributes {
@@ -64,6 +72,7 @@ impl From<&FFIOsuDifficultyAttributes> for OsuDifficultyAttributes {
 }
 
 impl From<&FFIOsuScoreState> for OsuScoreState {
+    #[inline]
     fn from(value: &FFIOsuScoreState) -> Self {
         OsuScoreState {
             max_combo: value.max_combo as usize,
@@ -76,6 +85,7 @@ impl From<&FFIOsuScoreState> for OsuScoreState {
 }
 
 impl From<&OsuPerformanceAttributes> for FFIOsuPerformanceAttributes {
+    #[inline]
     fn from(value: &OsuPerformanceAttributes) -> Self {
         FFIOsuPerformanceAttributes {
             pp_total: value.pp,
