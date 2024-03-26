@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace Osu.Performance.ROsu;
+namespace Osu.Performance;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct OsuDifficultyAttributes

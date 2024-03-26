@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace Osu.Performance.ROsu;
+namespace Osu.Performance;
 
 [UsedImplicitly]
 public class OsuPerformance : IDisposable

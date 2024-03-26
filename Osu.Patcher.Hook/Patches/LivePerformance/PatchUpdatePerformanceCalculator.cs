@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Performance.ROsu;
+using Osu.Performance;
 using Osu.Stubs;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;

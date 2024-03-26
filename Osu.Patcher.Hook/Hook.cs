@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Performance;
 using Osu.Utils;
 
 namespace Osu.Patcher.Hook;
@@ -19,6 +21,19 @@ public static class Hook
     public static int Initialize(string _)
     {
         ConsoleHook.Initialize();
+
+#if DEBUG
+        try
+        {
+            // MSBuild is flimsy with building rosu-ffi on up-to-date builds, try linking early
+            Marshal.PrelinkAll(typeof(Native));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"MSBuild broke again; clean & rebuild: {e}");
+            return 0;
+        }
+#endif
 
         try
         {

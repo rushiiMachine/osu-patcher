@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Osu.Performance.ROsu;
+namespace Osu.Performance;
 
-internal static class Native
+public static class Native
 {
     [DllImport("rosu.ffi.dll", EntryPoint = "calculate_osu_performance")]
     internal static extern OsuPerformanceInfo CalculateOsuPerformance(
