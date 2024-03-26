@@ -20,9 +20,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.x.x
-      
+
       - name: Setup .NET Framework
         uses: microsoft/setup-msbuild@v2
+
+      - name: Setup Rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: i686-pc-windows-msvc
 
       - name: Build
         run: dotnet build Osu.Patcher.Injector
