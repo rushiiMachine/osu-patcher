@@ -1,5 +1,6 @@
 bin/
 obj/
+target/
 /packages/
 /_ReSharper.Caches/
 *.idea
