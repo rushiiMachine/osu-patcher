@@ -11,16 +11,19 @@ public class OsuPerformance : IDisposable
 {
     private readonly ConcurrentQueue<PendingCalculation> _queue;
     private readonly CancellationTokenSource _queueTaskCancellation;
-    private readonly IntPtr _state;
+    private IntPtr _state = IntPtr.Zero;
 
     public OsuPerformance(string mapPath, uint mods)
     {
-        _state = Native.InitializeOsuGradualPerformance(mapPath, mods);
         _queue = new ConcurrentQueue<PendingCalculation>();
-
         _queueTaskCancellation = new CancellationTokenSource();
+
         Task.Factory.StartNew(
-            ProcessQueue,
+            () =>
+            {
+                _state = Native.InitializeOsuGradualPerformance(mapPath, mods);
+                ProcessQueue();
+            },
             _queueTaskCancellation.Token,
             TaskCreationOptions.LongRunning,
             TaskScheduler.Default
@@ -30,8 +33,9 @@ public class OsuPerformance : IDisposable
     public void Dispose()
     {
         _queueTaskCancellation.Cancel();
-        OnNewCalculation = null;
         Native.DisposeGradualOsuPerformance(_state);
+        OnNewCalculation = null;
+        _state = IntPtr.Zero;
     }
 
     [UsedImplicitly]
@@ -62,6 +66,11 @@ public class OsuPerformance : IDisposable
         while (true)
         {
             if (_queueTaskCancellation.IsCancellationRequested) return;
+            if (_state == IntPtr.Zero) // Not yet initialized
+            {
+                await Task.Delay(300);
+                continue;
+            }
 
             while (_queue.TryDequeue(out var item))
             {
@@ -78,7 +87,7 @@ public class OsuPerformance : IDisposable
                 if (_queueTaskCancellation.IsCancellationRequested) return;
             }
 
-            await Task.Delay(200);
+            await Task.Delay(100);
         }
     }
 
