@@ -34,5 +34,5 @@ public class SpriteManager
     );
 
     [UsedImplicitly]
-    public static Type RuntimeTime => Add.Reference.DeclaringType!;
+    public static Type RuntimeType => Add.Reference.DeclaringType!;
 }

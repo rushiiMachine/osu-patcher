@@ -40,8 +40,8 @@ public class PatchAddPerformanceToScoreDisplay
         var performanceSprite = ((ConstructorInfo)pSpriteText.Constructor.Reference).Invoke(
         [
             /* text: */ "0000.0",
-            /* fontName: */ "", // TODO: use correct value
-            /* spacingOverlap: */ 0f, // TODO: use correct value
+            /* fontName: */ "Assets/score/score",
+            /* spacingOverlap: */ 10f,
             /* fieldType: */ alignRight ? Fields.TopRight : Fields.TopLeft,
             /* origin: */ alignRight ? Origins.TopRight : Origins.TopLeft,
             /* clock: */ Clocks.Game,

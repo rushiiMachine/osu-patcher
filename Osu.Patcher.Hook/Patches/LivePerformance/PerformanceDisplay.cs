@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using HarmonyLib;
 using Osu.Stubs;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
@@ -40,3 +42,25 @@ internal static class PerformanceDisplay
         }
     }
 }
+
+// [HarmonyPatch]
+// public class fhjks
+// {
+//     static fhjks()
+//     {
+//         Console.WriteLine("sinit");
+//     }
+//     
+//     [HarmonyTargetMethod]
+//     private static MethodBase fjhsdf() => pSpriteText.Constructor.Reference;
+//
+//     [HarmonyPrefix]
+//     private static void before(
+//         [HarmonyArgument(0)] string text,
+//         [HarmonyArgument(1)] string abc,
+//         [HarmonyArgument(2)] float abcd
+//     )
+//     {
+//         Console.WriteLine($"{text} {abc} {abcd}");
+//     }
+// }

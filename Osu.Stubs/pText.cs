@@ -26,7 +26,7 @@ public class pText
             Ldarg_0,
             Ldfld,
             Ldarg_1,
-            Callvirt,
+            Call,
             Brfalse_S,
             Ret,
             Ldarg_0,
@@ -37,7 +37,6 @@ public class pText
             Stfld,
             Ret,
         },
-        false,
-        true
+        entireMethod: true
     );
 }

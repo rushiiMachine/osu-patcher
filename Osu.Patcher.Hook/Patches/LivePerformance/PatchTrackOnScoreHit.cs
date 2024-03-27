@@ -28,7 +28,6 @@ public static class PatchTrackOnScoreHit
         [HarmonyArgument(0)] int increaseScoreType,
         [HarmonyArgument(2)] bool increaseCombo)
     {
-        Console.WriteLine(increaseScoreType);
         if (!PerformanceCalculator.IsInitialized)
         {
             Console.WriteLine("OnIncreaseScoreHit called before performance calculator initialized!");

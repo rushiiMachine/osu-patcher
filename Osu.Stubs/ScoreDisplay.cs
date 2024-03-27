@@ -78,10 +78,10 @@ public class ScoreDisplay
     [UsedImplicitly]
     public static readonly LazyField<object> SpriteManager = new(
         "ScoreDisplay#spriteManager",
-        () => RuntimeTime.GetDeclaredFields()
-            .Single(field => field.FieldType == SpriteManager.Reference)
+        () => RuntimeType.GetDeclaredFields()
+            .Single(field => field.FieldType == Stubs.SpriteManager.RuntimeType)
     );
 
     [UsedImplicitly]
-    public static Type RuntimeTime => Constructor.Reference.DeclaringType!;
+    public static Type RuntimeType => Constructor.Reference.DeclaringType!;
 }

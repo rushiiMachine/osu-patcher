@@ -54,7 +54,7 @@ internal static class PerformanceCalculator
         if (beatmapPath == null) return;
 
         Calculator = new OsuPerformance(beatmapPath, (uint)mods);
-        Calculator.OnNewCalculation += Console.WriteLine;
+        Calculator.OnNewCalculation += PerformanceDisplay.UpdatePerformanceCounter;
 
         Debug.WriteLine("Initialized performance calculator!");
     }

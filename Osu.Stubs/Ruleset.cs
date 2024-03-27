@@ -123,7 +123,7 @@ public static class Ruleset
     public static readonly LazyField<object?> ScoreDisplay = new(
         "Ruleset#ScoreDisplay",
         () => RuntimeType.GetRuntimeFields()
-            .Single(field => field.FieldType == ScoreDisplay.Reference)
+            .Single(field => field.FieldType == Stubs.ScoreDisplay.RuntimeType)
     );
 
     [UsedImplicitly]
