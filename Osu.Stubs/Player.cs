@@ -38,6 +38,26 @@ public static class Player
     );
 
     /// <summary>
+    ///     Original: <c>OnLoadComplete(bool success)</c>
+    ///     b20240124: <c>#=zXb_K4cZvV$uy</c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyMethod<bool> OnLoadComplete = new(
+        "Player#OnLoadComplete(...)",
+        new[]
+        {
+            Br,
+            Ldloc_S,
+            Callvirt,
+            Unbox_Any,
+            Stloc_2,
+            Ldsfld,
+            Ldfld,
+            Call,
+        }
+    );
+
+    /// <summary>
     ///     Original: <c>currentScore</c>
     ///     b20240124: <c>#=zF6h5l4j0$TfX</c>
     /// </summary>
