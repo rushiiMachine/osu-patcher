@@ -8,7 +8,7 @@ using Osu.Stubs;
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
 /// <summary>
-///     Hooks <c>Ruleset::ResetScore()</c> to also reset our performance calculator.
+///     Hooks <c>Ruleset::ResetScore()</c> to also reset our performance calculator and caches.
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]

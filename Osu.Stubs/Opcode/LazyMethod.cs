@@ -18,11 +18,16 @@ public class LazyMethod
     /// </summary>
     /// <param name="name"><c>Class#Method</c> name of what this signature is matching.</param>
     /// <param name="signature">Sequential opcodes to search the target method with.</param>
+    /// <param name="isConstructor">Whether this method is a constructor.</param>
     /// <param name="entireMethod">Whether the signature is the entire method.</param>
-    internal LazyMethod(string name, IReadOnlyList<OpCode> signature, bool entireMethod = false)
+    internal LazyMethod(string name, IReadOnlyList<OpCode> signature,
+        bool isConstructor = false,
+        bool entireMethod = false)
     {
         _name = name;
-        _lazy = new Lazy<MethodBase?>(() => OpCodeMatcher.FindMethodBySignature(signature, entireMethod));
+        _lazy = new Lazy<MethodBase?>(() => isConstructor
+            ? OpCodeMatcher.FindConstructorBySignature(signature, entireMethod)
+            : OpCodeMatcher.FindMethodBySignature(signature, entireMethod));
     }
 
     /// <summary>
@@ -66,8 +71,10 @@ public class LazyMethod
 public class LazyMethod<R> : LazyMethod
 {
     /// <inheritdoc />
-    internal LazyMethod(string name, IReadOnlyList<OpCode> signature)
-        : base(name, signature)
+    internal LazyMethod(string name, IReadOnlyList<OpCode> signature,
+        bool isConstructor = false,
+        bool entireMethod = false)
+        : base(name, signature, isConstructor, entireMethod)
     {
     }
 
