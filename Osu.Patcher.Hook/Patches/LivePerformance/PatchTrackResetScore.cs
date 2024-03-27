@@ -7,9 +7,12 @@ using Osu.Stubs;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
+/// <summary>
+///     Hooks <c>Ruleset::ResetScore()</c> to also reset our performance calculator.
+/// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class PatchClearPerformanceCalculator
+internal class PatchTrackResetScore
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -17,7 +20,7 @@ internal class PatchClearPerformanceCalculator
 
     [UsedImplicitly]
     [HarmonyPostfix]
-    private static void After() => PatchUpdatePerformanceCalculator.ResetCalculator();
+    private static void After() => PerformanceCalculator.ResetCalculator();
 
     [UsedImplicitly]
     [HarmonyFinalizer]
@@ -26,7 +29,7 @@ internal class PatchClearPerformanceCalculator
     {
         if (__exception != null)
         {
-            Console.WriteLine($"Exception due to {nameof(PatchClearPerformanceCalculator)}: {__exception}");
+            Console.WriteLine($"Exception due to {nameof(PatchTrackResetScore)}: {__exception}");
         }
     }
 }

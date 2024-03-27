@@ -1,8 +1,6 @@
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Threading;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance;
@@ -10,38 +8,14 @@ using Osu.Stubs;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
+/// <summary>
+///     Hooks <c>Ruleset::OnIncreaseScoreHit(...)</c> to send score updates to our performance calculator
+///     so it can recalculate based on new HitObject judgements.
+/// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public static class PatchUpdatePerformanceCalculator
+public static class PatchTrackOnScoreHit
 {
-    private static OsuPerformance? _performance;
-
-    internal static void ResetCalculator() => new Thread(() =>
-    {
-        Debug.WriteLine("Resetting performance calculator");
-
-        _performance?.Dispose();
-        _performance = null;
-
-        var currentScore = Player.CurrentScore.Get();
-        if (currentScore == null) return;
-
-        var modsObfuscated = Score.EnabledMods.Get(currentScore);
-        var mods = Score.EnabledModsGetValue.Invoke(modsObfuscated);
-
-        // Clear relax mod for now (live pp calculations for relax are fucking garbage)
-        mods &= ~(1 << 7);
-
-        var beatmap = Score.Beatmap.Get(currentScore);
-        if (beatmap == null) return;
-
-        var beatmapPath = Beatmap.GetBeatmapPath(beatmap);
-        if (beatmapPath == null) return;
-
-        _performance = new OsuPerformance(beatmapPath, (uint)mods);
-        _performance.OnNewCalculation += Console.WriteLine;
-    }).Start();
-
     [UsedImplicitly]
     [HarmonyTargetMethod]
     private static MethodBase Target() => Ruleset.OnIncreaseScoreHit.Reference;
@@ -54,7 +28,12 @@ public static class PatchUpdatePerformanceCalculator
         [HarmonyArgument(0)] int increaseScoreType,
         [HarmonyArgument(2)] bool increaseCombo)
     {
-        if (_performance == null) return;
+        Console.WriteLine(increaseScoreType);
+        if (!PerformanceCalculator.IsInitialized)
+        {
+            Console.WriteLine("OnIncreaseScoreHit called before performance calculator initialized!");
+            return;
+        }
 
         var judgement = (increaseScoreType & ~IncreaseScoreType.OsuComboModifiers) switch
         {
@@ -74,7 +53,7 @@ public static class PatchUpdatePerformanceCalculator
         var CurrentScore = Ruleset.CurrentScore.Get(__instance);
         var MaxCombo = Score.MaxCombo.Get(CurrentScore);
 
-        _performance.AddJudgement(judgement, (uint)MaxCombo);
+        PerformanceCalculator.Calculator?.AddJudgement(judgement, (uint)MaxCombo);
     }
 
     [UsedImplicitly]
@@ -84,7 +63,7 @@ public static class PatchUpdatePerformanceCalculator
     {
         if (__exception != null)
         {
-            Console.WriteLine($"Exception due to {nameof(PatchUpdatePerformanceCalculator)}: {__exception}");
+            Console.WriteLine($"Exception due to {nameof(PatchTrackOnScoreHit)}: {__exception}");
         }
     }
 }
