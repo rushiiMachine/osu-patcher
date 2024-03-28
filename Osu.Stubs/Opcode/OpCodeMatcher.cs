@@ -36,8 +36,10 @@ public static class OpCodeMatcher
     ///     Search for a constructor inside the osu! assembly by an IL OpCode signature.
     /// </summary>
     /// <param name="signature">A set of sequential OpCodes to match.</param>
+    /// <param name="entireMethod">Whether the signature is the entire method to search for.</param>
     /// <returns>The found constructor (method) or null if none found.</returns>
-    public static ConstructorInfo? FindConstructorBySignature(IReadOnlyList<OpCode> signature)
+    public static ConstructorInfo? FindConstructorBySignature(IReadOnlyList<OpCode> signature,
+        bool entireMethod = false)
     {
         if (signature.Count <= 0) return null;
 
@@ -50,7 +52,7 @@ public static class OpCodeMatcher
             var instructions = method.GetMethodBody()?.GetILAsByteArray();
             if (instructions == null) continue;
 
-            if (InstructionsMatchesSignature(instructions, signature, false))
+            if (InstructionsMatchesSignature(instructions, signature, entireMethod))
                 return method;
         }
 

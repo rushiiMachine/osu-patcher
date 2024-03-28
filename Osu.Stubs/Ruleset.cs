@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Osu.Stubs.Opcode;
+using Osu.Stubs.Utils;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
@@ -79,6 +80,31 @@ public static class Ruleset
     );
 
     /// <summary>
+    ///     Original: <c>Initialize()</c>
+    ///     b20240123: <c></c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyMethod Initialize = new(
+        "Ruleset#Initialize()",
+        new[]
+        {
+            Ldarg_0,
+            Callvirt,
+        }.Duplicate(8)
+    );
+
+    /// <summary>
+    ///     Original: <c>CurrentScore</c>
+    ///     b20240123: <c>Instance</c>
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyField<object> Instance = new(
+        "Ruleset#Instance",
+        () => RuntimeType.GetRuntimeFields()
+            .Single(field => field.FieldType == RuntimeType)
+    );
+
+    /// <summary>
     ///     Original: <c>CurrentScore</c>
     ///     b20240123: <c>#=zk4sdboE=</c>
     /// </summary>
@@ -87,6 +113,17 @@ public static class Ruleset
         "Ruleset#CurrentScore",
         () => RuntimeType.GetRuntimeFields()
             .Single(field => field.FieldType == Score.RuntimeType)
+    );
+
+    /// <summary>
+    ///     Original: <c>ScoreDisplay</c>
+    ///     b20240123: <c></c> TODO: find this
+    /// </summary>
+    [UsedImplicitly]
+    public static readonly LazyField<object?> ScoreDisplay = new(
+        "Ruleset#ScoreDisplay",
+        () => RuntimeType.GetRuntimeFields()
+            .Single(field => field.FieldType == Stubs.ScoreDisplay.RuntimeType)
     );
 
     [UsedImplicitly]

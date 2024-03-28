@@ -11,6 +11,7 @@ public static class Color
 {
     public static readonly XnaColor Red = GetColor("Red");
     public static readonly XnaColor Orange = GetColor("Orange");
+    public static readonly XnaColor White = GetColor("White");
     public static readonly XnaColor GhostWhite = GetColor("GhostWhite");
 
     private static XnaColor GetColor(string name)

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Threading.Tasks;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance;
@@ -28,7 +29,6 @@ public static class PatchTrackOnScoreHit
         [HarmonyArgument(0)] int increaseScoreType,
         [HarmonyArgument(2)] bool increaseCombo)
     {
-        Console.WriteLine(increaseScoreType);
         if (!PerformanceCalculator.IsInitialized)
         {
             Console.WriteLine("OnIncreaseScoreHit called before performance calculator initialized!");
@@ -53,7 +53,7 @@ public static class PatchTrackOnScoreHit
         var CurrentScore = Ruleset.CurrentScore.Get(__instance);
         var MaxCombo = Score.MaxCombo.Get(CurrentScore);
 
-        PerformanceCalculator.Calculator?.AddJudgement(judgement, (uint)MaxCombo);
+        Task.Run(() => PerformanceCalculator.Calculator?.AddJudgement(judgement, (uint)MaxCombo));
     }
 
     [UsedImplicitly]

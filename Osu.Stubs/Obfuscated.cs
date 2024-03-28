@@ -19,7 +19,7 @@ public class Obfuscated
             Stsfld,
             Ldc_I4,
             Ldc_I4_0,
-            Callvirt, // This is a reference to Scheduler::AddDelayed, TODO: use this?
+            Callvirt,
             Pop,
             Leave_S,
             Ldarg_0,
