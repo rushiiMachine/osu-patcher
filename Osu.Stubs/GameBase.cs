@@ -32,27 +32,6 @@ public class GameBase
         }
     );
 
-    // /// <summary>
-    // ///     Original: <c>loadQueuedMode(int disposalDelay)</c>
-    // ///     b20240123: <c>#=zCDewMhQMM5f_</c>
-    // /// </summary>
-    // [UsedImplicitly]
-    // public static readonly LazyMethod LoadQueuedMode = new(
-    //     "GameBase#loadQueuedMode(...)",
-    //     new[]
-    //     {
-    //         Initobj,
-    //         Ldloc_S,
-    //         Ldloca_S,
-    //         Initobj,
-    //         Ldloc_S,
-    //         Ldc_I4_0,
-    //         Ldc_I4_0,
-    //         Call,
-    //         Ldnull,
-    //     }
-    // );
-
     /// <summary>
     ///     Original: <c>softHandle(Exception e)</c>
     ///     b20240123: <c>#=z8BJOiJxSLUwM</c>

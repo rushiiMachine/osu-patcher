@@ -8,6 +8,10 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
+/// <summary>
+///     Original: <c>osu.Graphics.Sprites.pSpriteText</c>
+///     b20240123: <c>#=zckAvJzCXrz1Buo3s_qsuXqlnRaWrA6R8Iw==</c>
+/// </summary>
 [UsedImplicitly]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class pSpriteText
