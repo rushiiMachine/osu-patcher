@@ -26,7 +26,7 @@ public static class PatchDebugLogger
         [HarmonyArgument(0)] string message,
         [HarmonyArgument(1)] LoggingTarget target,
         [HarmonyArgument(2)] LogLevel level
-    ) => Console.WriteLine("{0} - {1}: {2}", level.ToString().First(), target, message);
+    ) => Console.WriteLine("[{0}] [{1}] {2}", level.ToString().First(), target, message);
 
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     private enum LogLevel

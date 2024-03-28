@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -18,6 +19,7 @@ public class OsuPerformance : IDisposable
         _queue = new ConcurrentQueue<PendingCalculation>();
         _queueTaskCancellation = new CancellationTokenSource();
 
+        Debug.WriteLine("Starting background task", nameof(OsuPerformance));
         Task.Factory.StartNew(
             () =>
             {
@@ -32,6 +34,7 @@ public class OsuPerformance : IDisposable
 
     public void Dispose()
     {
+        Debug.WriteLine("Disposing", "OsuPerformance");
         _queueTaskCancellation.Cancel();
         Native.DisposeGradualOsuPerformance(_state);
         OnNewCalculation = null;
@@ -78,7 +81,7 @@ public class OsuPerformance : IDisposable
 
                 if (performance < 0f)
                 {
-                    Console.WriteLine(new Exception("Cannot calculate performance after the end of a beatmap!"));
+                    Debug.Fail("Cannot calculate performance after the end of a beatmap!");
                     break;
                 }
 

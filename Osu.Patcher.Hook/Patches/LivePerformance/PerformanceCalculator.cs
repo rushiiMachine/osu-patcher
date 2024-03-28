@@ -32,7 +32,7 @@ internal static class PerformanceCalculator
 
     private static void ResetCalculatorSync()
     {
-        Debug.WriteLine("Resetting performance calculator");
+        Debug.WriteLine("Resetting performance calculator", nameof(PerformanceCalculator));
 
         // TODO: don't dispose it if the beatmap is the same, reuse parsed beatmap in native side
         Calculator?.Dispose();
@@ -56,6 +56,6 @@ internal static class PerformanceCalculator
         Calculator = new OsuPerformance(beatmapPath, (uint)mods);
         Calculator.OnNewCalculation += PerformanceDisplay.UpdatePerformanceCounter;
 
-        Debug.WriteLine("Initialized performance calculator!");
+        Debug.WriteLine("Initialized performance calculator!", nameof(PerformanceCalculator));
     }
 }

@@ -23,6 +23,8 @@ public static class Hook
         ConsoleHook.Initialize();
 
 #if DEBUG
+        DebugHook.Initialize();
+
         try
         {
             // MSBuild is flimsy with building rosu-ffi on up-to-date builds, try linking early

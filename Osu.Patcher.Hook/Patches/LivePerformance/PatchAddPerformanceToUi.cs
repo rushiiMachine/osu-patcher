@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -11,11 +12,11 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 /// <summary>
 ///     Hooks the constructor of <c>ScoreDisplay</c> to add our own <c>pTextSprite</c> for displaying
 ///     the performance counter to the ScoreDisplay's sprite manager.
-///     This needs score-p@2x.png or score-p.png in your skin's score font assets!
+///     To display "pp" this needs <c>score-p@2x.png</c>/<c>score-p.png</c> in your skin's defined score font.
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class PatchAddPerformanceToScoreDisplay
+public class PatchAddPerformanceToUi
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -32,6 +33,8 @@ public class PatchAddPerformanceToScoreDisplay
         [HarmonyArgument(3)] float scale
     )
     {
+        Debug.WriteLine("Adding Performance Counter to ScoreDisplay", nameof(PatchAddPerformanceToUi));
+
         var currentSkin = SkinManager.Current.Get();
         var scoreFont = SkinOsu.FontScore.Get(currentSkin);
         var scoreFontOverlap = SkinOsu.FontScoreOverlap.Get(currentSkin);
@@ -54,7 +57,7 @@ public class PatchAddPerformanceToScoreDisplay
 
         // Cannot be startPosition directly
         // TODO: don't add 9f offset if score-p@2x.png/score-p.png texture exists
-        var positionX = Vector2.X.Get(position) + 9f;
+        var positionX = Vector2.X.Get(position) + 8f;
         var positionY = GetYOffset(Vector2.Y.Get(position), scale, __instance);
         var newPosition = ((ConstructorInfo)Vector2.Constructor.Reference).Invoke([positionX, positionY]);
         pDrawable.Position.Set(performanceSprite, newPosition);
@@ -65,6 +68,8 @@ public class PatchAddPerformanceToScoreDisplay
 
         SpriteManager.Add.Invoke(spriteManager, [performanceSprite]);
         PerformanceDisplay.SetPerformanceCounter(performanceSprite);
+
+        Debug.WriteLine("Added Performance Counter to ScoreDisplay", nameof(PatchAddPerformanceToUi));
     }
 
     [UsedImplicitly]
@@ -74,7 +79,7 @@ public class PatchAddPerformanceToScoreDisplay
     {
         if (__exception != null)
         {
-            Console.WriteLine($"Exception due to {nameof(PatchAddPerformanceToScoreDisplay)}: {__exception}");
+            Console.WriteLine($"Exception due to {nameof(PatchAddPerformanceToUi)}: {__exception}");
         }
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ public static class PatchTrackOnScoreHit
     {
         if (!PerformanceCalculator.IsInitialized)
         {
-            Console.WriteLine("OnIncreaseScoreHit called before performance calculator initialized!");
+            Debug.Fail("OnIncreaseScoreHit called before performance calculator initialized!");
             return;
         }
 
