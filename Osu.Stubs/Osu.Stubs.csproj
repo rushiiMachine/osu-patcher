@@ -25,13 +25,16 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="all"/>
+        <ProjectReference Include="../Osu.Utils/Osu.Utils.csproj">
+            <SetTargetFramework>TargetFramework=net452</SetTargetFramework>
+        </ProjectReference>
 
         <!-- I have to do this stupid shit because NuGet doesn't respect ProjectReference.SetTargetFramework for transitive dependencies -->
         <!-- https://github.com/NuGet/Home/issues/12436 -->
         <!-- https://github.com/NuGet/Home/issues/5986#issuecomment-732401471 -->
         <PackageReference Include="Lib.Harmony" Version="2.3.1.1" PrivateAssets="all" GeneratePathProperty="true"/>
-        <None Include="$(PkgLib_Harmony)\lib\net452\0Harmony.dll">
+        <Content Include="$(PkgLib_Harmony)\lib\net452\0Harmony.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
+        </Content>
     </ItemGroup>
 </Project>

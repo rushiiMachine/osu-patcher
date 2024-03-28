@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
@@ -18,7 +18,7 @@ public class ScoreProcessor
     ///     b20240123: <c>#=z6nCyHQk=</c>
     /// </summary>
     [UsedImplicitly]
-    public static LazyMethod Clear = new(
+    public static readonly LazyMethod Clear = new(
         "ScoreProcessor#Clear(...)",
         new[]
         {
@@ -39,7 +39,7 @@ public class ScoreProcessor
     ///     b20240123: <c>#=zJdXS36o=</c>
     /// </summary>
     [UsedImplicitly]
-    public static LazyMethod AddScoreChange = new(
+    public static readonly LazyMethod AddScoreChange = new(
         "ScoreProcessor#Add(...)",
         new[]
         {
@@ -64,7 +64,7 @@ public class ScoreProcessor
     ///     b20240123: <c>#=zqaALxNP6RgRC</c>
     /// </summary>
     [UsedImplicitly]
-    public static LazyField<int> MaximumCombo = new(
+    public static readonly LazyField<int> MaximumCombo = new(
         "ScoreProcessor#MaximumCombo",
         () =>
         {

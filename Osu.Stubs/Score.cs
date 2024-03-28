@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
-using Osu.Stubs.Utils;
+using Osu.Utils.Extensions;
+using Osu.Utils.IL;
+using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;

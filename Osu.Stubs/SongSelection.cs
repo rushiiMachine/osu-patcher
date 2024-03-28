@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils.IL;
+using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;

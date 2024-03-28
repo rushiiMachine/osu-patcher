@@ -1,7 +1,8 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils.IL;
+using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
@@ -41,7 +42,7 @@ public static class EventManager
     ///     See: <see cref="SetShowStoryboard" />
     /// </summary>
     [UsedImplicitly]
-    public static LazyField<bool> ShowStoryboard = new(
+    public static readonly LazyField<bool> ShowStoryboard = new(
         "EventManager#ShowStoryboard.backing",
         () =>
         {

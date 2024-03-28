@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils.Lazy;
 
 namespace Osu.Stubs;
 
@@ -18,7 +18,7 @@ public class ScoreChange
     ///     b20240123: <c>#=zifzkx$8=</c>
     /// </summary>
     [UsedImplicitly]
-    public static LazyField<int> HitValue = new(
+    public static readonly LazyField<int> HitValue = new(
         "ScoreChange#HitValue",
         () => RuntimeType.GetFields()
             .First(field => field.FieldType == IncreaseScoreType.RuntimeType)

@@ -3,9 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils;
+using Osu.Utils.IL;
+using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
@@ -51,7 +52,7 @@ public static class Beatmap
         () =>
         {
             // Find the field this code is referencing: "this.Filename = Path.GetFileName(filename);"
-            var findMethod = AccessTools.Method(typeof(Path), nameof(Path.GetFileName));
+            var findMethod = typeof(Path).GetMethod(nameof(Path.GetFileName))!;
             var storeInstruction = MethodReader.GetInstructions(PrimaryConstructor)
                 .SkipWhile(inst => !findMethod.Equals(inst.Operand))
                 .Skip(1)

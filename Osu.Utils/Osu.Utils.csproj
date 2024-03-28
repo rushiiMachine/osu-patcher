@@ -1,9 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <RootNamespace>Osu.Utils</RootNamespace>
-        <AssemblyName>osu!.utils</AssemblyName>
+        <AssemblyName>utils</AssemblyName>
         <TargetFramework>net452</TargetFramework>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
@@ -25,8 +24,13 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" PrivateAssets="all"/>
-        <ProjectReference Include="../Osu.Stubs/Osu.Stubs.csproj">
-            <SetTargetFramework>TargetFramework=net452</SetTargetFramework>
-        </ProjectReference>
+
+        <!-- I have to do this stupid shit because NuGet doesn't respect ProjectReference.SetTargetFramework for transitive dependencies -->
+        <!-- https://github.com/NuGet/Home/issues/12436 -->
+        <!-- https://github.com/NuGet/Home/issues/5986#issuecomment-732401471 -->
+        <PackageReference Include="Lib.Harmony" Version="2.3.1.1" PrivateAssets="all" GeneratePathProperty="true"/>
+        <Content Include="$(PkgLib_Harmony)\lib\net452\0Harmony.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>

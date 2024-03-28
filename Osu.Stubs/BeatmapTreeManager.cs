@@ -1,5 +1,5 @@
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils.Lazy;
 
 namespace Osu.Stubs;
 

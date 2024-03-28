@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance;
-using Osu.Utils;
+using Osu.Stubs.Wrappers;
 
 namespace Osu.Patcher.Hook;
 

@@ -1,7 +1,8 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Opcode;
+using Osu.Utils;
+using Osu.Utils.Lazy;
 
 namespace Osu.Stubs;
 

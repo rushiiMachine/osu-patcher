@@ -3,11 +3,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Patcher.Hook", "Osu.Pat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Patcher.Injector", "Osu.Patcher.Injector\Osu.Patcher.Injector.csproj", "{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Performance", "Osu.Performance\Osu.Performance.csproj", "{79B81600-142A-4DF7-B1B1-09D18ABE4537}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Stubs", "Osu.Stubs\Osu.Stubs.csproj", "{04A4E8E0-7CF1-4120-B0A2-243F04864F37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Utils", "Osu.Utils\Osu.Utils.csproj", "{9FA3B15D-8421-4E04-BA84-85331845A01D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Performance", "Osu.Performance\Osu.Performance.csproj", "{79B81600-142A-4DF7-B1B1-09D18ABE4537}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Utils", "Osu.Utils\Osu.Utils.csproj", "{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,17 +23,17 @@ Global
 		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Debug|x86.Build.0 = Debug|Any CPU
 		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Release|x86.ActiveCfg = Release|Any CPU
 		{126E6B3C-FD40-4DAE-B5DD-5D261CDDD20E}.Release|x86.Build.0 = Release|Any CPU
-		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Debug|x86.Build.0 = Debug|Any CPU
-		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Release|x86.ActiveCfg = Release|Any CPU
-		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Release|x86.Build.0 = Release|Any CPU
-		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Debug|x86.Build.0 = Debug|Any CPU
-		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Release|x86.ActiveCfg = Release|Any CPU
-		{9FA3B15D-8421-4E04-BA84-85331845A01D}.Release|x86.Build.0 = Release|Any CPU
 		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Debug|x86.Build.0 = Debug|Any CPU
 		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Release|x86.ActiveCfg = Release|Any CPU
 		{79B81600-142A-4DF7-B1B1-09D18ABE4537}.Release|x86.Build.0 = Release|Any CPU
+		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Debug|x86.Build.0 = Debug|Any CPU
+		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Release|x86.ActiveCfg = Release|Any CPU
+		{04A4E8E0-7CF1-4120-B0A2-243F04864F37}.Release|x86.Build.0 = Release|Any CPU
+		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Debug|x86.Build.0 = Debug|Any CPU
+		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Release|x86.ActiveCfg = Release|Any CPU
+		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
