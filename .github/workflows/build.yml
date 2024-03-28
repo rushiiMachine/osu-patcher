@@ -12,6 +12,8 @@ jobs:
   build:
     runs-on: windows-latest
     timeout-minutes: 5
+    # Only run if this isn't a PR or this is a PR not from our repo
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
