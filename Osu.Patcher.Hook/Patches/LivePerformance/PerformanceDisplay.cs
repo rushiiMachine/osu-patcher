@@ -24,11 +24,6 @@ internal static class PerformanceDisplay
     {
         try
         {
-            var ruleset = Ruleset.Instance.Get();
-
-            var scoreDisplay = Ruleset.ScoreDisplay.Get(ruleset);
-            if (scoreDisplay == null) return;
-
             if (!PerformanceCounter.TryGetTarget(out var sprite) || sprite == null)
                 return;
 

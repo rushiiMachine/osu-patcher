@@ -53,7 +53,8 @@ public class PatchAddPerformanceToScoreDisplay
         ]);
 
         // Cannot be startPosition directly
-        var positionX = Vector2.X.Get(position) + 8f;
+        // TODO: don't add 9f offset if score-p@2x.png/score-p.png texture exists
+        var positionX = Vector2.X.Get(position) + 9f;
         var positionY = GetYOffset(Vector2.Y.Get(position), scale, __instance);
         var newPosition = ((ConstructorInfo)Vector2.Constructor.Reference).Invoke([positionX, positionY]);
         pDrawable.Position.Set(performanceSprite, newPosition);
