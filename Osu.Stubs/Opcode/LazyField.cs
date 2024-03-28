@@ -45,4 +45,19 @@ public class LazyField<T>
     /// <returns>The current field value casted to the type defined by this LazyField.</returns>
     public T Get(object? instance = null) =>
         (T)Reference.GetValue(instance);
+
+    /// <summary>
+    ///     Set a instance field to a specific value.
+    /// </summary>
+    /// <param name="instance">An instance of the field's enclosing class.</param>
+    /// <param name="value">The new value.</param>
+    public void Set(object instance, T value) =>
+        Reference.SetValue(instance, value);
+
+    /// <summary>
+    ///     Set a static field to a specific value.
+    /// </summary>
+    /// <param name="value">The new value.</param>
+    public void Set(T value) =>
+        Reference.SetValue(null, value);
 }

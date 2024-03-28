@@ -50,7 +50,7 @@ public class ScoreDisplay
     ///     b20240123: <c>#=zRjDThRI=</c>
     /// </summary>
     [UsedImplicitly]
-    public static readonly LazyMethod Hide = new(
+    public static readonly LazyMethod Hide = new( // TODO: support hiding performance counter
         "ScoreDisplay#Hide()",
         new[]
         {
