@@ -27,6 +27,7 @@ internal static class PerformanceDisplay
             if (!PerformanceCounter.TryGetTarget(out var sprite) || sprite == null)
                 return;
 
+            // Technically this should be run with "GameBase.Scheduler.AddOnce(() => ...)" but it works anyways, so...
             pText.SetText.Invoke(sprite, [$"{pp:00.0}pp"]);
         }
         catch (Exception e)
