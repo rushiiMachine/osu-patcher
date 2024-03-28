@@ -16,6 +16,18 @@
       <ExecutableRowSnapshot>
         <option name="condition">
           <ConditionSnapshot>
+            <option name="type" value="immediately" />
+          </ConditionSnapshot>
+        </option>
+        <option name="executable">
+          <ExecutableSnapshot>
+            <option name="id" value="cleanSolution:20c508" />
+          </ExecutableSnapshot>
+        </option>
+      </ExecutableRowSnapshot>
+      <ExecutableRowSnapshot>
+        <option name="condition">
+          <ConditionSnapshot>
             <option name="type" value="afterPreviousFinished" />
           </ConditionSnapshot>
         </option>
