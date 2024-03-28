@@ -89,7 +89,11 @@ public class Score
         }
     );
 
-    // Is of type Obfuscated<Mods>
+    /// <summary>
+    ///     Is of type <c>Obfuscated{Mods}</c>
+    ///     Original: <c>EnabledMods</c>
+    ///     b20240123: <c>#=zxL1NzqBwrqNU</c>
+    /// </summary>
     [UsedImplicitly]
     public static readonly LazyField<object> EnabledMods = new(
         "Score#EnabledMods",
@@ -98,7 +102,9 @@ public class Score
                 field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == Obfuscated.RuntimeType)
     );
 
-    // Generic method Obfuscated<T>.get_Value() bound to the type parameter of 
+    /// <summary>
+    ///     The generic method <c>Obfuscated{T}::get_Value()</c> with the type parameter T bound to <c>Mods</c>.
+    /// </summary>
     [UsedImplicitly]
     public static readonly LazyMethod<int> EnabledModsGetValue = new(
         "Obfuscated<Mods>#get_Value()",

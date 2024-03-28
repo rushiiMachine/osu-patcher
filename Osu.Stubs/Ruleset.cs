@@ -10,13 +10,13 @@ namespace Osu.Stubs;
 
 /// <summary>
 ///     Original: <c>osu.GameModes.Play.Rulesets.Ruleset</c>
-///     b20240102.2: <c>#=z35zTtWacH8qc$rYRcsQ6iGtK1MBEurfpzNOeLiQ=</c>
+///     b20240123: <c>#=zwRa71lIOJzp$VMz5GAIPMrt1N4rdQ4gC2Fx1Jtw=</c>
 /// </summary>
 public static class Ruleset
 {
     /// <summary>
     ///     Original: <c>Fail(bool continuousPlay)</c>
-    ///     b20240102.2: <c>#=zWoTE_tk=</c>
+    ///     b20240123: <c>#=zPAIY7AY=</c>
     /// </summary>
     public static readonly LazyMethod Fail = new(
         "Ruleset#Fail(...)",
@@ -81,7 +81,7 @@ public static class Ruleset
 
     /// <summary>
     ///     Original: <c>Initialize()</c>
-    ///     b20240123: <c></c>
+    ///     b20240123: <c>#=znhXnLb4=</c>
     /// </summary>
     [UsedImplicitly]
     public static readonly LazyMethod Initialize = new(
@@ -117,7 +117,7 @@ public static class Ruleset
 
     /// <summary>
     ///     Original: <c>ScoreDisplay</c>
-    ///     b20240123: <c></c> TODO: find this
+    ///     b20240123: <c>#=znVUsSpw8w4aW</c>
     /// </summary>
     [UsedImplicitly]
     public static readonly LazyField<object?> ScoreDisplay = new(
