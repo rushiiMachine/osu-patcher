@@ -14,13 +14,31 @@ Using this on official Bancho servers WILL get you banned.
 
 ## Features
 
-- Show misses on hit objects while playing Relax.
-- Save all Relax scores to local leaderboards automatically.
-- Allow failing with Relax enabled (and low hp glow when shaders are on!).
-- Reenable combobreak sounds with Relax enabled.
-- Other misc fixes
+### Relax
+- Show misses on hit objects while playing Relax
+- Re-enable combobreak sounds with Relax enabled
+- Save all Relax scores to local leaderboards automatically
+- Allow failing with Relax enabled
+- Re-enable the low hp glow (with shaders on)
 
 <sup>Note: Relax refers to Relax *or* Autopilot</sup>
+
+### PP
+- Show a live pp counter during gameplay and replays
+- Switch between Bancho and ~~Akatsuki~~ (soon) pp calculators
+- ~~Show PP on local leaderboards~~ (soon)
+
+### Mods
+- Always faintly show active mods during gameplay
+- Auto restart when failed due to Sudden Death mod
+
+### UI
+- Increase the thumbnail opacity in song select
+- Allow opening settings during gameplay with Ctrl+O
+- Other miscellaneous fixes
+
+<!-- ### Other -->
+<!-- - Download from beatmap mirrors when offline -->
 
 ## Usage
 
@@ -32,17 +50,16 @@ into processes. If you aren't convinced it isn't a false positive, feel free to 
 
 ## Compiling
 
-1. Install the .NET SDK 8 in addition to the .NET Framework 4.5.2 developer pack.
-2. Run `dotnet restore`
-3. Run `dotnet build Osu.Patcher.Injector -c Release`
-4. Output will be located in `./Osu.Patcher.Injector/bin/Release/net6.0/`
+1. Install the .NET SDK 8, the .NET Framework 4.5.2 developer pack, and Rust (rustup/cargo).
+2. Run `dotnet build Osu.Patcher.Injector -c Release`
+3. Output will be located in `./Osu.Patcher.Injector/bin/Release/net8.0/`
 
 ## How
 
 This uses [ManagedInjector](https://github.com/holly-hacker/ManagedInjector) to inject a .NET DLL into an osu! process, which uses [Harmony](https://github.com/pardeike/Harmony) to hook methods/
 rewrite IL instructions. To find obfuscated methods, "signatures" based on a portion of the IL instructions from the 
 target method are used to locate it, and then patch it. Since this method doesn't rely on neither the Eazfuscator 
-obfuscation key nor the obfuscated names, it should work on any version even if the method names change.
+obfuscation key nor the obfuscated names, it should work on any version with matching IL even if the method names change.
 
 ## is this okay?
 
