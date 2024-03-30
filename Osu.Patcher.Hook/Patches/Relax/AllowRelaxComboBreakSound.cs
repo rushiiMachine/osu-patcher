@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Utils.Extensions;
 using Osu.Utils.IL;
 
 namespace Osu.Patcher.Hook.Patches.Relax;
@@ -26,7 +25,7 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowRelaxComboBreakSound : BasePatch
+internal class AllowRelaxComboBreakSound : OsuPatch
 {
     // #=z04fOmc1I_BS0TV6TAo2QOUQvjceryuOcqoleWPg=:#=zSio4IZHzUUrC
     private static readonly OpCode[] Signature =
@@ -48,17 +47,13 @@ internal class AllowRelaxComboBreakSound : BasePatch
 
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        NoopAfterSignature(instructions, Signature.Take(Signature.Length - 4).ToArray(), 4);
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(AllowRelaxComboBreakSound)}: {__exception}");
-        }
+        instructions = instructions.NoopAfterSignature(
+            Signature.Take(Signature.Length - 4).ToArray(),
+            4
+        );
+
+        return instructions;
     }
 }

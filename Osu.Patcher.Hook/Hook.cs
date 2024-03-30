@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Patcher.Hook.Patches;
 using Osu.Performance;
 using Osu.Stubs.Wrappers;
 
@@ -66,10 +67,15 @@ public static class Hook
     {
         foreach (var type in AccessTools.GetTypesFromAssembly(typeof(Hook).Assembly))
         {
+            // Check if the type extends OsuPatch
+            if (!type.IsSubclassOf(typeof(OsuPatch)))
+                continue;
+
+            Debug.WriteLine($"Processing Patch {type.Name}", "Hook");
+
             try
             {
-                // This executes for every type and ignores if no [HarmonyPatch] is present
-                harmony.CreateClassProcessor(type).Patch();
+                new OsuPatchProcessor(harmony, type).Patch();
             }
             catch (Exception e)
             {

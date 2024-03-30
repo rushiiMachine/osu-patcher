@@ -14,7 +14,7 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public static class LogOsuLogger
+internal class LogOsuLogger : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

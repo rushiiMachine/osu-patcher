@@ -11,7 +11,7 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class LogSoftErrors
+internal class LogSoftErrors : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

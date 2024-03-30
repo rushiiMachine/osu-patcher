@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -25,7 +23,7 @@ namespace Osu.Patcher.Hook.Patches.Mods;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class PatchSuddenDeathAutoRetry
+internal class PatchSuddenDeathAutoRetry : OsuPatch
 {
     private const int ModPerfect = 1 << 14;
     private const int ModSuddenDeath = 1 << 5;
@@ -45,15 +43,4 @@ public class PatchSuddenDeathAutoRetry
             inst => inst.opcode == Ldc_I4 && inst.OperandIs(ModPerfect),
             inst => inst.operand = ModPerfect | ModSuddenDeath
         );
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(PatchSuddenDeathAutoRetry)}: {__exception}");
-        }
-    }
 }

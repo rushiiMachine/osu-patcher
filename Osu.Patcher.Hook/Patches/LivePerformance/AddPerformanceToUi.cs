@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class AddPerformanceToUi
+internal class AddPerformanceToUi : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -71,17 +70,6 @@ public class AddPerformanceToUi
         PerformanceDisplay.SetPerformanceCounter(performanceSprite);
 
         Debug.WriteLine("Added Performance Counter to ScoreDisplay", nameof(AddPerformanceToUi));
-    }
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(AddPerformanceToUi)}: {__exception}");
-        }
     }
 
     private static float GetYOffset(float baseYPosition, float scale, object scoreDisplay)

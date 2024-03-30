@@ -3,6 +3,7 @@ using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs;
+using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Patcher.Hook.Patches.UI;
@@ -25,7 +26,7 @@ namespace Osu.Patcher.Hook.Patches.UI;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class AllowOpenOptionsInGameplay : BasePatch
+internal class AllowOpenOptionsInGameplay : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -33,9 +34,9 @@ public class AllowOpenOptionsInGameplay : BasePatch
 
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        InsertAfterSignature(
-            instructions,
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.InsertAfterSignature(
             new[]
             {
                 Ldloc_2,
@@ -52,4 +53,7 @@ public class AllowOpenOptionsInGameplay : BasePatch
                 new(Ldc_I4_1), // Push "true" onto stack
             }
         );
+
+        return instructions;
+    }
 }

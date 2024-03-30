@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Patcher.Hook.Patches.UI;
 using Osu.Stubs;
+using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Patcher.Hook.Patches.Misc;
@@ -28,7 +29,7 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class AllowPlayModeReload : BasePatch
+internal class AllowPlayModeReload : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -36,9 +37,9 @@ public class AllowPlayModeReload : BasePatch
 
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        InsertBeforeSignature(
-            instructions,
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.InsertBeforeSignature(
             new[]
             {
                 // Ldsfld, // Loads the ReplayScore to check if it's null
@@ -55,4 +56,7 @@ public class AllowPlayModeReload : BasePatch
                 new(Ret),
             }
         );
+
+        return instructions;
+    }
 }

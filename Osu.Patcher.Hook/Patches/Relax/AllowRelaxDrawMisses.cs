@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Utils.Extensions;
 using Osu.Utils.IL;
 
 namespace Osu.Patcher.Hook.Patches.Relax;
@@ -25,7 +24,7 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowRelaxDrawMisses : BasePatch
+internal class AllowRelaxDrawMisses : OsuPatch
 {
     // #=zTBjFb7Vm$jY$rY4MsKxmcIvGHnQN:\u0005\u200A\u2002\u2002\u2001\u2004\u2003\u2007\u2001\u2002\u2002\u2000
     private static readonly OpCode[] Signature =
@@ -49,17 +48,13 @@ internal class AllowRelaxDrawMisses : BasePatch
 
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        NoopAfterSignature(instructions, Signature.Take(Signature.Length - 4).ToArray(), 4);
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(AllowRelaxDrawMisses)}: {__exception}");
-        }
+        instructions = instructions.NoopAfterSignature(
+            Signature.Take(Signature.Length - 4).ToArray(),
+            4
+        );
+
+        return instructions;
     }
 }

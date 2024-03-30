@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs;
+using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Patcher.Hook.Patches.UI;
@@ -16,7 +15,7 @@ namespace Osu.Patcher.Hook.Patches.UI;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class RevertSortWhenNoGroup : BasePatch
+internal class RevertSortWhenNoGroup : OsuPatch
 {
     /// <summary>
     ///     Constant value for the enum value of <c>osu.GameplayElements.Beatmaps.TreeGroupMode:None</c>
@@ -64,8 +63,7 @@ public class RevertSortWhenNoGroup : BasePatch
         ILGenerator generator)
     {
         var newLocalIdx = generator.DeclareLocal(typeof(int)).LocalIndex;
-        instructions = InsertAfterSignature(
-            instructions,
+        instructions = instructions.InsertAfterSignature(
             new[]
             {
                 Ldarg_0,
@@ -86,8 +84,7 @@ public class RevertSortWhenNoGroup : BasePatch
         );
 
         // Add a call to our method before the if statement to update the target sort method
-        instructions = InsertBeforeSignature(
-            instructions,
+        instructions = instructions.InsertBeforeSignature(
             new[]
             {
                 // Ldloc_0, // This contains all the labels pointing to it
@@ -127,16 +124,5 @@ public class RevertSortWhenNoGroup : BasePatch
         );
 
         return instructions;
-    }
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(RevertSortWhenNoGroup)}: {__exception}");
-        }
     }
 }

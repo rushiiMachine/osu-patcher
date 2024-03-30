@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Utils.Extensions;
 using Osu.Utils.IL;
 
 namespace Osu.Patcher.Hook.Patches.Relax;
@@ -23,7 +24,7 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AutoSaveRelaxScores : BasePatch
+internal class AutoSaveRelaxScores : OsuPatch
 {
     // #=zG9n2xn5fBJ3KmhYrFhPv_ouHnledvs2AJ1Dwx_c=:#=zPWtjIx_tsaf1
     private static readonly OpCode[] Signature =
@@ -67,6 +68,13 @@ internal class AutoSaveRelaxScores : BasePatch
 
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        NoopAfterSignature(instructions, Signature.Take(Signature.Length - 24).ToArray(), 24);
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.NoopAfterSignature(
+            Signature.Take(Signature.Length - 24).ToArray(),
+            24
+        );
+
+        return instructions;
+    }
 }

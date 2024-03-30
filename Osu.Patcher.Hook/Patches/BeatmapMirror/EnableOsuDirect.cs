@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs;
+using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Patcher.Hook.Patches.BeatmapMirror;
@@ -28,7 +27,7 @@ namespace Osu.Patcher.Hook.Patches.BeatmapMirror;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class EnableOsuDirect : BasePatch
+internal class EnableOsuDirect : OsuPatch
 {
     private static readonly OpCode[] Signature =
     {
@@ -49,9 +48,9 @@ public class EnableOsuDirect : BasePatch
 
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        InsertBeforeSignature(
-            instructions,
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.InsertBeforeSignature(
             Signature,
             new CodeInstruction[]
             {
@@ -61,14 +60,6 @@ public class EnableOsuDirect : BasePatch
             }
         );
 
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(EnableOsuDirect)}: {__exception}");
-        }
+        return instructions;
     }
 }

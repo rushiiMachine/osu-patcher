@@ -23,7 +23,7 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class FixDoubleSkipping : BasePatch
+internal class FixDoubleSkipping : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -48,20 +48,13 @@ internal class FixDoubleSkipping : BasePatch
     /// </summary>
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        instructions.Manipulator(
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.Manipulator(
             inst => inst.OperandIs(10000),
             inst => inst.operand = 0
         );
 
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(FixDoubleSkipping)}: {__exception}");
-        }
+        return instructions;
     }
 }

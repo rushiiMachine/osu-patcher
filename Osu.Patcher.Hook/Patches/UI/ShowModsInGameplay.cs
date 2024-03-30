@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -15,7 +14,7 @@ namespace Osu.Patcher.Hook.Patches.UI;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class ShowModsInGameplay
+internal class ShowModsInGameplay : OsuPatch
 {
     // TODO: make this user configurable
     private const float ModsNewAlpha = .2f;
@@ -75,17 +74,6 @@ public class ShowModsInGameplay
                 }
             }
         );
-    }
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(ShowModsInGameplay)}: {__exception}");
-        }
     }
 
     private enum ReplaceState

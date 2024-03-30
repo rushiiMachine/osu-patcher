@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -16,7 +15,7 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public static class TrackOnScoreHit
+internal class TrackOnScoreHit : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -55,16 +54,5 @@ public static class TrackOnScoreHit
         var MaxCombo = Score.MaxCombo.Get(CurrentScore);
 
         Task.Run(() => PerformanceCalculator.Calculator?.AddJudgement(judgement, (uint)MaxCombo));
-    }
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(TrackOnScoreHit)}: {__exception}");
-        }
     }
 }

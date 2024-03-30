@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -12,7 +10,7 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class TrackResetScore
+internal class TrackResetScore : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -21,15 +19,4 @@ internal class TrackResetScore
     [UsedImplicitly]
     [HarmonyPostfix]
     private static void After() => PerformanceCalculator.ResetCalculator();
-
-    [UsedImplicitly]
-    [HarmonyFinalizer]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void Finalizer(Exception? __exception)
-    {
-        if (__exception != null)
-        {
-            Console.WriteLine($"Exception due to {nameof(TrackResetScore)}: {__exception}");
-        }
-    }
 }

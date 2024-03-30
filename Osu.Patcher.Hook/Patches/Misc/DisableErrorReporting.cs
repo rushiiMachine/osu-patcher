@@ -10,7 +10,7 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-internal class DisableErrorReporting : BasePatch
+internal class DisableErrorReporting : OsuPatch
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

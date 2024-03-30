@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs;
+using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Patcher.Hook.Patches.UI;
@@ -13,7 +14,7 @@ namespace Osu.Patcher.Hook.Patches.UI;
 /// </summary>
 [HarmonyPatch]
 [UsedImplicitly]
-public class CustomSongSelectThumbnailAlpha : BasePatch
+internal class CustomSongSelectThumbnailAlpha : OsuPatch
 {
     // TODO: make this user configurable through settings
     private const int NewDeselectedAlpha = 185; // 0-255
@@ -33,11 +34,15 @@ public class CustomSongSelectThumbnailAlpha : BasePatch
     /// </summary>
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> ChangeDeselectFade(IEnumerable<CodeInstruction> instructions) =>
-        instructions.Manipulator(
+    private static IEnumerable<CodeInstruction> ChangeDeselectFade(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.Manipulator(
             inst => inst.Is(Ldc_I4_S, 50),
             inst => inst.operand = NewDeselectedAlpha
         );
+
+        return instructions;
+    }
 
 
     /// <summary>
@@ -55,7 +60,7 @@ public class CustomSongSelectThumbnailAlpha : BasePatch
         if (__originalMethod != BeatmapTreeItem.UpdateSprites.Reference)
             return instructions;
 
-        return NoopSignature(instructions, new[]
+        return instructions.NoopSignature(new[]
         {
             Ldarg_0,
             Ldfld,
