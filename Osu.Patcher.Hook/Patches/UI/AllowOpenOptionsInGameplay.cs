@@ -24,9 +24,10 @@ namespace Osu.Patcher.Hook.Patches.UI;
 ///             return true;
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowOpenOptionsInGameplay : OsuPatch
+internal static class AllowOpenOptionsInGameplay
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -37,8 +38,7 @@ internal class AllowOpenOptionsInGameplay : OsuPatch
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         instructions = instructions.InsertAfterSignature(
-            new[]
-            {
+            [
                 Ldloc_2,
                 Ldloc_3,
                 And,
@@ -46,7 +46,7 @@ internal class AllowOpenOptionsInGameplay : OsuPatch
                 Cgt,
                 // -- Inject right here to replace the result of Cgt --
                 // Ret,
-            },
+            ],
             new CodeInstruction[]
             {
                 new(Pop),

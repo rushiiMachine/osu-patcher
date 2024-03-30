@@ -33,12 +33,13 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 ///             GameBase.FadeState == (FadeStates)2)
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowRelaxLowHpGlow : OsuPatch
+internal static class AllowRelaxLowHpGlow
 {
     private static readonly OpCode[] Signature =
-    {
+    [
         OpCodes.Ldarg_0,
         OpCodes.Ldfld,
         OpCodes.Ldfld,
@@ -51,7 +52,7 @@ internal class AllowRelaxLowHpGlow : OsuPatch
         OpCodes.Brtrue, // No-oped (4 inst)
         OpCodes.Ldsfld,
         OpCodes.Brtrue, // ---------
-    };
+    ];
 
     [UsedImplicitly]
     [HarmonyTargetMethod]

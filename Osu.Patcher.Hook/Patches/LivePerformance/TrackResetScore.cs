@@ -6,11 +6,12 @@ using Osu.Stubs;
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
 /// <summary>
-///     Hooks <c>Ruleset::ResetScore()</c> to also reset our performance calculator and caches.
+///     Hooks <c>Ruleset::ResetScore()</c> to also reset our performance calculator.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class TrackResetScore : OsuPatch
+internal static class TrackResetScore
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

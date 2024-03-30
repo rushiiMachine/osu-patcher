@@ -27,9 +27,10 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 ///             return true;
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowPlayModeReload : OsuPatch
+internal static class AllowPlayModeReload
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
@@ -40,15 +41,14 @@ internal class AllowPlayModeReload : OsuPatch
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         instructions = instructions.InsertBeforeSignature(
-            new[]
-            {
+            [
                 // Ldsfld, // Loads the ReplayScore to check if it's null
                 // -- Inject right here to override the value -- 
                 Brfalse_S,
                 Ldsfld,
                 Ldfld,
                 Call,
-            },
+            ],
             new CodeInstruction[]
             {
                 new(Pop),

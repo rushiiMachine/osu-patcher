@@ -13,9 +13,10 @@ namespace Osu.Patcher.Hook.Patches.UI;
 ///     When the song select is changed to no grouping, then the sorting is not changed back (to before the
 ///     grouping being selected and changing the sorting) which is extremely annoying.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class RevertSortWhenNoGroup : OsuPatch
+internal static class RevertSortWhenNoGroup
 {
     /// <summary>
     ///     Constant value for the enum value of <c>osu.GameplayElements.Beatmaps.TreeGroupMode:None</c>
@@ -64,19 +65,18 @@ internal class RevertSortWhenNoGroup : OsuPatch
     {
         var newLocalIdx = generator.DeclareLocal(typeof(int)).LocalIndex;
         instructions = instructions.InsertAfterSignature(
-            new[]
-            {
+            [
                 Ldarg_0,
                 Ldfld,
                 Ldfld,
                 Callvirt,
                 Stloc_0,
-            },
+            ],
             new[]
             {
                 // Load the stored current sort mode and convert to int
-                CodeInstruction.LoadLocal(0),
-                new CodeInstruction(Conv_I4),
+                new(Ldloc_0),
+                new(Conv_I4),
 
                 // Store the current sort mode into a new local for later
                 CodeInstruction.StoreLocal(newLocalIdx),

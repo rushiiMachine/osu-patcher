@@ -12,9 +12,10 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// <summary>
 ///     Hook <c>osu_common.Helpers.Logger:Log</c> to print the live log to our console.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class LogOsuLogger : OsuPatch
+internal static class LogOsuLogger
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

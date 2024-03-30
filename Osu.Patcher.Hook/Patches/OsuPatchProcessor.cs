@@ -39,6 +39,12 @@ public class OsuPatchProcessor : PatchClassProcessor
     }
 
     /// <summary>
+    ///     Checks if the specified type is marked as an <see cref="OsuPatch" />.
+    /// </summary>
+    public static bool IsOsuPatch(Type type) =>
+        type.GetCustomAttribute(typeof(OsuPatch)) != null;
+
+    /// <summary>
     ///     Adds a new <see cref="HarmonyFinalizer" /> attribute patch to the
     ///     current patch processor targeting a specific <paramref name="type" />.
     /// </summary>
@@ -54,7 +60,7 @@ public class OsuPatchProcessor : PatchClassProcessor
     [UsedImplicitly]
     [HarmonyFinalizer]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    private static void BaseFinalizer<P>(Exception? __exception) where P : OsuPatch
+    private static void BaseFinalizer<P>(Exception? __exception)
     {
         if (__exception == null)
             return;

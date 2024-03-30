@@ -22,13 +22,14 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 ///         if ((mods & Mods.NoFail) <= Mods.None && ...)
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowRelaxFailing : OsuPatch
+internal static class AllowRelaxFailing
 {
     // #=zeXZ7VnmadWamDozl0oXkDPqWT5QR:#=zwMd5KYaUmGit
     private static readonly OpCode[] Signature =
-    {
+    [
         OpCodes.And,
         OpCodes.Ldc_I4_0,
         OpCodes.Cgt,
@@ -37,7 +38,7 @@ internal class AllowRelaxFailing : OsuPatch
         OpCodes.Brtrue_S, // No-oped (4 inst)
         OpCodes.Ldsfld,
         OpCodes.Brtrue_S, // ---------
-    };
+    ];
 
     [UsedImplicitly]
     [HarmonyTargetMethod]

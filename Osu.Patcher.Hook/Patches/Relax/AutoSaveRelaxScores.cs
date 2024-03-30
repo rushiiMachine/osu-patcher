@@ -22,13 +22,14 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 ///             {
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AutoSaveRelaxScores : OsuPatch
+internal static class AutoSaveRelaxScores
 {
     // #=zG9n2xn5fBJ3KmhYrFhPv_ouHnledvs2AJ1Dwx_c=:#=zPWtjIx_tsaf1
     private static readonly OpCode[] Signature =
-    {
+    [
         OpCodes.Ldarg_0,
         OpCodes.Ldfld,
         OpCodes.Ldfld,
@@ -60,7 +61,7 @@ internal class AutoSaveRelaxScores : OsuPatch
         OpCodes.Ldc_I4_0,
         OpCodes.Cgt,
         OpCodes.Brtrue, // <-------------
-    };
+    ];
 
     [UsedImplicitly]
     [HarmonyTargetMethod]

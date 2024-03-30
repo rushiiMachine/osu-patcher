@@ -12,9 +12,10 @@ namespace Osu.Patcher.Hook.Patches.UI;
 ///     Makes the mods list overlay that is shown when entering play mode always show, like in a replay
 ///     but faded to a user customizable amount.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class ShowModsInGameplay : OsuPatch
+internal static class ShowModsInGameplay
 {
     // TODO: make this user configurable
     private const float ModsNewAlpha = .2f;

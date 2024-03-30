@@ -8,9 +8,10 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// <summary>
 ///     Disable the error reporter to prevent sentry from being spammed with errors possibly caused by this patcher.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class DisableErrorReporting : OsuPatch
+internal static class DisableErrorReporting
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

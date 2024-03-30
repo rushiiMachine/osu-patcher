@@ -13,9 +13,10 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 ///     Hooks <c>Ruleset::OnIncreaseScoreHit(...)</c> to send score updates to our performance calculator
 ///     so it can recalculate based on new HitObject judgements.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class TrackOnScoreHit : OsuPatch
+internal static class TrackOnScoreHit
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

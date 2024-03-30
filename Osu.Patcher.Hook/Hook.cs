@@ -67,8 +67,7 @@ public static class Hook
     {
         foreach (var type in AccessTools.GetTypesFromAssembly(typeof(Hook).Assembly))
         {
-            // Check if the type extends OsuPatch
-            if (!type.IsSubclassOf(typeof(OsuPatch)))
+            if (!OsuPatchProcessor.IsOsuPatch(type))
                 continue;
 
             Debug.WriteLine($"Processing Patch {type.Name}", "Hook");

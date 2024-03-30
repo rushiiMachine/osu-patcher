@@ -1,6 +1,9 @@
+using System;
+
 namespace Osu.Patcher.Hook.Patches;
 
 /// <summary>
-///     A base patch that provides utility methods for signature-based patching.
+///     A marker for osu! patches for <see cref="OsuPatchProcessor" /> to handle.
 /// </summary>
-public abstract class OsuPatch;
+[AttributeUsage(AttributeTargets.Class)]
+public class OsuPatch : Attribute;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -21,9 +20,10 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 ///         int leadIn = leadInTime < 0 ? -leadInTime : 0;
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class FixDoubleSkipping : OsuPatch
+internal static class FixDoubleSkipping
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

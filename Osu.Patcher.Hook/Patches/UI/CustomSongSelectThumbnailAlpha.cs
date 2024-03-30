@@ -12,9 +12,10 @@ namespace Osu.Patcher.Hook.Patches.UI;
 /// <summary>
 ///     Changes the default alpha on beatmap thumbnails in song select.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class CustomSongSelectThumbnailAlpha : OsuPatch
+internal static class CustomSongSelectThumbnailAlpha
 {
     // TODO: make this user configurable through settings
     private const int NewDeselectedAlpha = 185; // 0-255
@@ -60,8 +61,8 @@ internal class CustomSongSelectThumbnailAlpha : OsuPatch
         if (__originalMethod != BeatmapTreeItem.UpdateSprites.Reference)
             return instructions;
 
-        return instructions.NoopSignature(new[]
-        {
+        return instructions.NoopSignature(
+        [
             Ldarg_0,
             Ldfld,
             Ldloc_0,
@@ -72,6 +73,6 @@ internal class CustomSongSelectThumbnailAlpha : OsuPatch
             Ldc_I4_0,
             Callvirt,
             Pop,
-        });
+        ]);
     }
 }

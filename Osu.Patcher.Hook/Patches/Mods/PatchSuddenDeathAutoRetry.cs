@@ -21,9 +21,10 @@ namespace Osu.Patcher.Hook.Patches.Mods;
 ///         if ((this.CurrentScore.EnabledMods & mask) > Mods.None)
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class PatchSuddenDeathAutoRetry : OsuPatch
+internal static class PatchSuddenDeathAutoRetry
 {
     private const int ModPerfect = 1 << 14;
     private const int ModSuddenDeath = 1 << 5;
@@ -38,9 +39,13 @@ internal class PatchSuddenDeathAutoRetry : OsuPatch
     /// </summary>
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) =>
-        instructions.Manipulator(
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        instructions = instructions.Manipulator(
             inst => inst.opcode == Ldc_I4 && inst.OperandIs(ModPerfect),
             inst => inst.operand = ModPerfect | ModSuddenDeath
         );
+
+        return instructions;
+    }
 }

@@ -14,9 +14,10 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 ///     the performance counter to the ScoreDisplay's sprite manager.
 ///     To display "pp" this needs <c>score-p@2x.png</c>/<c>score-p.png</c> in your skin's defined score font.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AddPerformanceToUi : OsuPatch
+internal static class AddPerformanceToUi
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

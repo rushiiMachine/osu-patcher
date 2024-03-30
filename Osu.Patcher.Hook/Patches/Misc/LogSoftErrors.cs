@@ -9,9 +9,10 @@ namespace Osu.Patcher.Hook.Patches.Misc;
 /// <summary>
 ///     Hooks <c>osu.GameBase:softHandle(Exception)</c> to log all soft exceptions thrown inside osu! to our console.
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class LogSoftErrors : OsuPatch
+internal static class LogSoftErrors
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]

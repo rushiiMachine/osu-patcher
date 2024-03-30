@@ -22,13 +22,14 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 ///         if (increaseScoreType == (IncreaseScoreType)(-131072))
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowRelaxDrawMisses : OsuPatch
+internal static class AllowRelaxDrawMisses
 {
     // #=zTBjFb7Vm$jY$rY4MsKxmcIvGHnQN:\u0005\u200A\u2002\u2002\u2001\u2004\u2003\u2007\u2001\u2002\u2002\u2000
     private static readonly OpCode[] Signature =
-    {
+    [
         OpCodes.Ldarg_1,
         OpCodes.Ldc_I4_8,
         OpCodes.Callvirt,
@@ -40,7 +41,7 @@ internal class AllowRelaxDrawMisses : OsuPatch
         OpCodes.Brtrue, // No-oped (4 inst)
         OpCodes.Ldsfld,
         OpCodes.Brtrue, // ----------
-    };
+    ];
 
     [UsedImplicitly]
     [HarmonyTargetMethod]

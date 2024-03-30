@@ -23,13 +23,14 @@ namespace Osu.Patcher.Hook.Patches.Relax;
 ///         if (this.ComboCounter.HitCombo > 20)
 ///     ]]></code>
 /// </summary>
+[OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class AllowRelaxComboBreakSound : OsuPatch
+internal static class AllowRelaxComboBreakSound
 {
     // #=z04fOmc1I_BS0TV6TAo2QOUQvjceryuOcqoleWPg=:#=zSio4IZHzUUrC
     private static readonly OpCode[] Signature =
-    {
+    [
         OpCodes.Ldarg_0,
         OpCodes.Ldfld,
         OpCodes.Callvirt,
@@ -39,7 +40,7 @@ internal class AllowRelaxComboBreakSound : OsuPatch
         OpCodes.Brtrue_S, // All no-oped (4 inst)
         OpCodes.Ldsfld,
         OpCodes.Brtrue_S, // --------
-    };
+    ];
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
