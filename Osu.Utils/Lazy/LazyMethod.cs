@@ -29,7 +29,7 @@ public class LazyMethod : ILazy<MethodInfo>
     public string Name { get; }
 
     public MethodInfo Reference => this.GetReference(Name, _lazy);
-    
+
     public override string ToString() => $"{nameof(LazyMethod)}({Name})";
 
     /// <summary>

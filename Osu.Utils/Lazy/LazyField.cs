@@ -27,7 +27,7 @@ public class LazyField<T> : ILazy<FieldInfo>
     public string Name { get; }
 
     public FieldInfo Reference => this.GetReference(Name, _lazy);
-    
+
     public override string ToString() => $"{nameof(LazyField<object>)}({Name})";
 
     /// <summary>

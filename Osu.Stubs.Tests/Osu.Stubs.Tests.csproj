@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Build">
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <RootNamespace>Osu.Stubs.Tests</RootNamespace>
         <TargetFramework>net462</TargetFramework>
         <PlatformTarget>x86</PlatformTarget> <!-- Running in 32bit is necessary for loading in osu! -->
@@ -30,6 +31,7 @@
 
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0"/>
         <PackageReference Include="NUnit" Version="4.1.0"/>
+        <PackageReference Include="NUnitLite" Version="4.1.0"/>
         <PackageReference Include="NUnit3TestAdapter" Version="4.5.0"/>
         <PackageReference Include="NUnit.Analyzers" Version="4.1.0">
             <PrivateAssets>all</PrivateAssets>

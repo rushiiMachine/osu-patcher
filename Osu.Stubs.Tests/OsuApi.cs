@@ -54,15 +54,13 @@ public static class OsuApi
     {
         var updateFiles = await GetReleaseFiles(ReleaseStream.Stable40);
 
-        foreach (var updateFile in updateFiles)
+        Parallel.ForEach(updateFiles, updateFile =>
         {
             Console.WriteLine($"Downloading {updateFile.FileName}");
+            DownloadFile(updateFile.DownloadUrl, Path.Combine(dir, updateFile.FileName)).Wait();
+        });
 
-            await DownloadFile(
-                updateFile.DownloadUrl,
-                Path.Combine(dir, updateFile.FileName)
-            );
-        }
+        Console.WriteLine("Finished downloading osu!");
     }
 
     private static async Task DownloadFile(string url, string path)

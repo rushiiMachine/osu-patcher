@@ -6,3 +6,4 @@ target/
 *.idea
 *.iml
 *DotSettings.user
+**/TestResult.xml

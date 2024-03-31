@@ -6,6 +6,8 @@ using NUnit.Framework;
 using Osu.Utils.Extensions;
 using Osu.Utils.Lazy;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 namespace Osu.Stubs.Tests;
 
 [TestFixture]
@@ -13,12 +15,33 @@ namespace Osu.Stubs.Tests;
 public class TestStubs
 {
     [TestCaseSource(nameof(LoadStubs))]
-    public void TestStub(ILazy<MemberInfo> lazy) =>
-        Assert.DoesNotThrow(lazy.Fill);
+    public void TestStub(ILazy<MemberInfo> lazy) => Assert.DoesNotThrow(
+        () =>
+        {
+            try
+            {
+                lazy.Fill();
+            }
+            catch (AggregateException e)
+            {
+                if (e.InnerException is ReflectionTypeLoadException typeLoadException)
+                {
+                    throw new AggregateException(typeLoadException.LoaderExceptions);
+                }
+
+                throw e.InnerException!;
+            }
+        }
+    );
+
+    [Test(Description = "Tests cannot be run in 64bit mode!", ExpectedResult = true)]
+    public static bool CheckIs32Bit() => !Environment.Is64BitProcess;
 
     private static IEnumerable<ILazy<MemberInfo>> LoadStubs()
     {
-        var osuDir = Path.Combine(Environment.CurrentDirectory, "osu!");
+        if (!CheckIs32Bit()) return [];
+
+        var osuDir = Path.Combine(Assembly.GetExecutingAssembly().Location, "../osu!");
         var osuExe = Path.Combine(osuDir, "osu!.exe");
 
         if (!Directory.Exists(osuDir)) // TODO: check file hashes to force re-download
@@ -27,10 +50,8 @@ public class TestStubs
             OsuApi.DownloadOsu(osuDir).Wait();
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
         // Add osu! directory to assembly search path
         AppDomain.CurrentDomain.AppendPrivatePath(osuDir);
-#pragma warning restore CS0618 // Type or member is obsolete
 
         // Load the osu! executable and it's dependencies as assemblies without executing
         Assembly.LoadFile(osuExe);
