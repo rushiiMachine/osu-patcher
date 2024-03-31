@@ -29,6 +29,8 @@ public class LazyMethod : ILazy<MethodInfo>
     public string Name { get; }
 
     public MethodInfo Reference => this.GetReference(Name, _lazy);
+    
+    public override string ToString() => $"{nameof(LazyMethod)}({Name})";
 
     /// <summary>
     ///     Find if not already cached and reflectively invoke this method. Does not return any value.

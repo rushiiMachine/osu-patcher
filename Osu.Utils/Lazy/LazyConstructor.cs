@@ -29,6 +29,8 @@ public class LazyConstructor : ILazy<ConstructorInfo>
     public string Name { get; }
 
     public ConstructorInfo Reference => this.GetReference(Name, _lazy);
+    
+    public override string ToString() => $"{nameof(LazyConstructor)}({Name})";
 
     /// <summary>
     ///     Find if not already cached and reflectively invoke this constructor to create a new instance of a class.

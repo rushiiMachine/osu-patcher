@@ -1,32 +1,41 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
+using NUnit.Framework;
 using Osu.Utils.Extensions;
 using Osu.Utils.Lazy;
 
-#pragma warning disable CS0618 // Type or member is obsolete
-
 namespace Osu.Stubs.Tests;
 
-internal static class Program
+[TestFixture]
+[Parallelizable]
+public class TestStubs
 {
-    private static async Task Main()
+    [TestCaseSource(nameof(LoadStubs))]
+    public void TestStub(ILazy<MemberInfo> lazy) =>
+        Assert.DoesNotThrow(lazy.Fill);
+
+    private static IEnumerable<ILazy<MemberInfo>> LoadStubs()
     {
         var osuDir = Path.Combine(Environment.CurrentDirectory, "osu!");
         var osuExe = Path.Combine(osuDir, "osu!.exe");
 
-        if (!Directory.Exists(osuDir))
+        if (!Directory.Exists(osuDir)) // TODO: check file hashes to force re-download
         {
             Directory.CreateDirectory(osuDir);
-            await OsuApi.DownloadOsu(osuDir);
+            OsuApi.DownloadOsu(osuDir).Wait();
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
+        // Add osu! directory to assembly search path
         AppDomain.CurrentDomain.AppendPrivatePath(osuDir);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        // Load the osu! executable and it's dependencies as assemblies without executing
         Assembly.LoadFile(osuExe);
 
-        List<ILazy<MemberInfo>> stubs = new(200);
+        var stubs = new List<ILazy<MemberInfo>>(300);
 
         foreach (var type in Assembly.GetAssembly(typeof(Stub)).GetTypes())
         {
@@ -45,17 +54,6 @@ internal static class Program
         stubs.Sort((a, b) =>
             string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
 
-        foreach (var lazy in stubs)
-        {
-            try
-            {
-                Console.WriteLine($"{lazy.Name} -> {lazy.Reference}");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{lazy.Name} -> [Failure]");
-                Console.WriteLine(e);
-            }
-        }
+        return stubs;
     }
 }

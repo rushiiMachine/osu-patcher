@@ -26,6 +26,8 @@ public class LazyType : ILazy<Type>
 
     public Type Reference => this.GetReference(Name, _lazy);
 
+    public override string ToString() => $"{nameof(LazyType)}({Name})";
+
     /// <summary>
     ///     Finds a class based on it's full name including namespace.
     /// </summary>
