@@ -16,7 +16,7 @@ public static class Obfuscated
     /// </summary>
     [Stub]
     public static readonly LazyType Class = new(
-        "osu.Helpers.Obfuscated{T}",
+        "osu.Helpers.Obfuscated<T>",
         () => Finalize!.Reference.DeclaringType!
     );
 
@@ -49,7 +49,7 @@ public static class Obfuscated
     /// </summary>
     [Stub]
     public static readonly LazyMethod<object> GetValue = new(
-        "osu.Helpers.Obfuscated{T}::get_Value()",
+        "osu.Helpers.Obfuscated<T>::get_Value()",
         () => Class.Reference
             .GetRuntimeMethods()
             .First(mtd =>

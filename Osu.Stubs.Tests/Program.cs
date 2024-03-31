@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ internal static class Program
         AppDomain.CurrentDomain.AppendPrivatePath(osuDir);
         Assembly.LoadFile(osuExe);
 
+        List<ILazy<MemberInfo>> stubs = new(200);
+
         foreach (var type in Assembly.GetAssembly(typeof(Stub)).GetTypes())
         {
             foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Static))
@@ -32,17 +35,26 @@ internal static class Program
                 if (field.GetCustomAttribute(typeof(Stub)) == null)
                     continue;
 
-                var lazy = field.GetValue<ILazy<MemberInfo>>(null);
+                var stub = field.GetValue<ILazy<MemberInfo>>(null);
+                if (stub == null) throw new Exception();
 
-                try
-                {
-                    Console.WriteLine($"{lazy.Name} -> {lazy.Reference}");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"{lazy.Name} -> [Failure]");
-                    Console.WriteLine(e);
-                }
+                stubs.Add(stub);
+            }
+        }
+
+        stubs.Sort((a, b) =>
+            string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
+
+        foreach (var lazy in stubs)
+        {
+            try
+            {
+                Console.WriteLine($"{lazy.Name} -> {lazy.Reference}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{lazy.Name} -> [Failure]");
+                Console.WriteLine(e);
             }
         }
     }

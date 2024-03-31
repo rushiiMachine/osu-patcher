@@ -44,7 +44,7 @@ public static class SkinManager
     /// </summary>
     [Stub]
     public static readonly LazyField<object> Current = new(
-        "SkinManager#Current",
+        "osu.Graphics.Skinning.SkinManager::Current",
         // There is two fields with type SkinOsu; Current and CurrentUserSkin in that order
         () => Class.Reference.GetDeclaredFields()
             .First(f => f.FieldType == SkinOsu.Class.Reference)
