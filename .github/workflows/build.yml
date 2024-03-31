@@ -1,4 +1,4 @@
-name: Build
+name: Build & Test
 
 on:
   push:
@@ -34,9 +34,12 @@ jobs:
       - name: Build
         run: dotnet build Osu.Patcher.Injector
 
-      - name: Upload artifacts
+      - name: Upload Injector artifact
         uses: actions/upload-artifact@v4
         with:
           name: osu!patcher-debug
           if-no-files-found: error
           path: .\Osu.Patcher.Injector\bin\Debug\net8.0\**
+      
+      - name: Run stub tests
+        run: dotnet run --project Osu.Stubs.Tests

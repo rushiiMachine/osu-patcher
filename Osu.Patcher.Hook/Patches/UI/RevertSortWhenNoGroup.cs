@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs;
 using Osu.Stubs.Helpers;
 using Osu.Stubs.SongSelect;
 using Osu.Utils.Extensions;

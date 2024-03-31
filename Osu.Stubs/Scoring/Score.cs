@@ -104,7 +104,7 @@ public static class Score
     /// </summary>
     [Stub]
     public static readonly LazyField<object> EnabledMods = new(
-        "Score#EnabledMods",
+        "osu.GameplayElements.Scoring.Score::EnabledMods",
         () => Class.Reference
             .GetDeclaredFields()
             .Single(field => field.FieldType.IsGenericType &&

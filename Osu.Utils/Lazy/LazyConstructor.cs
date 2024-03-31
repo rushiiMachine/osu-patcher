@@ -11,14 +11,14 @@ namespace Osu.Utils.Lazy;
 ///     A reference to a constructor that gets located at runtime and invoked reflectively.
 /// </summary>
 [PublicAPI]
-public class LazyConstructor : LazyInfo<ConstructorInfo>
+public class LazyConstructor : ILazy<ConstructorInfo>
 {
     private readonly Lazy<ConstructorInfo> _lazy;
 
     /// <summary>
     ///     Make a wrapper around Lazy for constructor.
     /// </summary>
-    /// <param name="name"><see cref="LazyInfo{T}.Name" /> of type what this <paramref name="action" /> is returning.</param>
+    /// <param name="name"><see cref="ILazy{T}.Name" /> of type what this <paramref name="action" /> is returning.</param>
     /// <param name="action">The lazy action to run when the value is needed.</param>
     public LazyConstructor(string name, Func<ConstructorInfo> action)
     {
@@ -26,9 +26,11 @@ public class LazyConstructor : LazyInfo<ConstructorInfo>
         _lazy = new Lazy<ConstructorInfo>(action);
     }
 
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override ConstructorInfo Reference => GetReference<LazyConstructor>(Name, _lazy);
+    public ConstructorInfo Reference => this.GetReference(Name, _lazy);
+
+    public override string ToString() => $"{nameof(LazyConstructor)}({Name})";
 
     /// <summary>
     ///     Find if not already cached and reflectively invoke this constructor to create a new instance of a class.

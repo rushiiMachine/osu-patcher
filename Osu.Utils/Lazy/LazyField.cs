@@ -9,7 +9,7 @@ namespace Osu.Utils.Lazy;
 /// </summary>
 /// <typeparam name="T">The type this field should be treated as.</typeparam>
 [PublicAPI]
-public class LazyField<T> : LazyInfo<FieldInfo>
+public class LazyField<T> : ILazy<FieldInfo>
 {
     private readonly Lazy<FieldInfo> _lazy;
 
@@ -24,9 +24,11 @@ public class LazyField<T> : LazyInfo<FieldInfo>
         _lazy = new Lazy<FieldInfo>(action);
     }
 
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override FieldInfo Reference => GetReference<LazyField<FieldInfo>>(Name, _lazy);
+    public FieldInfo Reference => this.GetReference(Name, _lazy);
+
+    public override string ToString() => $"{nameof(LazyField<object>)}({Name})";
 
     /// <summary>
     ///     Gets the current value of this field.

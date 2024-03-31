@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance;
-using Osu.Stubs;
 using Osu.Stubs.Rulesets;
 using Osu.Stubs.Scoring;
 
