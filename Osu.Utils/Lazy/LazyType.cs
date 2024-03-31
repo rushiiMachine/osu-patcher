@@ -7,7 +7,7 @@ namespace Osu.Utils.Lazy;
 ///     A reference to a Type that gets located at runtime and interacted with reflectively.
 /// </summary>
 [PublicAPI]
-public class LazyType : LazyInfo<Type>
+public class LazyType : ILazy<Type>
 {
     private readonly Lazy<Type> _lazy;
 
@@ -22,15 +22,15 @@ public class LazyType : LazyInfo<Type>
         _lazy = new Lazy<Type>(action);
     }
 
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override Type Reference => GetReference<LazyType>(Name, _lazy);
+    public Type Reference => this.GetReference(Name, _lazy);
 
     /// <summary>
     ///     Finds a class based on it's full name including namespace.
     /// </summary>
     /// <param name="originalName">
-    ///     <see cref="LazyInfo{T}.Name" />
+    ///     <see cref="ILazy{T}.Name" />
     /// </param>
     /// <param name="runtimeName">
     ///     The full runtime name to search for, including any namespaces. If this isn't different from

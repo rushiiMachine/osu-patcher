@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs;
 using Osu.Stubs.GameModes;
 using Osu.Stubs.Other;
 

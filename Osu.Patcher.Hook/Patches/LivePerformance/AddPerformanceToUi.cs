@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs;
 using Osu.Stubs.Framework;
 using Osu.Stubs.GameModes;
 using Osu.Stubs.Graphics;

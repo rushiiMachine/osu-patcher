@@ -11,14 +11,14 @@ namespace Osu.Utils.Lazy;
 ///     A reference to a method that gets located at runtime and invoked reflectively.
 /// </summary>
 [PublicAPI]
-public class LazyMethod : LazyInfo<MethodInfo>
+public class LazyMethod : ILazy<MethodInfo>
 {
     private readonly Lazy<MethodInfo> _lazy;
 
     /// <summary>
     ///     Make a wrapper around Lazy for methods.
     /// </summary>
-    /// <param name="name"><see cref="LazyInfo{T}.Name" /> of what type this <paramref name="action" /> is returning.</param>
+    /// <param name="name"><see cref="ILazy{T}.Name" /> of what type this <paramref name="action" /> is returning.</param>
     /// <param name="action">The lazy action to run when the value is needed.</param>
     public LazyMethod(string name, Func<MethodInfo> action)
     {
@@ -26,9 +26,9 @@ public class LazyMethod : LazyInfo<MethodInfo>
         _lazy = new Lazy<MethodInfo>(action);
     }
 
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override MethodInfo Reference => GetReference<LazyMethod>(Name, _lazy);
+    public MethodInfo Reference => this.GetReference(Name, _lazy);
 
     /// <summary>
     ///     Find if not already cached and reflectively invoke this method. Does not return any value.
@@ -43,7 +43,7 @@ public class LazyMethod : LazyInfo<MethodInfo>
     ///     Searches every method to see if this <paramref name="signature" /> is the entire method's bytecode.
     /// </summary>
     /// <param name="name">
-    ///     <see cref="LazyInfo{T}.Name" />
+    ///     <see cref="ILazy{T}.Name" />
     /// </param>
     /// <param name="signature">Sequential opcodes to compare the target method's bytecode with.</param>
     public static LazyMethod BySignature(string name, IReadOnlyList<OpCode> signature) =>
@@ -54,7 +54,7 @@ public class LazyMethod : LazyInfo<MethodInfo>
     ///     Searches every method to see if this <paramref name="signature" /> is located in the method's bytecode.
     /// </summary>
     /// <param name="name">
-    ///     <see cref="LazyInfo{T}.Name" />
+    ///     <see cref="ILazy{T}.Name" />
     /// </param>
     /// <param name="signature">Sequential opcodes to search the target method with.</param>
     public static LazyMethod ByPartialSignature(string name, IReadOnlyList<OpCode> signature) =>

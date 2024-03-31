@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Stubs", "Osu.Stubs\Osu.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Utils", "Osu.Utils\Osu.Utils.csproj", "{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osu.Stubs.Tests", "Osu.Stubs.Tests\Osu.Stubs.Tests.csproj", "{F60A9670-BD12-4FF9-A56B-AF564CFD8CCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -35,5 +37,9 @@ Global
 		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Debug|x86.Build.0 = Debug|Any CPU
 		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Release|x86.ActiveCfg = Release|Any CPU
 		{DBE8C9EB-4AC9-45A3-AFFF-A899A7A99823}.Release|x86.Build.0 = Release|Any CPU
+		{F60A9670-BD12-4FF9-A56B-AF564CFD8CCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F60A9670-BD12-4FF9-A56B-AF564CFD8CCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{F60A9670-BD12-4FF9-A56B-AF564CFD8CCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{F60A9670-BD12-4FF9-A56B-AF564CFD8CCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

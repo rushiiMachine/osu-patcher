@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs;
 using Osu.Stubs.GameModes;
 using static System.Reflection.Emit.OpCodes;
 
