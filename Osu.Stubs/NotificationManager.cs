@@ -8,7 +8,7 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.Graphics.Notifications.NotificationManager</c>
 ///     v20230326: <c>#=zKAl4ByX632sEL0mCYHkNNO8=</c>
 /// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public static class NotificationManager
 {
     /// <summary>
@@ -23,11 +23,9 @@ public static class NotificationManager
     ///     </code>
     ///     v20230326: <c>#=zKAl4ByX632sEL0mCYHkNNO8=:#=zKgeB1K0=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod ShowMessage = new(
-        "NotificationManager#ShowMessage",
-        new[]
-        {
+    public static readonly LazyMethod ShowMessage = LazyMethod.ByPartialSignature(
+        "osu.Graphics.Notifications.NotificationManager::ShowMessage(string, Color, int, VoidDelegate)",
+        [
             Ldarg_1,
             Stfld,
             Ldloc_0,
@@ -37,6 +35,6 @@ public static class NotificationManager
             Ldloc_0,
             Ldftn,
             Newobj,
-        }
+        ]
     );
 }

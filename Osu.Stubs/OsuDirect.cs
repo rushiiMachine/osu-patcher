@@ -8,17 +8,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.Online.OsuDirect</c>
 ///     b20240102.2: <c>#=zz3BVwBujgm4LKna55Dwx3UA=</c>
 /// </summary>
-public abstract class OsuDirect
+[PublicAPI]
+public static class OsuDirect
 {
     /// <summary>
-    ///     Original: <c>HandlePickup()</c>
+    ///     Original: <c>HandlePickup(...)</c>
     ///     b20240102.2: <c>#=zJczNz_3lxxrQQnnZog==</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod HandlePickup = new(
-        "osu.Online.OsuDirect#HandlePickup",
-        new[]
-        {
+    public static readonly LazyMethod HandlePickup = LazyMethod.ByPartialSignature(
+        "osu.Online.OsuDirect::HandlePickup(...)",
+        [
             Ldloc_0,
             Ldfld,
             Ldloc_0,
@@ -29,6 +28,6 @@ public abstract class OsuDirect
             Newobj,
             Call,
             Ret,
-        }
+        ]
     );
 }

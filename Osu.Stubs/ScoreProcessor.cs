@@ -10,18 +10,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.GameplayElements.Scoring.Processors.ScoreProcessor</c>
 ///     b20240123: <c>#=zBbxc56nwToQ2q_6LjFIHXSZoq$I8pyNIyxBZVi76rJHE</c>
 /// </summary>
-[UsedImplicitly]
-public class ScoreProcessor
+[PublicAPI]
+public static class ScoreProcessor
 {
     /// <summary>
     ///     Original: <c>Reset(bool storeStatistics)</c>
     ///     b20240123: <c>#=z6nCyHQk=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod Clear = new(
-        "ScoreProcessor#Clear(...)",
-        new[]
-        {
+    public static readonly LazyMethod Clear = LazyMethod.ByPartialSignature(
+        "osu.GameplayElements.Scoring.Processors.ScoreProcessor::Clear(bool)",
+        [
             Ldc_R8,
             Stfld,
             Ldarg_0,
@@ -31,16 +29,15 @@ public class ScoreProcessor
             Ldfld,
             Callvirt,
             Ret,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>Add(ScoreChange change)</c>
     ///     b20240123: <c>#=zJdXS36o=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod AddScoreChange = new(
-        "ScoreProcessor#Add(...)",
+    public static readonly LazyMethod AddScoreChange = LazyMethod.ByPartialSignature(
+        "osu.GameplayElements.Scoring.Processors.ScoreProcessor::Add(ScoreChange)",
         new[]
         {
             Brfalse_S,
@@ -63,14 +60,10 @@ public class ScoreProcessor
     ///     Original: <c>MaximumCombo</c>
     ///     b20240123: <c>#=zqaALxNP6RgRC</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<int> MaximumCombo = new(
-        "ScoreProcessor#MaximumCombo",
-        () =>
-        {
-            return AddScoreChange.Reference.DeclaringType!
-                .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                .First(field => field.FieldType == typeof(int) && field.IsFamily); // protected int
-        }
+        "osu.GameplayElements.Scoring.Processors.ScoreProcessor::MaximumCombo",
+        () => AddScoreChange.Reference.DeclaringType!
+            .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+            .First(field => field.IsFamily && field.FieldType == typeof(int)) // checks for "protected int"
     );
 }

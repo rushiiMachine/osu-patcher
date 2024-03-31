@@ -10,19 +10,17 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.Graphics.Sprites.pText</c>
 ///     b20240123: <c>#=zrPwR$Vhf84Bn$SnxyFkpTe8J9fMu</c>
 /// </summary>
-[UsedImplicitly]
+[PublicAPI]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class pText
+public static class pText
 {
     /// <summary>
     ///     Original: <c>set_Text(string value)</c> (property setter)
     ///     b20240123: <c>#=zeWQSmtI=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod SetText = new(
-        "pText#set_Text(...)",
-        new[]
-        {
+    public static readonly LazyMethod SetText = LazyMethod.BySignature(
+        "osu.Graphics.Sprites.pText::set_Text(string)",
+        [
             Ldarg_0,
             Ldfld,
             Ldarg_1,
@@ -36,7 +34,6 @@ public class pText
             Ldarg_1,
             Stfld,
             Ret,
-        },
-        entireMethod: true
+        ]
     );
 }

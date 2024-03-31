@@ -40,7 +40,7 @@ internal static class AddPerformanceToUi
         var scoreFont = SkinOsu.FontScore.Get(currentSkin);
         var scoreFontOverlap = SkinOsu.FontScoreOverlap.Get(currentSkin);
 
-        var performanceSprite = ((ConstructorInfo)pSpriteText.Constructor.Reference).Invoke(
+        var performanceSprite = pSpriteText.Constructor.Invoke(
         [
             /* text: */ "00.0pp",
             /* fontName: */ scoreFont,
@@ -48,7 +48,7 @@ internal static class AddPerformanceToUi
             /* fieldType: */ alignRight ? Fields.TopRight : Fields.TopLeft,
             /* origin: */ alignRight ? Origins.TopRight : Origins.TopLeft,
             /* clock: */ Clocks.Game,
-            /* startPosition: */ ((ConstructorInfo)Vector2.Constructor.Reference).Invoke([0f, 0f]),
+            /* startPosition: */ Vector2.Constructor.Invoke([0f, 0f]),
             /* drawDepth: */ 0.95f,
             /* alwaysDraw: */ true,
             /* color: */ Color.White,
@@ -60,7 +60,7 @@ internal static class AddPerformanceToUi
         // TODO: don't add 9f offset if score-p@2x.png/score-p.png texture exists
         var positionX = Vector2.X.Get(position) + 8f;
         var positionY = GetYOffset(Vector2.Y.Get(position), scale, __instance);
-        var newPosition = ((ConstructorInfo)Vector2.Constructor.Reference).Invoke([positionX, positionY]);
+        var newPosition = Vector2.Constructor.Invoke([positionX, positionY]);
         pDrawable.Position.Set(performanceSprite, newPosition);
 
         pDrawable.Scale.Set(performanceSprite, 0.50f);
@@ -76,9 +76,9 @@ internal static class AddPerformanceToUi
     private static float GetYOffset(float baseYPosition, float scale, object scoreDisplay)
     {
         // Read the heights of both pSpriteTexts: s_Score, s_Accuracy
-        var sprites = ScoreDisplay.RuntimeType
+        var sprites = ScoreDisplay.Class.Reference
             .GetDeclaredFields()
-            .Where(f => f.FieldType == pSpriteText.RuntimeType)
+            .Where(f => f.FieldType == pSpriteText.Class.Reference)
             .Select(f => f.GetValue(scoreDisplay));
         var spriteSizes = sprites
             .Where(s => s != null)

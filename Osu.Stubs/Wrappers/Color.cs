@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Osu.Utils;
 
 namespace Osu.Stubs.Wrappers;
@@ -7,6 +8,7 @@ using XnaColor = object;
 /// <summary>
 ///     Original: <c>Microsoft.Xna.Framework.Graphics.Color</c>
 /// </summary>
+[PublicAPI]
 public static class Color
 {
     public static readonly XnaColor Red = GetColor("Red");

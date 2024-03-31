@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using HarmonyLib;
-using JetBrains.Annotations;
 
 namespace Osu.Utils.Extensions;
 
 /// <summary>
 ///     Utilities for patching bytecode through the usage of <see cref="HarmonyTranspiler" />.
 /// </summary>
-[UsedImplicitly]
 public static class TranspilerExtensions
 {
     /// <summary>
@@ -19,7 +17,6 @@ public static class TranspilerExtensions
     /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
     /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
     /// <param name="newInstructions">The instructions to insert after a signature match.</param>
-    [UsedImplicitly]
     public static IEnumerable<CodeInstruction> InsertAfterSignature(
         this IEnumerable<CodeInstruction> instructions,
         IReadOnlyList<OpCode> signature,
@@ -62,7 +59,6 @@ public static class TranspilerExtensions
     /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
     /// <param name="newInstructions">The instructions to insert before a signature match.</param>
     /// <param name="all">Match all instances of a signature.</param>
-    [UsedImplicitly]
     public static IEnumerable<CodeInstruction> InsertBeforeSignature(
         this IEnumerable<CodeInstruction> instructions,
         IReadOnlyList<OpCode> signature,
@@ -112,7 +108,6 @@ public static class TranspilerExtensions
     /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
     /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
     /// <param name="all">Match all instances of a signature.</param>
-    [UsedImplicitly]
     public static IEnumerable<CodeInstruction> NoopSignature(
         this IEnumerable<CodeInstruction> instructions,
         IReadOnlyList<OpCode> signature,
@@ -166,7 +161,6 @@ public static class TranspilerExtensions
     /// <param name="signature">The signature to find within the instructions based on IL opcodes.</param>
     /// <param name="replaceAfterSignature">The amount of instructions to replace after the signature.</param>
     /// <param name="all">Match all instances of a signature.</param>
-    [UsedImplicitly]
     public static IEnumerable<CodeInstruction> NoopAfterSignature(
         this IEnumerable<CodeInstruction> instructions,
         OpCode[] signature,

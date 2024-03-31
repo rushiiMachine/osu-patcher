@@ -1,11 +1,13 @@
 using System;
+using JetBrains.Annotations;
 
 namespace Osu.Stubs.Wrappers;
 
 /// <summary>
 ///     Original: <c>osu_common.Helpers.VoidDelegate</c>
 /// </summary>
-internal static class VoidDelegate
+[PublicAPI]
+public static class VoidDelegate
 {
     /// <summary>
     ///     Transforms an <see cref="Action" /> into a VoidDelegate from osu!.

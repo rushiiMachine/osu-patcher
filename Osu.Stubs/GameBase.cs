@@ -8,18 +8,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.GameBase</c>
 ///     b20240123: <c>#=zduF3QmjgMG4eSc$fOQ==</c>
 /// </summary>
-[UsedImplicitly]
-public class GameBase
+[PublicAPI]
+public static class GameBase
 {
     /// <summary>
     ///     Original: <c>get_ModeCanReload()</c>
     ///     b20240123: <c>#=zL6aRJUMxZO5fmlF9KQ==</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod<bool> GetModeCanReload = new(
-        "GameBase#get_ModeCanReload()",
-        new[]
-        {
+    public static readonly LazyMethod<bool> GetModeCanReload = LazyMethod<bool>.ByPartialSignature(
+        "osu.GameBase::get_ModeCanReload()",
+        [
             Ldc_I4_7,
             Bgt_S,
             Ldloc_0,
@@ -29,18 +27,16 @@ public class GameBase
             Ldc_I4_7,
             Beq_S,
             Br_S,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>softHandle(Exception e)</c>
     ///     b20240123: <c>#=z8BJOiJxSLUwM</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod SoftHandle = new(
-        "GameBase#softHandle(...)",
-        new[]
-        {
+    public static readonly LazyMethod SoftHandle = LazyMethod.ByPartialSignature(
+        "osu.GameBase::softHandle(Exception)",
+        [
             Ldarg_0,
             Isinst,
             Brtrue_S,
@@ -51,6 +47,6 @@ public class GameBase
             Isinst,
             Brfalse_S,
             Ldc_I4_8,
-        }
+        ]
     );
 }

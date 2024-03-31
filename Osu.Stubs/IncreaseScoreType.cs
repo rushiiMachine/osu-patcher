@@ -1,13 +1,9 @@
-using System;
 using JetBrains.Annotations;
+using Osu.Utils.Lazy;
 
 namespace Osu.Stubs;
 
-/// <summary>
-///     Original: <c>osu.GameModes.Play.Rulesets.IncreaseScoreType</c>
-///     b20240123: <c>#=zGMiEmtRx7tdNjrx8B18dVB33Br1S9OJ2_XDs0XJSAtWZ</c>
-/// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public class IncreaseScoreType
 {
     // For HitCircles, the only IST emitted is the final hit result (Osu50, Osu100, Osu300, OsuMiss)
@@ -37,9 +33,15 @@ public class IncreaseScoreType
     public const int Osu300 = 1 << 10;
     public const int OsuMiss = -0x20000;
 
-    // Used as the first parameter in the constructor for ScoreChange
-    [UsedImplicitly]
-    public static Type RuntimeType => ScoreChange.PrimaryConstructor
-        .GetParameters()[0]
-        .ParameterType;
+    /// <summary>
+    ///     Used as the first parameter in another method: <c>ScoreChange::ScoreChange(IncreaseScoreType, ...)</c>
+    ///     Original: <c>osu.GameModes.Play.Rulesets.IncreaseScoreType</c>
+    ///     b20240123: <c>#=zGMiEmtRx7tdNjrx8B18dVB33Br1S9OJ2_XDs0XJSAtWZ</c>
+    /// </summary>
+    public static readonly LazyType Class = new(
+        "osu.GameModes.Play.Rulesets.IncreaseScoreType",
+        () => ScoreChange.Constructor.Reference
+            .GetParameters()[0]
+            .ParameterType
+    );
 }

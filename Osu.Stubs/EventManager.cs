@@ -11,18 +11,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.GameplayElements.Events.EventManager</c>
 ///     b20240102.2: <c>#=zbJqkrJF69yLASpsnblYMeq3jWETw</c>
 /// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public static class EventManager
 {
     /// <summary>
-    ///     Original: <c>set_ShowStoryboard</c> (property setter)
+    ///     Original: <c>set_ShowStoryboard()</c> (property setter)
     ///     b20240102.2: <c>#=zKZugEelWoTXb</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod SetShowStoryboard = new(
-        "EventManager#ShowStoryboard.set",
-        new[]
-        {
+    public static readonly LazyMethod SetShowStoryboard = LazyMethod.BySignature(
+        "osu.GameplayElements.Events.EventManager::set_ShowStoryBoard()",
+        [
             Ldarg_0,
             Ldsfld,
             Bne_Un_S,
@@ -34,16 +32,15 @@ public static class EventManager
             Ldsfld,
             Callvirt,
             Ret,
-        }
+        ]
     );
 
     /// <summary>
     ///     The compiler generated backing field for the <c>ShowStoryboard</c> property.
     ///     See: <see cref="SetShowStoryboard" />
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<bool> ShowStoryboard = new(
-        "EventManager#ShowStoryboard.backing",
+        "osu.GameplayElements.Events.EventManager::[ShowStoryboard backing]",
         () =>
         {
             // Find a single StoreField instruction in the setter for this property

@@ -11,21 +11,24 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.Helpers.Bindable</c>
 ///     b20240102.2: <c>#=zDruHkLGdhQjyjYxqzw==</c>
 /// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public static class Bindable
 {
     /// <summary>
-    ///     Original: <c>Value.get</c> (property getter method)
+    ///     Original: <c>get_Value()</c> (property getter method)
     ///     b20240102.2: <c>#=zHO4Uaog=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod<object> GetValue = new("Bindable#Value.get", () =>
-    {
-        var instructions = MethodReader.GetInstructions(SongSelection.BeatmapTreeManagerOnRightClicked.Reference);
+    public static readonly LazyMethod<object> GetValue = new(
+        "osu.Helpers.Bindable::get_Value()",
+        () =>
+        {
+            var instructions = MethodReader
+                .GetInstructions(SongSelection.BeatmapTreeManagerOnRightClicked.Reference);
 
-        // Get reference to Bindable:Value.get (property getter)
-        return (MethodBase)instructions
-            .First(inst => inst.Opcode == Callvirt)
-            .Operand;
-    });
+            // Get reference to Bindable:Value.get (property getter)
+            return (MethodInfo)instructions
+                .First(inst => inst.Opcode == Callvirt)
+                .Operand;
+        }
+    );
 }

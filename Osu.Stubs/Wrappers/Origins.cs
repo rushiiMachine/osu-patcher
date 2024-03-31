@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Osu.Stubs.Wrappers;
@@ -6,9 +5,8 @@ namespace Osu.Stubs.Wrappers;
 /// <summary>
 ///     Original: <c>osu.Graphics.Sprites.Origins</c>
 /// </summary>
-[UsedImplicitly]
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
-public class Origins
+[PublicAPI]
+public static class Origins
 {
     public const int TopLeft = 0;
     public const int Centre = 1;

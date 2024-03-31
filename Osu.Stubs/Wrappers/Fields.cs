@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Osu.Stubs.Wrappers;
@@ -6,8 +5,7 @@ namespace Osu.Stubs.Wrappers;
 /// <summary>
 ///     Original: <c>osu.Graphics.Sprites.Fields</c>
 /// </summary>
-[UsedImplicitly]
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
+[PublicAPI]
 public class Fields
 {
     public const int GameField = 1;

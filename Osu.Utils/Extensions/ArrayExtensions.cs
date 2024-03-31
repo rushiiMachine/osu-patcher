@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace Osu.Utils.Extensions;
 
 public static class ArrayExtensions
@@ -12,7 +10,6 @@ public static class ArrayExtensions
     /// <param name="defaultValue">Alternative default value</param>
     /// <typeparam name="T">A non-null type inside the array.</typeparam>
     /// <returns>The value or default value</returns>
-    [UsedImplicitly]
     public static T? GetOrDefault<T>(this T[] array, int index, T? defaultValue) =>
         index < array.Length ? array[index] : defaultValue;
 
@@ -22,7 +19,6 @@ public static class ArrayExtensions
     /// <param name="array">Source array</param>
     /// <param name="times">Amount of times to copy the items.</param>
     /// <returns>A new array with shallow copied items.</returns>
-    [UsedImplicitly]
     public static T[] Duplicate<T>(this T[] array, int times)
     {
         var newArray = new T[array.Length * times];

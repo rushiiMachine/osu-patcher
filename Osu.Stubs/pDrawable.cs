@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -10,23 +9,26 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
-/// <summary>
-///     Original: <c>osu.Graphics.pDrawable</c>
-///     b20240123: <c>#=zB63SnFDTnRqYMKLlscCRpu_ww$IG</c>
-/// </summary>
-[UsedImplicitly]
+[PublicAPI]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public static class pDrawable
 {
     /// <summary>
+    ///     Original: <c>osu.Graphics.pDrawable</c>
+    ///     b20240123: <c>#=zB63SnFDTnRqYMKLlscCRpu_ww$IG</c>
+    /// </summary>
+    public static LazyType Class = new(
+        "osu.Graphics.pDrawable",
+        () => ScaleTo!.Reference.DeclaringType!
+    );
+
+    /// <summary>
     ///     Original: <c>Click(bool confirmed)</c>
     ///     b20240123: <c>#=zcJ6mazw=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod<bool> Click = new(
-        "pDrawable#Click(...)",
-        new[]
-        {
+    public static readonly LazyMethod<bool> Click = LazyMethod<bool>.ByPartialSignature(
+        "osu.Graphics.pDrawable::Click(bool)",
+        [
             Ret,
             Ldarg_0,
             Ldfld,
@@ -36,18 +38,16 @@ public static class pDrawable
             Brfalse_S,
             Ldarg_0,
             Ldfld,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>ScaleTo(float final, int duration, EasingTypes easing)</c>
     ///     b20240123: <c>#=zVyF2njk=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod<object> ScaleTo = new(
-        "pDrawable#ScaleTo(...)",
-        new[]
-        {
+    public static readonly LazyMethod<object> ScaleTo = LazyMethod<object>.ByPartialSignature(
+        "osu.Graphics.pDrawable::ScaleTo(float, int, EasingTypes)",
+        [
             Ldc_I4_4, // TransformationType.Scale
             Ldarg_0,
             Ldfld, // this.Scale
@@ -59,20 +59,19 @@ public static class pDrawable
             Ldsfld,
             Conv_I4,
             Sub,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>Position</c>
     ///     b20240123: <c>#=ztOn8vDI=</c>
+    ///     There is 3 fields with a type of <c>Vector2</c> on this class. The middle one is <c>Position</c>.
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<object> Position = new(
-        "pDrawable#Position",
-        // There is 3 fields with a type of <c>Vector2</c> on this class. The middle one is <c>Position</c>.
-        () => RuntimeType.GetDeclaredFields().AsEnumerable()
+        "osu.Graphics.pDrawable::Position",
+        () => Class.Reference.GetDeclaredFields().AsEnumerable()
             .Reverse()
-            .Where(field => field.FieldType == Vector2.RuntimeType)
+            .Where(field => field.FieldType == Vector2.Class.Reference)
             .Skip(1)
             .First()
     );
@@ -81,9 +80,8 @@ public static class pDrawable
     ///     Original: <c>Scale</c>
     ///     b20240123: <c>#=zmbpQ79A=</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<float> Scale = new(
-        "pDrawable#Scale",
+        "osu.Graphics.pDrawable::Scale",
         () =>
         {
             // The last "ldsfld float" in the ScaleTo method is a reference to this.Scale 
@@ -95,7 +93,4 @@ public static class pDrawable
             return (FieldInfo)instruction.Operand;
         }
     );
-
-    [UsedImplicitly]
-    public static Type RuntimeType => ScaleTo.Reference.DeclaringType!;
 }

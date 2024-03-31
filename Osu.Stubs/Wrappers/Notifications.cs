@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Osu.Stubs.Wrappers;
 
-[UsedImplicitly]
+[PublicAPI]
 public static class Notifications
 {
     /// <summary>
@@ -15,7 +15,6 @@ public static class Notifications
     ///     Milliseconds to show the notification for after the user sees the notification for the first time.
     /// </param>
     /// <param name="action">Notification onclick action.</param>
-    [UsedImplicitly]
     public static void ShowMessage(
         string message,
         NotificationColor color,

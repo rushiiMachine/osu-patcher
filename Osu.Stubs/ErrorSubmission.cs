@@ -8,18 +8,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.Helpers.ErrorSubmission</c>
 ///     v20230326: <c>#=zhC91LB1xsJMwYkF0UQ==</c>
 /// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public static class ErrorSubmission
 {
     /// <summary>
     ///     Original: osu.Helpers.ErrorSubmission:Submit(OsuError)
     ///     v20230326: #=zhC91LB1xsJMwYkF0UQ==:#=zPqLxZPA=
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod Submit = new(
-        "ErrorSubmission#Submit",
-        new[]
-        {
+    public static readonly LazyMethod Submit = LazyMethod.ByPartialSignature(
+        "osu.Helpers.ErrorSubmission::Submit(OsuError)",
+        [
             Ldsfld,
             Ldc_I4_0,
             Ble_S,
@@ -34,6 +32,6 @@ public static class ErrorSubmission
             Ldarg_0,
             Ldfld,
             Ldarg_0,
-        }
+        ]
     );
 }

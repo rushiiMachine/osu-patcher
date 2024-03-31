@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using JetBrains.Annotations;
 using Osu.Utils.IL;
 
 namespace Osu.Utils.Lazy;
@@ -9,51 +10,25 @@ namespace Osu.Utils.Lazy;
 /// <summary>
 ///     A reference to a method that gets located at runtime and invoked reflectively.
 /// </summary>
-public class LazyMethod
+[PublicAPI]
+public class LazyMethod : LazyInfo<MethodInfo>
 {
-    private readonly Lazy<MethodBase?> _lazy;
-    private readonly string _name;
-
-    /// <summary>
-    ///     A lazy method signature matcher
-    /// </summary>
-    /// <param name="name"><c>Class#Method</c> name of what this signature is matching.</param>
-    /// <param name="signature">Sequential opcodes to search the target method with.</param>
-    /// <param name="isConstructor">Whether this method is a constructor.</param>
-    /// <param name="entireMethod">Whether the signature is the entire method.</param>
-    public LazyMethod(string name, IReadOnlyList<OpCode> signature,
-        bool isConstructor = false,
-        bool entireMethod = false)
-    {
-        _name = name;
-        _lazy = new Lazy<MethodBase?>(() => isConstructor
-            ? OpCodeMatcher.FindConstructorBySignature(signature, entireMethod)
-            : OpCodeMatcher.FindMethodBySignature(signature, entireMethod));
-    }
+    private readonly Lazy<MethodInfo> _lazy;
 
     /// <summary>
     ///     Make a wrapper around Lazy for methods.
     /// </summary>
-    /// <param name="name"><c>Class#Method</c> name of what this <paramref name="action" /> is returning.</param>
+    /// <param name="name"><see cref="LazyInfo{T}.Name" /> of what type this <paramref name="action" /> is returning.</param>
     /// <param name="action">The lazy action to run when the value is needed.</param>
-    public LazyMethod(string name, Func<MethodBase?> action)
+    public LazyMethod(string name, Func<MethodInfo> action)
     {
-        _name = name;
-        _lazy = new Lazy<MethodBase?>(action);
+        Name = name;
+        _lazy = new Lazy<MethodInfo>(action);
     }
 
-    public MethodBase Reference
-    {
-        get
-        {
-            var value = _lazy.Value;
+    public override string Name { get; }
 
-            if (value == null)
-                throw new Exception($"Method was not found for signature of {_name}");
-
-            return value;
-        }
-    }
+    public override MethodInfo Reference => GetReference<LazyMethod>(Name, _lazy);
 
     /// <summary>
     ///     Find if not already cached and reflectively invoke this method. Does not return any value.
@@ -62,6 +37,28 @@ public class LazyMethod
     /// <param name="parameters">Parameters to pass to the method, if any.</param>
     public void Invoke(object? instance = null, object?[]? parameters = null) =>
         Reference.Invoke(instance, parameters);
+
+    /// <summary>
+    ///     A lazy method opcode opcode matcher.
+    ///     Searches every method to see if this <paramref name="signature" /> is the entire method's bytecode.
+    /// </summary>
+    /// <param name="name">
+    ///     <see cref="LazyInfo{T}.Name" />
+    /// </param>
+    /// <param name="signature">Sequential opcodes to compare the target method's bytecode with.</param>
+    public static LazyMethod BySignature(string name, IReadOnlyList<OpCode> signature) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(signature, true)!);
+
+    /// <summary>
+    ///     A lazy method opcode partial opcode matcher.
+    ///     Searches every method to see if this <paramref name="signature" /> is located in the method's bytecode.
+    /// </summary>
+    /// <param name="name">
+    ///     <see cref="LazyInfo{T}.Name" />
+    /// </param>
+    /// <param name="signature">Sequential opcodes to search the target method with.</param>
+    public static LazyMethod ByPartialSignature(string name, IReadOnlyList<OpCode> signature) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(signature)!);
 }
 
 // ReSharper disable once InconsistentNaming
@@ -69,19 +66,11 @@ public class LazyMethod
 ///     A reference to a method that gets located at runtime and invoked reflectively.
 /// </summary>
 /// <typeparam name="R">A type that the return value of this method can be casted to.</typeparam>
+[PublicAPI]
 public class LazyMethod<R> : LazyMethod
 {
     /// <inheritdoc />
-    public LazyMethod(string name, IReadOnlyList<OpCode> signature,
-        bool isConstructor = false,
-        bool entireMethod = false)
-        : base(name, signature, isConstructor, entireMethod)
-    {
-    }
-
-    /// <inheritdoc />
-    public LazyMethod(string name, Func<MethodBase?> action)
-        : base(name, action)
+    public LazyMethod(string name, Func<MethodInfo> action) : base(name, action)
     {
     }
 
@@ -98,4 +87,12 @@ public class LazyMethod<R> : LazyMethod
     /// <typeparam name="T">The return type of this method to cast to.</typeparam>
     public T Invoke<T>(object? instance = null, object?[]? parameters = null) =>
         (T)Reference.Invoke(instance, parameters);
+
+    /// <inheritdoc cref="LazyMethod.BySignature" />
+    public new static LazyMethod<R> BySignature(string name, IReadOnlyList<OpCode> signature) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(signature, true)!);
+
+    /// <inheritdoc cref="LazyMethod.ByPartialSignature" />
+    public new static LazyMethod<R> ByPartialSignature(string name, IReadOnlyList<OpCode> signature) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(signature)!);
 }

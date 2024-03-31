@@ -8,18 +8,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu_common.Helpers.Logger</c>
 ///     b20240102.2: <c>#=zN_Wxi7NCKC8KJdpmHc2RwYM=</c>
 /// </summary>
-[UsedImplicitly]
-public class Logger
+[PublicAPI]
+public static class Logger
 {
     /// <summary>
     ///     Original: <c>Log(string message, LoggingTarget target, LogLevel level)</c>
     ///     b20240102.2: <c>#=zzl_m9cI=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod Log = new(
-        "Logger#Log(...)",
-        new[]
-        {
+    public static readonly LazyMethod Log = LazyMethod.BySignature(
+        "osu_common.Helpers.Logger::Log(string, LoggingTarget, LogLevel)",
+        [
             Ldarg_1,
             Ldc_I4_1,
             Call,
@@ -30,8 +28,6 @@ public class Logger
             Pop,
             Leave_S,
             Ret,
-        },
-        false,
-        true
+        ]
     );
 }

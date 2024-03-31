@@ -8,16 +8,15 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.GameModes.Options.Options</c>
 ///     b20240123: <c>#=zIP$6zD_IcaL0ugvXAFTvJYG2gFLx</c>
 /// </summary>
-[UsedImplicitly]
-public class Options
+[PublicAPI]
+public static class Options
 {
     /// <summary>
     ///     Original: <c>CanExpand</c> (property getter)
     ///     b20240123: <c>#=zxcgzxWXF$WLr</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod<bool> GetCanExpand = new(
-        "Options#get_CanExpand",
+    public static readonly LazyMethod<bool> GetCanExpand = LazyMethod<bool>.ByPartialSignature(
+        "osu.GameModes.Options.Options.Options::get_CanExpand()",
         new[]
         {
             Ldc_I4,

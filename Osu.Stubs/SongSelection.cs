@@ -12,17 +12,16 @@ namespace Osu.Stubs;
 ///     Original: <c>osu.GameModes.Select.SongSelection</c>
 ///     b20240102.2: <c>#=zKgaD0lVGl2RcuL9z0qvnoUGLjD870$Ll1w==</c>
 /// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public static class SongSelection
 {
     /// <summary>
     ///     Original: <c>chooseBestSortMode(TreeGroupMode mode)</c>
     ///     b20240102.2: <c>#=zWDJY2KbbLKhn7OSo1w==</c>
     /// </summary>
-    public static readonly LazyMethod ChoseBestSortMode = new(
-        "SongSelection#chooseBestSortMode",
-        new[]
-        {
+    public static readonly LazyMethod ChoseBestSortMode = LazyMethod.ByPartialSignature(
+        "osu.GameModes.Select.SongSelection::chooseBestSortMode",
+        [
             Ldfld,
             Ldfld,
             Ldloc_0,
@@ -33,18 +32,16 @@ public static class SongSelection
             Box,
             Ldc_I4_1,
             Callvirt,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>beatmapTreeManager_OnRightClicked(object sender, BeatmapTreeItem item)</c>
     ///     b20240102.2: <c>#=zAmaE6G1Q0ysoWbGTpb40gD4dZN45</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod BeatmapTreeManagerOnRightClicked = new(
-        "SongSelection#beatmapTreeManager_OnRightClicked",
-        new[]
-        {
+    public static readonly LazyMethod BeatmapTreeManagerOnRightClicked = LazyMethod.ByPartialSignature(
+        "osu.GameModes.Select.SongSelection::beatmapTreeManager_OnRightClicked",
+        [
             Ldarg_2,
             Isinst,
             Brfalse_S,
@@ -54,16 +51,15 @@ public static class SongSelection
             Callvirt,
             Ldc_I4_S,
             Bne_Un_S,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>beatmapTreeManager</c> of type <see cref="Stubs.BeatmapTreeManager" />
     ///     b20240102.2: <c>#=zj0IgvXxTqseooUEFmQ==</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<object> BeatmapTreeManager = new(
-        "SongSelection#beatmapTreeManager",
+        "osu.GameModes.Select.SongSelection::beatmapTreeManager",
         () => FindReferences().BeatmapTreeManager
     );
 

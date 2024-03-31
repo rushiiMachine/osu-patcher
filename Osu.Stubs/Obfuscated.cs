@@ -7,21 +7,25 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
-/// <summary>
-///     Original: <c>osu.Helpers.Obfuscated{T}</c>
-///     b20240123: <c>#=z7wrq$zbpx0eedoF3ocH29DF53lUE{#=z62rU_UA=}</c>
-/// </summary>
-[UsedImplicitly]
-public class Obfuscated
+[PublicAPI]
+public static class Obfuscated
 {
+    /// <summary>
+    ///     Original: <c>osu.Helpers.Obfuscated{T}</c>
+    ///     b20240123: <c>#=z7wrq$zbpx0eedoF3ocH29DF53lUE{#=z62rU_UA=}</c>
+    /// </summary>
+    public static readonly LazyType Class = new(
+        "osu.Helpers.Obfuscated{T}",
+        () => Finalize!.Reference.DeclaringType!
+    );
+
     /// <summary>
     ///     Original: <c>Finalize()</c>
     ///     b20240123: <c>Finalize()</c>
     /// </summary>
-    private static readonly LazyMethod Finalize = new(
-        "Obfuscated#Finalize()",
-        new[]
-        {
+    private static readonly LazyMethod Finalize = LazyMethod.ByPartialSignature(
+        "osu.Helpers.Obfuscated<T>::Finalize()",
+        [
             Newobj,
             Dup,
             Stsfld,
@@ -34,25 +38,28 @@ public class Obfuscated
             Call,
             Endfinally,
             Ret,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>get_Value()</c> (property getter)
     ///     b20240123: <c>#=zHT6xZVI=</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyMethod<object> GetValue = new(
-        "Obfuscated#get_Value()",
-        () => RuntimeType.GetRuntimeMethods()
-            .First(mtd => mtd.GetParameters().Length == 0 && mtd.ReturnType.IsGenericParameter)
+        "osu.Helpers.Obfuscated{T}::get_Value()",
+        () => Class.Reference
+            .GetRuntimeMethods()
+            .First(mtd =>
+                mtd.GetParameters().Length == 0 &&
+                mtd.ReturnType.IsGenericParameter)
     );
 
-    [UsedImplicitly]
-    public static Type RuntimeType => Finalize.Reference.DeclaringType!;
-
-    // Binds the generic parameter in Obfuscated<T> so the method becomes callable
-    public static MethodBase BindGetValue(Type type) => RuntimeType
+    /// <summary>
+    ///     Binds the generic parameter in <c>Obfuscated{T}</c> so the method becomes callable
+    /// </summary>
+    /// <param name="type">The type that should be bound to the T generic parameter.</param>
+    /// <returns>A new bound method info that is invokable.</returns>
+    public static MethodInfo BindGetValue(Type type) => Class.Reference
         .MakeGenericType(type)
         .GetMethod(GetValue.Reference.Name)!;
 }

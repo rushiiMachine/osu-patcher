@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -11,21 +10,38 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
-/// <summary>
-///     Original: <c>osu.GameplayElements.Beatmaps.Beatmap</c>
-///     b20240123: <c>#=znWyq67N7qygzmzTavD7zPPRqI0zwVZPmTyOyayVHbxCf</c>
-/// </summary>
-[UsedImplicitly]
+[PublicAPI]
 public static class Beatmap
 {
+    /// <summary>
+    ///     Original: <c>osu.GameplayElements.Beatmaps.Beatmap</c>
+    ///     b20240123: <c>#=znWyq67N7qygzmzTavD7zPPRqI0zwVZPmTyOyayVHbxCf</c>
+    /// </summary>
+    public static readonly LazyType Class = new(
+        "osu.GameplayElements.Beatmaps.Beatmap",
+        () => Score.Constructor.Reference
+            .GetParameters()[1] // 2nd param is of type Beatmap
+            .ParameterType
+    );
+
+    /// <summary>
+    ///     Original: <c>Beatmap(string filename)</c>
+    ///     b20240123: <c>#=znWyq67N7qygzmzTavD7zPPRqI0zwVZPmTyOyayVHbxCf</c>
+    /// </summary>
+    public static readonly LazyConstructor Constructor = new(
+        "osu.GameplayElements.Beatmaps.Beatmap::Beatmap(string)",
+        () => Class.Reference
+            .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
+            .Single()
+    );
+
     /// <summary>
     ///     Original: Unknown, best guess: <c>SetContainingFolder(string absoluteDirPath)</c>
     ///     b20240123: <c>#=zQwzJucCIbIUZrSZR8Q==</c>
     /// </summary>
-    private static readonly LazyMethod SetContainingFolder = new(
-        "Beatmap#SetContainingFolder(...)",
-        new[]
-        {
+    private static readonly LazyMethod SetContainingFolder = LazyMethod.ByPartialSignature(
+        "osu.GameplayElements.Beatmaps.Beatmap::[unknown, SetContainingFolder?]",
+        [
             Callvirt,
             Starg_S,
             Ldarg_0,
@@ -39,21 +55,20 @@ public static class Beatmap
             Callvirt,
             Stfld, // Reference to ContainingFolder
             Ret,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>Filename</c>
     ///     b20240123: <c>#=zdZI_NOQ=</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<string?> Filename = new(
-        "Beatmap#Filename",
+        "osu.GameplayElements.Beatmaps.Beatmap::Filename",
         () =>
         {
             // Find the field this code is referencing: "this.Filename = Path.GetFileName(filename);"
             var findMethod = typeof(Path).GetMethod(nameof(Path.GetFileName))!;
-            var storeInstruction = MethodReader.GetInstructions(PrimaryConstructor)
+            var storeInstruction = MethodReader.GetInstructions(Constructor.Reference)
                 .SkipWhile(inst => !findMethod.Equals(inst.Operand))
                 .Skip(1)
                 .First();
@@ -68,9 +83,8 @@ public static class Beatmap
     ///     Original: Unknown, best guess: <c>ContainingFolder</c> (not absolute)
     ///     b20240123: <c>#=zDmW9P6igScNm</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<string?> ContainingFolder = new(
-        "Beatmap#ContainingFolder",
+        "osu.GameplayElements.Beatmaps.Beatmap::ContainingFolder",
         () =>
         {
             // Last Stfld is a reference to ContainingFolder
@@ -84,25 +98,10 @@ public static class Beatmap
     );
 
     /// <summary>
-    ///     Original: <c>Beatmap(string filename)</c>
-    ///     b20240123: <c>#=znWyq67N7qygzmzTavD7zPPRqI0zwVZPmTyOyayVHbxCf</c>
-    /// </summary>
-    [UsedImplicitly]
-    public static ConstructorInfo PrimaryConstructor => RuntimeType
-        .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
-        .Single();
-
-    [UsedImplicitly]
-    public static Type RuntimeType => (Score.ConstructorFromReplayAndMap.Reference as ConstructorInfo)!
-        .GetParameters()[1] // 2nd param is of type Beatmap
-        .ParameterType;
-
-    /// <summary>
     ///     Utility wrapper to get the full beatmap path of a <c>Beatmap</c>.
     /// </summary>
     /// <param name="beatmap">An instance of <c>Beatmap</c> that was initialized with the filepath.</param>
     /// <returns>The absolute path, or null if this isn't a file-backed Beatmap.</returns>
-    [UsedImplicitly]
     public static string? GetBeatmapPath(object beatmap)
     {
         var filename = Filename.Get(beatmap);

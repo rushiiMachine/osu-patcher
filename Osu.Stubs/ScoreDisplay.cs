@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -7,13 +6,18 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
-/// <summary>
-///     Original: <c>osu.GameModes.Play.Components.ScoreDisplay</c>
-///     b20240124: <c>#=z6dniqZasYGnUF21A3FQQhhWHV7POD$6AVg==</c>
-/// </summary>
-[UsedImplicitly]
-public class ScoreDisplay
+[PublicAPI]
+public static class ScoreDisplay
 {
+    /// <summary>
+    ///     Original: <c>osu.GameModes.Play.Components.ScoreDisplay</c>
+    ///     b20240124: <c>#=z6dniqZasYGnUF21A3FQQhhWHV7POD$6AVg==</c>
+    /// </summary>
+    public static readonly LazyType Class = new(
+        "osu.GameModes.Play.Components.ScoreDisplay",
+        () => Constructor!.Reference.DeclaringType!
+    );
+
     /// <summary>
     ///     Original:
     ///     <c>
@@ -26,11 +30,9 @@ public class ScoreDisplay
     ///     </c>
     ///     b20240124: Same as class
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod Constructor = new(
-        "ScoreDisplay::<init>(...)",
-        new[]
-        {
+    public static readonly LazyConstructor Constructor = LazyConstructor.ByPartialSignature(
+        "osu.GameModes.Play.Components.ScoreDisplay::ScoreDisplay(SpriteManager, Vector2, bool, float, bool, bool)",
+        [
             Conv_R4,
             Ldarg_3,
             Brtrue_S,
@@ -41,19 +43,16 @@ public class ScoreDisplay
             Brtrue_S,
             Ldc_I4_0,
             Br_S,
-        },
-        true
+        ]
     );
 
     /// <summary>
     ///     Original: <c>Hide()</c>
     ///     b20240123: <c>#=zRjDThRI=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod Hide = new( // TODO: support hiding performance counter
-        "ScoreDisplay#Hide()",
-        new[]
-        {
+    public static readonly LazyMethod Hide = LazyMethod.ByPartialSignature( // TODO: support hiding performance counter
+        "osu.GameModes.Play.Components.ScoreDisplay::Hide()",
+        [
             Ldc_I4_0,
             Ldc_I4_0,
             Ldc_I4_0,
@@ -68,20 +67,16 @@ public class ScoreDisplay
             Ldc_I4_0,
             Callvirt,
             Ret,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>spriteManager</c>
     ///     b20240123: <c>#=zK4XquDeTazcx</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<object> SpriteManager = new(
-        "ScoreDisplay#spriteManager",
-        () => RuntimeType.GetDeclaredFields()
-            .Single(field => field.FieldType == Stubs.SpriteManager.RuntimeType)
+        "osu.GameModes.Play.Components.ScoreDisplay::spriteManager",
+        () => Class.Reference.GetDeclaredFields()
+            .Single(field => field.FieldType == Stubs.SpriteManager.Class.Reference)
     );
-
-    [UsedImplicitly]
-    public static Type RuntimeType => Constructor.Reference.DeclaringType!;
 }

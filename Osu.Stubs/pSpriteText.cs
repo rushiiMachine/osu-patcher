@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using HarmonyLib;
@@ -8,14 +7,19 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs;
 
-/// <summary>
-///     Original: <c>osu.Graphics.Sprites.pSpriteText</c>
-///     b20240123: <c>#=zckAvJzCXrz1Buo3s_qsuXqlnRaWrA6R8Iw==</c>
-/// </summary>
-[UsedImplicitly]
+[PublicAPI]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public class pSpriteText
+public static class pSpriteText
 {
+    /// <summary>
+    ///     Original: <c>osu.Graphics.Sprites.pSpriteText</c>
+    ///     b20240123: <c>#=zckAvJzCXrz1Buo3s_qsuXqlnRaWrA6R8Iw==</c>
+    /// </summary>
+    public static readonly LazyType Class = new(
+        "osu.Graphics.Sprites.pSpriteText",
+        () => Constructor!.Reference.DeclaringType!
+    );
+
     /// <summary>
     ///     Original:
     ///     <c>
@@ -25,10 +29,9 @@ public class pSpriteText
     ///     </c>
     ///     b20240123: <c></c>
     /// </summary>
-    public static readonly LazyMethod<object> Constructor = new(
-        "pSpriteText#<init>(...)",
-        new[]
-        {
+    public static readonly LazyConstructor Constructor = LazyConstructor.ByPartialSignature(
+        "osu.Graphics.Sprites.pSpriteText::pSpriteText(...)",
+        [
             Ldarg_2,
             Ldarg_S,
             Call,
@@ -41,8 +44,7 @@ public class pSpriteText
             Ldarg_0,
             Ldfld,
             Ldloca_S,
-        },
-        true
+        ]
     );
 
     /// <summary>
@@ -50,11 +52,9 @@ public class pSpriteText
     ///     Original: <c>MeasureText()</c>
     ///     b20240123: <c>#=z2Klmy0o=</c>
     /// </summary>
-    [UsedImplicitly]
-    public static readonly LazyMethod<object> MeasureText = new(
-        "pSpriteText#MeasureText()",
-        new[]
-        {
+    public static readonly LazyMethod<object> MeasureText = LazyMethod<object>.ByPartialSignature(
+        "osu.Graphics.Sprites.pSpriteText::MeasureText()",
+        [
             Ldarg_0,
             Ldfld,
             Brfalse_S,
@@ -64,20 +64,16 @@ public class pSpriteText
             Ldarg_0,
             Ldfld,
             Ret,
-        }
+        ]
     );
 
     /// <summary>
     ///     Original: <c>TextConstantSpacing</c>
     ///     b20240123: <c>#=zWUFISsTiUxtU</c>
     /// </summary>
-    [UsedImplicitly]
     public static readonly LazyField<bool> TextConstantSpacing = new(
-        "pSpriteText#TextConstantSpacing",
-        () => RuntimeType.GetDeclaredFields()
+        "osu.Graphics.Sprites.pSpriteText::TextConstantSpacing",
+        () => Class.Reference.GetDeclaredFields()
             .Single(field => field.FieldType == typeof(bool))
     );
-
-    [UsedImplicitly]
-    public static Type RuntimeType => Constructor.Reference.DeclaringType!;
 }

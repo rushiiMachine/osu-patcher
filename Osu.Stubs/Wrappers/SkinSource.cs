@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Osu.Stubs.Wrappers;
@@ -6,10 +5,8 @@ namespace Osu.Stubs.Wrappers;
 /// <summary>
 ///     Original: <c>osu.Graphics.Skinning.SkinSource</c>
 /// </summary>
-[UsedImplicitly]
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
-[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-public class SkinSource
+[PublicAPI]
+public static class SkinSource
 {
     public const int None = 0;
     public const int Osu = 1;
