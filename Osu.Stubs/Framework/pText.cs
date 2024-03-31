@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Framework;
 
 /// <summary>
 ///     Sprite that handles text. This is the base class of <c>pSpriteText</c>.
@@ -18,6 +18,7 @@ public static class pText
     ///     Original: <c>set_Text(string value)</c> (property setter)
     ///     b20240123: <c>#=zeWQSmtI=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod SetText = LazyMethod.BySignature(
         "osu.Graphics.Sprites.pText::set_Text(string)",
         [

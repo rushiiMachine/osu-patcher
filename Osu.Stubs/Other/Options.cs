@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Other;
 
 /// <summary>
 ///     Original: <c>osu.GameModes.Options.Options</c>
@@ -15,6 +15,7 @@ public static class Options
     ///     Original: <c>CanExpand</c> (property getter)
     ///     b20240123: <c>#=zxcgzxWXF$WLr</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<bool> GetCanExpand = LazyMethod<bool>.ByPartialSignature(
         "osu.GameModes.Options.Options.Options::get_CanExpand()",
         new[]

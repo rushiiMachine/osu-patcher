@@ -3,12 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Osu.Stubs.Scoring;
 using Osu.Utils;
 using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Other;
 
 [PublicAPI]
 public static class Beatmap
@@ -17,6 +18,7 @@ public static class Beatmap
     ///     Original: <c>osu.GameplayElements.Beatmaps.Beatmap</c>
     ///     b20240123: <c>#=znWyq67N7qygzmzTavD7zPPRqI0zwVZPmTyOyayVHbxCf</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.GameplayElements.Beatmaps.Beatmap",
         () => Score.Constructor.Reference
@@ -28,6 +30,7 @@ public static class Beatmap
     ///     Original: <c>Beatmap(string filename)</c>
     ///     b20240123: <c>#=znWyq67N7qygzmzTavD7zPPRqI0zwVZPmTyOyayVHbxCf</c>
     /// </summary>
+    [Stub]
     public static readonly LazyConstructor Constructor = new(
         "osu.GameplayElements.Beatmaps.Beatmap::Beatmap(string)",
         () => Class.Reference
@@ -39,7 +42,8 @@ public static class Beatmap
     ///     Original: Unknown, best guess: <c>SetContainingFolder(string absoluteDirPath)</c>
     ///     b20240123: <c>#=zQwzJucCIbIUZrSZR8Q==</c>
     /// </summary>
-    private static readonly LazyMethod SetContainingFolder = LazyMethod.ByPartialSignature(
+    [Stub]
+    public static readonly LazyMethod SetContainingFolder = LazyMethod.ByPartialSignature(
         "osu.GameplayElements.Beatmaps.Beatmap::[unknown, SetContainingFolder?]",
         [
             Callvirt,
@@ -62,6 +66,7 @@ public static class Beatmap
     ///     Original: <c>Filename</c>
     ///     b20240123: <c>#=zdZI_NOQ=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<string?> Filename = new(
         "osu.GameplayElements.Beatmaps.Beatmap::Filename",
         () =>
@@ -83,6 +88,7 @@ public static class Beatmap
     ///     Original: Unknown, best guess: <c>ContainingFolder</c> (not absolute)
     ///     b20240123: <c>#=zDmW9P6igScNm</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<string?> ContainingFolder = new(
         "osu.GameplayElements.Beatmaps.Beatmap::ContainingFolder",
         () =>

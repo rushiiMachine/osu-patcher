@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.GameModes;
 
 [PublicAPI]
 public static class ScoreDisplay
@@ -13,6 +13,7 @@ public static class ScoreDisplay
     ///     Original: <c>osu.GameModes.Play.Components.ScoreDisplay</c>
     ///     b20240124: <c>#=z6dniqZasYGnUF21A3FQQhhWHV7POD$6AVg==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.GameModes.Play.Components.ScoreDisplay",
         () => Constructor!.Reference.DeclaringType!
@@ -30,6 +31,7 @@ public static class ScoreDisplay
     ///     </c>
     ///     b20240124: Same as class
     /// </summary>
+    [Stub]
     public static readonly LazyConstructor Constructor = LazyConstructor.ByPartialSignature(
         "osu.GameModes.Play.Components.ScoreDisplay::ScoreDisplay(SpriteManager, Vector2, bool, float, bool, bool)",
         [
@@ -50,6 +52,7 @@ public static class ScoreDisplay
     ///     Original: <c>Hide()</c>
     ///     b20240123: <c>#=zRjDThRI=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod Hide = LazyMethod.ByPartialSignature( // TODO: support hiding performance counter
         "osu.GameModes.Play.Components.ScoreDisplay::Hide()",
         [
@@ -74,9 +77,10 @@ public static class ScoreDisplay
     ///     Original: <c>spriteManager</c>
     ///     b20240123: <c>#=zK4XquDeTazcx</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object> SpriteManager = new(
         "osu.GameModes.Play.Components.ScoreDisplay::spriteManager",
         () => Class.Reference.GetDeclaredFields()
-            .Single(field => field.FieldType == Stubs.SpriteManager.Class.Reference)
+            .Single(field => field.FieldType == Graphics.SpriteManager.Class.Reference)
     );
 }

@@ -1,10 +1,11 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Osu.Stubs.Scoring;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.GameModes;
 
 [PublicAPI]
 public static class Player
@@ -13,6 +14,7 @@ public static class Player
     ///     Original: <c>osu.GameModes.Play.Player</c>
     ///     b20240124: <c>#=zOTWUr4vq60U15SRmD_JItyatbhdR</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.GameModes.Play.Player",
         () => GetAllowDoubleSkip!.Reference.DeclaringType!
@@ -22,6 +24,7 @@ public static class Player
     ///     Original: <c>get_AllowDoubleSkip()</c> (property getter)
     ///     b20240124: <c>#=zp29IlAJ43g4WRArPQA==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod GetAllowDoubleSkip = LazyMethod.ByPartialSignature(
         "osu.GameModes.Play.Player::get_AllowDoubleSkip()",
         [
@@ -43,6 +46,7 @@ public static class Player
     ///     Original: <c>OnLoadComplete(bool success)</c>
     ///     b20240124: <c>#=zXb_K4cZvV$uy</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<bool> OnLoadComplete = LazyMethod<bool>.ByPartialSignature(
         "osu.GameModes.Play.Player::OnLoadComplete(bool)",
         [
@@ -61,6 +65,7 @@ public static class Player
     ///     Original: <c>currentScore</c>
     ///     b20240124: <c>#=zF6h5l4j0$TfX</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object?> CurrentScore = new(
         "osu.GameModes.Play.Player::currentScore",
         () => Class.Reference

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Helpers;
 
 [PublicAPI]
 public static class Obfuscated
@@ -14,6 +14,7 @@ public static class Obfuscated
     ///     Original: <c>osu.Helpers.Obfuscated{T}</c>
     ///     b20240123: <c>#=z7wrq$zbpx0eedoF3ocH29DF53lUE{#=z62rU_UA=}</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.Helpers.Obfuscated{T}",
         () => Finalize!.Reference.DeclaringType!
@@ -23,7 +24,8 @@ public static class Obfuscated
     ///     Original: <c>Finalize()</c>
     ///     b20240123: <c>Finalize()</c>
     /// </summary>
-    private static readonly LazyMethod Finalize = LazyMethod.ByPartialSignature(
+    [Stub]
+    public static readonly LazyMethod Finalize = LazyMethod.ByPartialSignature(
         "osu.Helpers.Obfuscated<T>::Finalize()",
         [
             Newobj,
@@ -45,6 +47,7 @@ public static class Obfuscated
     ///     Original: <c>get_Value()</c> (property getter)
     ///     b20240123: <c>#=zHT6xZVI=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<object> GetValue = new(
         "osu.Helpers.Obfuscated{T}::get_Value()",
         () => Class.Reference

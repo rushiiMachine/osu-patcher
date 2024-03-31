@@ -5,7 +5,7 @@ using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Other;
 
 /// <summary>
 ///     Original: <c>osu.GameplayElements.Events.EventManager</c>
@@ -18,6 +18,7 @@ public static class EventManager
     ///     Original: <c>set_ShowStoryboard()</c> (property setter)
     ///     b20240102.2: <c>#=zKZugEelWoTXb</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod SetShowStoryboard = LazyMethod.BySignature(
         "osu.GameplayElements.Events.EventManager::set_ShowStoryBoard()",
         [
@@ -39,6 +40,7 @@ public static class EventManager
     ///     The compiler generated backing field for the <c>ShowStoryboard</c> property.
     ///     See: <see cref="SetShowStoryboard" />
     /// </summary>
+    [Stub]
     public static readonly LazyField<bool> ShowStoryboard = new(
         "osu.GameplayElements.Events.EventManager::[ShowStoryboard backing]",
         () =>

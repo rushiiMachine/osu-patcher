@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Other;
 
 /// <summary>
 ///     Original: <c>osu.GameBase</c>
@@ -15,6 +15,7 @@ public static class GameBase
     ///     Original: <c>get_ModeCanReload()</c>
     ///     b20240123: <c>#=zL6aRJUMxZO5fmlF9KQ==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<bool> GetModeCanReload = LazyMethod<bool>.ByPartialSignature(
         "osu.GameBase::get_ModeCanReload()",
         [
@@ -34,6 +35,7 @@ public static class GameBase
     ///     Original: <c>softHandle(Exception e)</c>
     ///     b20240123: <c>#=z8BJOiJxSLUwM</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod SoftHandle = LazyMethod.ByPartialSignature(
         "osu.GameBase::softHandle(Exception)",
         [

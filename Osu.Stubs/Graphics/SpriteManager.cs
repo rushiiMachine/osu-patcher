@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Graphics;
 
 [PublicAPI]
 public static class SpriteManager
@@ -11,6 +11,7 @@ public static class SpriteManager
     ///     Original: <c>osu.Graphics.Sprites.SpriteManager</c>
     ///     b20240123: <c>#=zaNwi4uR9iF1HqyG9UwEA2vinmw4mMbeYaQ==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.Graphics.Sprites.SpriteManager",
         () => Add!.Reference.DeclaringType!
@@ -20,6 +21,7 @@ public static class SpriteManager
     ///     Original: <c>Add(pDrawable p)</c>
     ///     b20240123: <c>#=zJdXS36o=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod Add = LazyMethod.ByPartialSignature(
         "osu.Graphics.Sprites.SpriteManager::Add(pDrawable)",
         [

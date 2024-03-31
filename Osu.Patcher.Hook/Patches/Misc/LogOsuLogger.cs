@@ -6,6 +6,7 @@ using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs;
+using Osu.Stubs.Helpers;
 
 namespace Osu.Patcher.Hook.Patches.Misc;
 

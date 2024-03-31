@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Patcher.Hook.Patches.UI;
 using Osu.Stubs;
+using Osu.Stubs.Other;
 using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 

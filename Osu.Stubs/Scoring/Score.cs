@@ -4,12 +4,13 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Stubs.Helpers;
 using Osu.Utils.Extensions;
 using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Scoring;
 
 [PublicAPI]
 public static class Score
@@ -18,6 +19,7 @@ public static class Score
     ///     Original: <c>osu.GameplayElements.Scoring.Score</c>
     ///     b20240123: <c>#=zwswDPw49w3ZrQEjyKFYhq9$8W6WDMiSHDDrNV7k=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.GameplayElements.Scoring.Score",
         () => GetAccuracy!.Reference.DeclaringType!
@@ -27,6 +29,7 @@ public static class Score
     ///     Original: <c>Score(string input, Beatmap beatmap)</c>
     ///     b20240123: <c>#=zwswDPw49w3ZrQEjyKFYhq9$8W6WDMiSHDDrNV7k=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyConstructor Constructor = new(
         "osu.GameplayElements.Scoring.Score::Score(string, Beatmap)",
         () => Class.Reference
@@ -40,6 +43,7 @@ public static class Score
     ///     Original: <c>get_Accuracy()</c> (property getter)
     ///     b20240123: <c>#=zY_1A2REMae0xoSV0fA==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<float> GetAccuracy = LazyMethod<float>.ByPartialSignature(
         "osu.GameplayElements.Scoring.Score::get_Accuracy()",
         [
@@ -61,17 +65,19 @@ public static class Score
     ///     Original: <c>Beatmap</c>
     ///     b20240123: <c>#=zhcWn5UkrdlUu</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object?> Beatmap = new(
         "osu.GameplayElements.Scoring.Score::Beatmap",
         () => Class.Reference
             .GetRuntimeFields()
-            .Single(inst => inst.FieldType == Stubs.Beatmap.Class.Reference)
+            .Single(inst => inst.FieldType == Other.Beatmap.Class.Reference)
     );
 
     /// <summary>
     ///     Original: <c>MaxCombo</c>
     ///     b20240123: <c>#=zkQ9fUTuRkHox</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<int> MaxCombo = new(
         "osu.GameplayElements.Scoring.Score::MaxCombo",
         () =>
@@ -96,6 +102,7 @@ public static class Score
     ///     Original: <c>EnabledMods</c>
     ///     b20240123: <c>#=zxL1NzqBwrqNU</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object> EnabledMods = new(
         "Score#EnabledMods",
         () => Class.Reference
@@ -107,6 +114,7 @@ public static class Score
     /// <summary>
     ///     The generic method <c>Obfuscated{T}::get_Value()</c> with the type parameter T bound to <c>Mods</c>.
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<int> EnabledModsGetValue = new(
         "osu.Helpers.Obfuscated<Mods>::get_Value()",
         () =>

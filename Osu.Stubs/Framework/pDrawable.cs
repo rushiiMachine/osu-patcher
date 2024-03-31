@@ -7,7 +7,7 @@ using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Framework;
 
 [PublicAPI]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -17,7 +17,8 @@ public static class pDrawable
     ///     Original: <c>osu.Graphics.pDrawable</c>
     ///     b20240123: <c>#=zB63SnFDTnRqYMKLlscCRpu_ww$IG</c>
     /// </summary>
-    public static LazyType Class = new(
+    [Stub]
+    public static readonly LazyType Class = new(
         "osu.Graphics.pDrawable",
         () => ScaleTo!.Reference.DeclaringType!
     );
@@ -26,6 +27,7 @@ public static class pDrawable
     ///     Original: <c>Click(bool confirmed)</c>
     ///     b20240123: <c>#=zcJ6mazw=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<bool> Click = LazyMethod<bool>.ByPartialSignature(
         "osu.Graphics.pDrawable::Click(bool)",
         [
@@ -45,6 +47,7 @@ public static class pDrawable
     ///     Original: <c>ScaleTo(float final, int duration, EasingTypes easing)</c>
     ///     b20240123: <c>#=zVyF2njk=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<object> ScaleTo = LazyMethod<object>.ByPartialSignature(
         "osu.Graphics.pDrawable::ScaleTo(float, int, EasingTypes)",
         [
@@ -67,6 +70,7 @@ public static class pDrawable
     ///     b20240123: <c>#=ztOn8vDI=</c>
     ///     There is 3 fields with a type of <c>Vector2</c> on this class. The middle one is <c>Position</c>.
     /// </summary>
+    [Stub]
     public static readonly LazyField<object> Position = new(
         "osu.Graphics.pDrawable::Position",
         () => Class.Reference.GetDeclaredFields().AsEnumerable()
@@ -80,6 +84,7 @@ public static class pDrawable
     ///     Original: <c>Scale</c>
     ///     b20240123: <c>#=zmbpQ79A=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<float> Scale = new(
         "osu.Graphics.pDrawable::Scale",
         () =>

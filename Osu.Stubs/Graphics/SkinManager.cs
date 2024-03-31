@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Graphics;
 
 [PublicAPI]
 public static class SkinManager
@@ -13,6 +13,7 @@ public static class SkinManager
     ///     Original: <c>osu.Graphics.Skinning.SkinManager</c>
     ///     b20240123: <c>#=zdwZLyAQXwqtPhTfOQ$e2PRLm39DcCX13EA==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.Graphics.Skinning.SkinManager",
         () => GetUseNewLayout!.Reference.DeclaringType!
@@ -22,6 +23,7 @@ public static class SkinManager
     ///     Original: <c>get_UseNewLayout()</c>
     ///     b20240123: <c>#=zOwgqVurLFLwR</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<bool> GetUseNewLayout = LazyMethod<bool>.ByPartialSignature(
         "osu.Graphics.Skinning.SkinManager::get_UseNewLayout()",
         [
@@ -40,6 +42,7 @@ public static class SkinManager
     ///     Original: <c>Current</c>
     ///     b20240123: <c>#=zUzFTHbU=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object> Current = new(
         "SkinManager#Current",
         // There is two fields with type SkinOsu; Current and CurrentUserSkin in that order

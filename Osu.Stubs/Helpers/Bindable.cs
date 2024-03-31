@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Osu.Stubs.SongSelect;
 using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Helpers;
 
 /// <summary>
 ///     Original: <c>osu.Helpers.Bindable</c>
@@ -18,6 +19,7 @@ public static class Bindable
     ///     Original: <c>get_Value()</c> (property getter method)
     ///     b20240102.2: <c>#=zHO4Uaog=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<object> GetValue = new(
         "osu.Helpers.Bindable::get_Value()",
         () =>

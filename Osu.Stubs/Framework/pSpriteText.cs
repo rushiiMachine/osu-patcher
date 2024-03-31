@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Framework;
 
 [PublicAPI]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -15,6 +15,7 @@ public static class pSpriteText
     ///     Original: <c>osu.Graphics.Sprites.pSpriteText</c>
     ///     b20240123: <c>#=zckAvJzCXrz1Buo3s_qsuXqlnRaWrA6R8Iw==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.Graphics.Sprites.pSpriteText",
         () => Constructor!.Reference.DeclaringType!
@@ -29,6 +30,7 @@ public static class pSpriteText
     ///     </c>
     ///     b20240123: <c></c>
     /// </summary>
+    [Stub]
     public static readonly LazyConstructor Constructor = LazyConstructor.ByPartialSignature(
         "osu.Graphics.Sprites.pSpriteText::pSpriteText(...)",
         [
@@ -52,6 +54,7 @@ public static class pSpriteText
     ///     Original: <c>MeasureText()</c>
     ///     b20240123: <c>#=z2Klmy0o=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod<object> MeasureText = LazyMethod<object>.ByPartialSignature(
         "osu.Graphics.Sprites.pSpriteText::MeasureText()",
         [
@@ -71,6 +74,7 @@ public static class pSpriteText
     ///     Original: <c>TextConstantSpacing</c>
     ///     b20240123: <c>#=zWUFISsTiUxtU</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<bool> TextConstantSpacing = new(
         "osu.Graphics.Sprites.pSpriteText::TextConstantSpacing",
         () => Class.Reference.GetDeclaredFields()

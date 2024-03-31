@@ -6,7 +6,7 @@ using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.SongSelect;
 
 /// <summary>
 ///     Original: <c>osu.GameModes.Select.SongSelection</c>
@@ -19,6 +19,7 @@ public static class SongSelection
     ///     Original: <c>chooseBestSortMode(TreeGroupMode mode)</c>
     ///     b20240102.2: <c>#=zWDJY2KbbLKhn7OSo1w==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod ChoseBestSortMode = LazyMethod.ByPartialSignature(
         "osu.GameModes.Select.SongSelection::chooseBestSortMode",
         [
@@ -39,6 +40,7 @@ public static class SongSelection
     ///     Original: <c>beatmapTreeManager_OnRightClicked(object sender, BeatmapTreeItem item)</c>
     ///     b20240102.2: <c>#=zAmaE6G1Q0ysoWbGTpb40gD4dZN45</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod BeatmapTreeManagerOnRightClicked = LazyMethod.ByPartialSignature(
         "osu.GameModes.Select.SongSelection::beatmapTreeManager_OnRightClicked",
         [
@@ -55,9 +57,10 @@ public static class SongSelection
     );
 
     /// <summary>
-    ///     Original: <c>beatmapTreeManager</c> of type <see cref="Stubs.BeatmapTreeManager" />
+    ///     Original: <c>beatmapTreeManager</c> of type <see cref="SongSelect.BeatmapTreeManager" />
     ///     b20240102.2: <c>#=zj0IgvXxTqseooUEFmQ==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object> BeatmapTreeManager = new(
         "osu.GameModes.Select.SongSelection::beatmapTreeManager",
         () => FindReferences().BeatmapTreeManager

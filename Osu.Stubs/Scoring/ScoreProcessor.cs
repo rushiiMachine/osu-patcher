@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Scoring;
 
 /// <summary>
 ///     Original: <c>osu.GameplayElements.Scoring.Processors.ScoreProcessor</c>
@@ -17,6 +17,7 @@ public static class ScoreProcessor
     ///     Original: <c>Reset(bool storeStatistics)</c>
     ///     b20240123: <c>#=z6nCyHQk=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod Clear = LazyMethod.ByPartialSignature(
         "osu.GameplayElements.Scoring.Processors.ScoreProcessor::Clear(bool)",
         [
@@ -36,6 +37,7 @@ public static class ScoreProcessor
     ///     Original: <c>Add(ScoreChange change)</c>
     ///     b20240123: <c>#=zJdXS36o=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod AddScoreChange = LazyMethod.ByPartialSignature(
         "osu.GameplayElements.Scoring.Processors.ScoreProcessor::Add(ScoreChange)",
         new[]
@@ -60,6 +62,7 @@ public static class ScoreProcessor
     ///     Original: <c>MaximumCombo</c>
     ///     b20240123: <c>#=zqaALxNP6RgRC</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<int> MaximumCombo = new(
         "osu.GameplayElements.Scoring.Processors.ScoreProcessor::MaximumCombo",
         () => AddScoreChange.Reference.DeclaringType!

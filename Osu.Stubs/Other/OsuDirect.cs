@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Other;
 
 /// <summary>
 ///     Original: <c>osu.Online.OsuDirect</c>
@@ -15,6 +15,7 @@ public static class OsuDirect
     ///     Original: <c>HandlePickup(...)</c>
     ///     b20240102.2: <c>#=zJczNz_3lxxrQQnnZog==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod HandlePickup = LazyMethod.ByPartialSignature(
         "osu.Online.OsuDirect::HandlePickup(...)",
         [

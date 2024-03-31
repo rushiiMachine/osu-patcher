@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.SongSelect;
 
 /// <summary>
 ///     Original: <c>osu.GameplayElements.Beatmaps.BeatmapTreeItem</c>
@@ -15,6 +15,7 @@ public static class BeatmapTreeItem
     ///     Original: <c>PopulateSprites(TreeItemState lastState, bool instant)</c>
     ///     b20240102.2: <c>#=ztf5JjnV1ubq2KLwXBg==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod UpdateSprites = LazyMethod.ByPartialSignature(
         "osu.GameplayElements.Beatmaps.BeatmapTreeItem::UpdateSprites(TreeItemState, bool)",
         [
@@ -38,6 +39,7 @@ public static class BeatmapTreeItem
     ///     Original: <c>PopulateSprites()</c>
     ///     b20240102.2: <c>#=zGdedQLY8W$wSqdNzBA==</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod PopulateSprites = LazyMethod.ByPartialSignature(
         "osu.GameplayElements.Beatmaps.BeatmapTreeItem::PopulateSprites()",
         [

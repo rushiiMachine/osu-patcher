@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Helpers;
 
 /// <summary>
 ///     Original: <c>osu.Helpers.ErrorSubmission</c>
@@ -15,6 +15,7 @@ public static class ErrorSubmission
     ///     Original: osu.Helpers.ErrorSubmission:Submit(OsuError)
     ///     v20230326: #=zhC91LB1xsJMwYkF0UQ==:#=zPqLxZPA=
     /// </summary>
+    [Stub]
     public static readonly LazyMethod Submit = LazyMethod.ByPartialSignature(
         "osu.Helpers.ErrorSubmission::Submit(OsuError)",
         [

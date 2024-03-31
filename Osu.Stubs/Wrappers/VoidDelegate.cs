@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Osu.Stubs.Graphics;
 
 namespace Osu.Stubs.Wrappers;
 

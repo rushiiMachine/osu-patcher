@@ -1,7 +1,8 @@
 using JetBrains.Annotations;
+using Osu.Stubs.Scoring;
 using Osu.Utils.Lazy;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Rulesets;
 
 [PublicAPI]
 public class IncreaseScoreType
@@ -38,6 +39,7 @@ public class IncreaseScoreType
     ///     Original: <c>osu.GameModes.Play.Rulesets.IncreaseScoreType</c>
     ///     b20240123: <c>#=zGMiEmtRx7tdNjrx8B18dVB33Br1S9OJ2_XDs0XJSAtWZ</c>
     /// </summary>
+    [Stub]
     public static readonly LazyType Class = new(
         "osu.GameModes.Play.Rulesets.IncreaseScoreType",
         () => ScoreChange.Constructor.Reference

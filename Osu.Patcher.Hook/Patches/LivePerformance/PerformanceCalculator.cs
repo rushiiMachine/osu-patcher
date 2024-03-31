@@ -2,6 +2,9 @@ using System;
 using System.Diagnostics;
 using Osu.Performance;
 using Osu.Stubs;
+using Osu.Stubs.GameModes;
+using Osu.Stubs.Other;
+using Osu.Stubs.Scoring;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 

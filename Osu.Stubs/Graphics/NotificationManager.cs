@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.Graphics;
 
 /// <summary>
 ///     Original: <c>osu.Graphics.Notifications.NotificationManager</c>
@@ -23,6 +23,7 @@ public static class NotificationManager
     ///     </code>
     ///     v20230326: <c>#=zKAl4ByX632sEL0mCYHkNNO8=:#=zKgeB1K0=</c>
     /// </summary>
+    [Stub]
     public static readonly LazyMethod ShowMessage = LazyMethod.ByPartialSignature(
         "osu.Graphics.Notifications.NotificationManager::ShowMessage(string, Color, int, VoidDelegate)",
         [

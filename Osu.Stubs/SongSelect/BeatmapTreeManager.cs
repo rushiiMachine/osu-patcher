@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 
-namespace Osu.Stubs;
+namespace Osu.Stubs.SongSelect;
 
 /// <summary>
 ///     Original: <c>osu.GameplayElements.Beatmaps.BeatmapTreeManager</c>
@@ -14,6 +14,7 @@ public static class BeatmapTreeManager
     ///     Original: <c>CurrentGroupMode</c> of type <c>Bindable{TreeGroupMode}</c>
     ///     b20240102.2: <c>#=zbF4rnAiPRGJl</c>
     /// </summary>
+    [Stub]
     public static readonly LazyField<object> CurrentGroupMode = new(
         "osu.GameplayElements.Beatmaps.BeatmapTreeManager::CurrentGroupMode",
         () => SongSelection.FindReferences().CurrentGroupMode
