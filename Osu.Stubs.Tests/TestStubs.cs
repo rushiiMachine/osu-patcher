@@ -21,6 +21,17 @@ public class TestStubs
             try
             {
                 lazy.Fill();
+
+                if (lazy.Reference is Type type)
+                {
+                    TestContext.WriteLine(type.FullName);
+                }
+                else
+                {
+                    TestContext.Write(lazy.Reference.DeclaringType!.FullName);
+                    TestContext.Write(" :: ");
+                    TestContext.WriteLine(lazy.Reference.ToString());
+                }
             }
             catch (AggregateException e)
             {
