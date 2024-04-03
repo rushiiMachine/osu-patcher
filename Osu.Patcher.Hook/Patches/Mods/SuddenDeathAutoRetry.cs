@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Rulesets;
+using Osu.Stubs.GameModes.Play.Rulesets;
 using static System.Reflection.Emit.OpCodes;
-using static Osu.Stubs.Other.Mods;
+using static Osu.Stubs.Root.Mods;
 
 namespace Osu.Patcher.Hook.Patches.Mods;
 

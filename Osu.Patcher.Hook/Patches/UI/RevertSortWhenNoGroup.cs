@@ -3,8 +3,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Stubs.GameModes.Select;
+using Osu.Stubs.GameplayElements.Beatmaps;
 using Osu.Stubs.Helpers;
-using Osu.Stubs.SongSelect;
 using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 

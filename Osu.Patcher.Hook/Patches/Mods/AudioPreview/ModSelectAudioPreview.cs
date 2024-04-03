@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.SongSelect;
+using Osu.Stubs.GameModes.Select;
 
 namespace Osu.Patcher.Hook.Patches.Mods.AudioPreview;
 

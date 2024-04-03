@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.SongSelect;
+using Osu.Stubs.GameplayElements.Beatmaps;
 using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 

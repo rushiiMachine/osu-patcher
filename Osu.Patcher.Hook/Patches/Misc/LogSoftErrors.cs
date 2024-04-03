@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Other;
+using Osu.Stubs.Root;
 
 namespace Osu.Patcher.Hook.Patches.Misc;
 

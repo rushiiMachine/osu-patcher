@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Performance;
-using Osu.Stubs.Rulesets;
-using Osu.Stubs.Scoring;
+using Osu.Stubs.GameModes.Play.Rulesets;
+using Osu.Stubs.GameplayElements.Scoring;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 

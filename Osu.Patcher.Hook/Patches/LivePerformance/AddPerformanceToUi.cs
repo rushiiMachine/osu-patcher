@@ -4,10 +4,12 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Framework;
-using Osu.Stubs.GameModes;
+using Osu.Stubs.GameModes.Play;
 using Osu.Stubs.Graphics;
+using Osu.Stubs.Graphics.Skinning;
+using Osu.Stubs.Graphics.Sprites;
 using Osu.Stubs.Wrappers;
+using Osu.Stubs.XNA;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 

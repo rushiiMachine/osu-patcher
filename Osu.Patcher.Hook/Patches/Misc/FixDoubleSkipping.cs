@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.GameModes;
-using Osu.Stubs.Other;
+using Osu.Stubs.GameModes.Play;
+using Osu.Stubs.GameplayElements.Events;
 
 namespace Osu.Patcher.Hook.Patches.Misc;
 

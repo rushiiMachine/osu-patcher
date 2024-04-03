@@ -1,5 +1,5 @@
 using System;
-using Osu.Stubs.Framework;
+using Osu.Stubs.Graphics.Sprites;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 

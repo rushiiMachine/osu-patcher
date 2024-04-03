@@ -1,7 +1,7 @@
 using System;
 using Osu.Stubs.Audio;
-using Osu.Stubs.Scoring;
-using static Osu.Stubs.Other.Mods;
+using Osu.Stubs.GameplayElements.Scoring;
+using static Osu.Stubs.Root.Mods;
 
 namespace Osu.Patcher.Hook.Patches.Mods.AudioPreview;
 

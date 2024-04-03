@@ -1,7 +1,7 @@
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.Rulesets;
+using Osu.Stubs.GameModes.Play.Rulesets;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 

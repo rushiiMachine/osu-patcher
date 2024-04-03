@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Osu.Stubs.SongSelect;
+using Osu.Stubs.GameModes.Select;
 using Osu.Utils.IL;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
