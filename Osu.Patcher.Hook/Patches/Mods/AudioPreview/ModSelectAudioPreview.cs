@@ -26,7 +26,8 @@ internal class ModSelectAudioPreview
         [HarmonyArgument(1)] int mod,
         [HarmonyArgument(2)] bool playSound)
     {
-        // These calls happen for all mods on any mod update and don't actually do anything
+        // These calls happen for all mods on any mod update
+        // and don't actually indicate a ModButton being pressed
         if (!playSound) return;
 
         // var availableModStates = ModButton.AvailableStates.Get(__instance);

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs.Audio;
@@ -9,57 +11,108 @@ using static System.Reflection.Emit.OpCodes;
 namespace Osu.Patcher.Hook.Patches.Mods.AudioPreview;
 
 /// <summary>
-///     <c>AudioTrackBass::updatePlaybackRate()</c> forcibly resets the tempo to
-///     normal if a pitch isn't applied. This forces the tempo to be set if pitch isn't applied,
-///     to be used with the <see cref="ModSelectAudioPreview" /> patch
+///     Apply various fixes to <c>AudioTrackBass</c> to make <c>BASS_ATTRIB_TEMPO</c> work again on
+///     "Preview" audio streams. We use this in combination with <see cref="ModSelectAudioPreview" />
+///     to reapply the constant pitch speed modifier (for DoubleTime).
 /// </summary>
 [OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal static class FixUpdatePlaybackRate
+internal class FixUpdatePlaybackRate
 {
-    // static FixUpdatePlaybackRate()
-    // {
-    //     Task.Run(async () =>
-    //     {
-    //         await Task.Delay(2000);
-    //         try
-    //         {
-    //             var mtd = AccessTools.Method(AudioTrackBass.Class.Reference.Name + ":" +
-    //                                          AudioTrackBass.UpdatePlaybackRate.Reference.Name);
-    //             foreach (var instruction in MethodReader.GetInstructions(mtd))
-    //             {
-    //                 Console.WriteLine($"{instruction.Opcode} {instruction.Operand}");
-    //             }
-    //         }
-    //         catch (Exception e)
-    //         {
-    //             Console.WriteLine(e);
-    //         }
-    //     });
-    // }
-
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    private static MethodBase Target() => AudioTrackBass.UpdatePlaybackRate.Reference;
+    private static MethodBase Target() => AudioTrackBass.Constructor.Reference;
 
-    // TODO: WHY THE FUCK ISN'T THIS TRANSPILER APPLYING CHANGES????? PRE/POST PATCHES WORK FINE BUT THIS DOESN'T????????
     [UsedImplicitly]
     [HarmonyTranspiler]
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static IEnumerable<CodeInstruction> Transpiler(
+        IEnumerable<CodeInstruction> instructions,
+        ILGenerator generator)
     {
-        instructions = instructions.ManipulatorReplace(
-            // Find inst that loads 0f as the parameter "value" to BASS_ChannelSetAttribute
-            inst => inst.Is(Ldc_R4, 0f),
-            inst => new CodeInstruction[]
+        // Remove the conditional & block that checks for this.Preview and always do the full initialization
+        // Otherwise, the "quick" initialization never uses BASS_FX_TempoCreate, which makes setting
+        // BASSAttribute.BASS_ATTRIB_TEMPO impossible (what's used for DoubleTime).
+        // instructions = instructions.NoopSignature(
+        instructions = instructions.NoopSignature(
+            // if (Preview) { audioStream = audioStreamForwards = audioStreamPrefilter; }
+            [
+                Ldarg_0,
+                Callvirt,
+                Brfalse_S,
+                Ldarg_0,
+                Ldarg_0,
+                Ldarg_0,
+                Ldfld,
+                Dup,
+                Stloc_1,
+                Stfld,
+                Ldloc_1,
+                Call,
+                Br_S,
+            ]
+        );
+
+        // Change this "BASSFlag flags = Preview ? 0 : (BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_STREAM_PRESCAN);"
+        // into "BASSFlag flags = Preview ? BASSFlag.BASS_STREAM_DECODE : (BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_STREAM_PRESCAN);"
+        // This is so BASS_FX_TempoCreate still works when called later
+        var foundFlags = false;
+        const int BASS_STREAM_DECODE = 0x200000;
+        const int BASS_STREAM_PRESCAN = 0x20000;
+        instructions = instructions.Manipulator(
+            inst => foundFlags || inst.Is(Ldc_I4, BASS_STREAM_DECODE | BASS_STREAM_PRESCAN),
+            inst =>
             {
-                new(Ldarg_0) { labels = inst.labels }, // Load "this"
-                new(Ldfld, AudioTrackBass.PlaybackRate.Reference), // Load the float64 "playbackRate"
-                new(Ldc_R8, 100.0), // Load the float64 "100.0"
-                new(Sub), // Subtract 100.0 from playbackRate
-                new(Conv_R4), // Convert to float32
+                if (inst.OperandIs(BASS_STREAM_DECODE | BASS_STREAM_PRESCAN))
+                {
+                    foundFlags = true;
+                    return;
+                }
+
+                // This is the "? 0"
+                if (inst.opcode != Ldc_I4_0)
+                    return;
+
+                inst.opcode = Ldc_I4;
+                inst.operand = BASS_STREAM_DECODE;
+                foundFlags = false;
             }
         );
+
+        // Load speed optimization: disable BASS_FX_ReverseCreate when the "quick" parameter is true (aka. Preview)
+        var found = false;
+        instructions = instructions.Reverse().ManipulatorReplace(
+            inst => found || inst.Is(Stfld, AudioTrackBass.AudioStreamBackwardsHandle.Reference),
+            inst =>
+            {
+                // Only targeting the Call instruction before Stfld
+                if (inst.opcode != Call)
+                {
+                    found = true;
+                    return [inst];
+                }
+
+                found = false;
+                var labelTrue = generator.DefineLabel();
+                var labelFalse = generator.DefineLabel();
+
+                return new[]
+                {
+                    new(Ldarg_2), // "bool quick"
+                    new(Brfalse_S, labelFalse),
+
+                    // Clean up the 3 values to the Call on stack
+                    new(Pop),
+                    new(Pop),
+                    new(Pop),
+                    new(Ldc_I4_0), // Load a "0" to be used for Stfld AudioStreamBackwardsHandle
+                    new(Br_S, labelTrue),
+
+                    inst.WithLabels([labelFalse]),
+                    new(Nop) { labels = [labelTrue] },
+                }.Reverse();
+            }
+        ).Reverse();
 
         return instructions;
     }
