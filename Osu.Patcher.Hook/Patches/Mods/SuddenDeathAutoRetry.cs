@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Stubs.Rulesets;
 using static System.Reflection.Emit.OpCodes;
+using static Osu.Stubs.Other.Mods;
 
 namespace Osu.Patcher.Hook.Patches.Mods;
 
@@ -24,11 +25,8 @@ namespace Osu.Patcher.Hook.Patches.Mods;
 [OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal static class PatchSuddenDeathAutoRetry
+internal static class SuddenDeathAutoRetry
 {
-    private const int ModPerfect = 1 << 14;
-    private const int ModSuddenDeath = 1 << 5;
-
     [UsedImplicitly]
     [HarmonyTargetMethod]
     private static MethodBase Target() => Ruleset.Fail.Reference;
@@ -42,8 +40,8 @@ internal static class PatchSuddenDeathAutoRetry
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         instructions = instructions.Manipulator(
-            inst => inst.opcode == Ldc_I4 && inst.OperandIs(ModPerfect),
-            inst => inst.operand = ModPerfect | ModSuddenDeath
+            inst => inst.opcode == Ldc_I4 && inst.OperandIs(Perfect),
+            inst => inst.operand = Perfect | SuddenDeath
         );
 
         return instructions;

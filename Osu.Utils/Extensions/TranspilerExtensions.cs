@@ -210,4 +210,35 @@ public static class TranspilerExtensions
         if (found && replacementRemaining > 0 && replaceAfterSignature != replacementRemaining)
             throw new Exception("Not enough space in method to noop more instructions!");
     }
+
+    /// <summary>
+    ///     A transpiler that replaces instructions that match a predicate with new instruction(s)
+    /// </summary>
+    /// <param name="instructions">The input instructions to patch, mainly coming from a HarmonyTranspiler.</param>
+    /// <param name="predicate">A predicate selecting the instructions to act upon.</param>
+    /// <param name="action">An action to insert the new matching instructions. Labels are <b>NOT</b> carried over!</param>
+    public static IEnumerable<CodeInstruction> ManipulatorReplace(
+        this IEnumerable<CodeInstruction> instructions,
+        Func<CodeInstruction, bool> predicate,
+        Func<CodeInstruction, IEnumerable<CodeInstruction>> action)
+    {
+        var found = false;
+
+        foreach (var instruction in instructions)
+        {
+            if (!predicate(instruction))
+            {
+                yield return instruction;
+            }
+            else
+            {
+                found = true;
+                foreach (var newInstruction in action(instruction))
+                    yield return newInstruction;
+            }
+        }
+
+        if (!found)
+            throw new Exception("ManipulatorReplace didn't find any matches!");
+    }
 }

@@ -42,7 +42,7 @@ public static class SongSelection
     /// </summary>
     [Stub]
     public static readonly LazyMethod BeatmapTreeManagerOnRightClicked = LazyMethod.ByPartialSignature(
-        "osu.GameModes.Select.SongSelection::beatmapTreeManager_OnRightClicked",
+        "osu.GameModes.Select.SongSelection::beatmapTreeManager_OnRightClicked(object, BeatmapTreeItem)",
         [
             Ldarg_2,
             Isinst,
