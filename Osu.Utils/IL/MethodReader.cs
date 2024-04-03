@@ -39,4 +39,6 @@ public struct IlInstruction
 {
     public OpCode Opcode;
     public object Operand;
+
+    public override string ToString() => $"ILInstruction({Opcode}" + (Operand != null ? $", {Operand})" : ")");
 }
