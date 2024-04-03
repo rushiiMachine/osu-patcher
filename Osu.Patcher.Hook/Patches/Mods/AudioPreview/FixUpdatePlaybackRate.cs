@@ -8,6 +8,8 @@ using Osu.Stubs.Audio;
 using Osu.Utils.Extensions;
 using static System.Reflection.Emit.OpCodes;
 
+// ReSharper disable InconsistentNaming
+
 namespace Osu.Patcher.Hook.Patches.Mods.AudioPreview;
 
 /// <summary>

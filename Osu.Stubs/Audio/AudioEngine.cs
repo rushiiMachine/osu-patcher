@@ -15,6 +15,25 @@ namespace Osu.Stubs.Audio;
 public class AudioEngine
 {
     /// <summary>
+    ///     Original: <c>LoadAudioForPreview(Beatmap beatmap, bool continuePlayback, bool previewPoint, bool quick)</c>
+    ///     b20240123: <c></c>
+    /// </summary>
+    [Stub]
+    public static readonly LazyMethod<bool> LoadAudioForPreview = LazyMethod<bool>.ByPartialSignature(
+        "osu.Audio.AudioEngine::LoadAudioForPreview(Beatmap, bool, bool, bool)",
+        [
+            Call,
+            Ldc_I4_0,
+            Ceq,
+            Stloc_0,
+            Leave_S,
+            Pop,
+            Ldc_I4,
+            Call,
+        ]
+    );
+
+    /// <summary>
     ///     Original: <c>get_CurrentPlaybackRate()</c> (property getter)
     ///     b20240123: <c></c>
     /// </summary>

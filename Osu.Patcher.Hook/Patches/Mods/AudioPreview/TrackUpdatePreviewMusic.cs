@@ -2,23 +2,23 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
 using JetBrains.Annotations;
-using Osu.Stubs.SongSelect;
+using Osu.Stubs.Audio;
 
 namespace Osu.Patcher.Hook.Patches.Mods.AudioPreview;
 
 /// <summary>
-///     Hooks the place where ModButtons get updates in the mod selection menu to apply audio effects.
+///     Hooks the place where preview audio gets loaded to apply our mod audio effects.
 /// </summary>
 [OsuPatch]
 [HarmonyPatch]
 [UsedImplicitly]
-internal class ModSelectAudioPreview
+public class TrackUpdatePreviewMusic
 {
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    private static MethodBase Target() => ModSelection.UpdateMods.Reference;
+    private static MethodBase Target() => AudioEngine.LoadAudioForPreview.Reference;
 
-    [UsedImplicitly]
     [HarmonyPostfix]
+    [UsedImplicitly]
     private static void After() => Task.Run(ModAudioEffects.ApplyModEffects);
 }
