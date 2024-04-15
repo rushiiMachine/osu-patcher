@@ -40,10 +40,10 @@ public class LazyConstructor : ILazy<ConstructorInfo>
         Reference.Invoke(parameters);
 
     /// <inheritdoc cref="LazyMethod.BySignature" />
-    public static LazyConstructor BySignature(string name, IReadOnlyList<OpCode> signature) =>
-        new(name, () => OpCodeMatcher.FindConstructorBySignature(signature, true)!);
+    public static LazyConstructor BySignature(string name, IReadOnlyList<OpCode> signature, Type? type = null) =>
+        new(name, () => OpCodeMatcher.FindConstructorBySignature(type, signature, true)!);
 
     /// <inheritdoc cref="LazyMethod.ByPartialSignature" />
-    public static LazyConstructor ByPartialSignature(string name, IReadOnlyList<OpCode> signature) =>
-        new(name, () => OpCodeMatcher.FindConstructorBySignature(signature)!);
+    public static LazyConstructor ByPartialSignature(string name, IReadOnlyList<OpCode> signature, Type? type = null) =>
+        new(name, () => OpCodeMatcher.FindConstructorBySignature(type, signature)!);
 }

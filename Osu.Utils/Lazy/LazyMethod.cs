@@ -48,8 +48,9 @@ public class LazyMethod : ILazy<MethodInfo>
     ///     <see cref="ILazy{T}.Name" />
     /// </param>
     /// <param name="signature">Sequential opcodes to compare the target method's bytecode with.</param>
-    public static LazyMethod BySignature(string name, IReadOnlyList<OpCode> signature) =>
-        new(name, () => OpCodeMatcher.FindMethodBySignature(signature, true)!);
+    /// <param name="type">The type to shrink searching to, otherwise all types will be searched.</param>
+    public static LazyMethod BySignature(string name, IReadOnlyList<OpCode> signature, Type? type = null) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(type, signature, true)!);
 
     /// <summary>
     ///     A lazy method opcode partial opcode matcher.
@@ -59,8 +60,9 @@ public class LazyMethod : ILazy<MethodInfo>
     ///     <see cref="ILazy{T}.Name" />
     /// </param>
     /// <param name="signature">Sequential opcodes to search the target method with.</param>
-    public static LazyMethod ByPartialSignature(string name, IReadOnlyList<OpCode> signature) =>
-        new(name, () => OpCodeMatcher.FindMethodBySignature(signature)!);
+    /// <param name="type">The type to shrink searching to, otherwise all types will be searched.</param>
+    public static LazyMethod ByPartialSignature(string name, IReadOnlyList<OpCode> signature, Type? type = null) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(type, signature)!);
 }
 
 // ReSharper disable once InconsistentNaming
@@ -91,10 +93,11 @@ public class LazyMethod<R> : LazyMethod
         (T)Reference.Invoke(instance, parameters);
 
     /// <inheritdoc cref="LazyMethod.BySignature" />
-    public new static LazyMethod<R> BySignature(string name, IReadOnlyList<OpCode> signature) =>
-        new(name, () => OpCodeMatcher.FindMethodBySignature(signature, true)!);
+    public new static LazyMethod<R> BySignature(string name, IReadOnlyList<OpCode> signature, Type? type = null) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(type, signature, true)!);
 
     /// <inheritdoc cref="LazyMethod.ByPartialSignature" />
-    public new static LazyMethod<R> ByPartialSignature(string name, IReadOnlyList<OpCode> signature) =>
-        new(name, () => OpCodeMatcher.FindMethodBySignature(signature)!);
+    public new static LazyMethod<R>
+        ByPartialSignature(string name, IReadOnlyList<OpCode> signature, Type? type = null) =>
+        new(name, () => OpCodeMatcher.FindMethodBySignature(type, signature)!);
 }

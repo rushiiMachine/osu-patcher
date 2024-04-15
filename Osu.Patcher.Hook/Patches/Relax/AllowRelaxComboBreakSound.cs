@@ -44,7 +44,7 @@ internal static class AllowRelaxComboBreakSound
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    internal static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature)!;
+    internal static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(null, Signature)!;
 
     [UsedImplicitly]
     [HarmonyTranspiler]

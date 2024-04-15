@@ -45,7 +45,7 @@ internal static class AllowRelaxDrawMisses
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    internal static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature)!;
+    internal static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(null, Signature)!;
 
     [UsedImplicitly]
     [HarmonyTranspiler]

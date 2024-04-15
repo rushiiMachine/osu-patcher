@@ -65,7 +65,7 @@ internal static class AutoSaveRelaxScores
 
     [UsedImplicitly]
     [HarmonyTargetMethod]
-    private static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(Signature)!;
+    private static MethodBase Target() => OpCodeMatcher.FindMethodBySignature(null, Signature)!;
 
     [UsedImplicitly]
     [HarmonyTranspiler]
