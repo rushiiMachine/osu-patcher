@@ -4,6 +4,7 @@ using Osu.Performance;
 using Osu.Stubs.GameModes.Play;
 using Osu.Stubs.GameplayElements.Beatmaps;
 using Osu.Stubs.GameplayElements.Scoring;
+using Osu.Stubs.Helpers;
 
 namespace Osu.Patcher.Hook.Patches.LivePerformance;
 
@@ -12,6 +13,8 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 /// </summary>
 internal static class PerformanceCalculator
 {
+    private static readonly Obfuscated ObfuscatedModsStub = new(Stubs.Root.Mods.Type.Reference);
+    
     public static OsuPerformance? Calculator { get; private set; }
 
     public static bool IsInitialized => Calculator != null;
@@ -44,7 +47,7 @@ internal static class PerformanceCalculator
         if (currentScore == null) return;
 
         var modsObfuscated = Score.EnabledMods.Get(currentScore);
-        var mods = Score.EnabledModsGetValue.Invoke(modsObfuscated);
+        var mods = ObfuscatedModsStub.GetValue.Invoke<int>(modsObfuscated);
 
         // Clear relax mod for now (live pp calculations for relax are fucking garbage)
         mods &= ~(1 << 7);

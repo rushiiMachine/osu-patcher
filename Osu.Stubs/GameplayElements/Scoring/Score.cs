@@ -108,21 +108,6 @@ public static class Score
         () => Class.Reference
             .GetDeclaredFields()
             .Single(field => field.FieldType.IsGenericType &&
-                             field.FieldType.GetGenericTypeDefinition() == Obfuscated.Class.Reference)
-    );
-
-    /// <summary>
-    ///     The generic method <c>Obfuscated{T}::get_Value()</c> with the type parameter T bound to <c>Mods</c>.
-    /// </summary>
-    [Stub]
-    public static readonly LazyMethod<int> EnabledModsGetValue = new(
-        "osu.Helpers.Obfuscated<Mods>::get_Value()",
-        () =>
-        {
-            var modsType = EnabledMods.Reference.FieldType
-                .GetGenericArguments().First();
-
-            return Obfuscated.BindGetValue(modsType);
-        }
+                             field.FieldType.GetGenericTypeDefinition() == Obfuscated.Generic.Class.Reference)
     );
 }
