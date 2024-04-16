@@ -31,6 +31,9 @@ internal static class TrackOnScoreHit
         [HarmonyArgument(0)] int increaseScoreType,
         [HarmonyArgument(2)] bool increaseCombo)
     {
+        if (!PerformanceOptions.ShowPerformanceInGame.Value)
+            return;
+
         if (!PerformanceCalculator.IsInitialized)
         {
             Debug.Fail("OnIncreaseScoreHit called before performance calculator initialized!");

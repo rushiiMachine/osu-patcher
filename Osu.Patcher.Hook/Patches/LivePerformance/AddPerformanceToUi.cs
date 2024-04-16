@@ -38,6 +38,9 @@ internal static class AddPerformanceToUi
         [HarmonyArgument(3)] float scale
     )
     {
+        if (!PerformanceOptions.ShowPerformanceInGame.Value)
+            return;
+
         Debug.WriteLine("Adding Performance Counter to ScoreDisplay", nameof(AddPerformanceToUi));
 
         var currentSkin = SkinManager.Current.Get();

@@ -14,7 +14,7 @@ namespace Osu.Patcher.Hook.Patches.LivePerformance;
 internal static class PerformanceCalculator
 {
     private static readonly Obfuscated ObfuscatedModsStub = new(Stubs.Root.Mods.Type.Reference);
-    
+
     public static OsuPerformance? Calculator { get; private set; }
 
     public static bool IsInitialized => Calculator != null;
