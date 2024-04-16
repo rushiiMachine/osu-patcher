@@ -22,6 +22,11 @@ public abstract class PatchOptions
     public abstract void Load(Settings config);
 
     /// <summary>
+    ///     When called, save current internal state to the target config to be saved.
+    /// </summary>
+    public abstract void Save(Settings config);
+
+    /// <summary>
     ///     Finds and initializes an instance of every single type extending <see cref="PatchOptions" />.
     /// </summary>
     public static IEnumerable<PatchOptions> CreateAllPatchOptions()

@@ -46,6 +46,28 @@ public class Settings
         }
     }
 
+    /// <summary>
+    ///     Handles writing the patcher options to disk.
+    /// </summary>
+    public static void WriteToDisk(Settings settings, string osuDir)
+    {
+        Debug.WriteLine("Writing patcher config to disk");
+
+        Directory.CreateDirectory(osuDir);
+
+        var file = Path.Combine(osuDir, OptionsFilename);
+        using var fs = File.OpenWrite(file);
+
+        try
+        {
+            Serializer.Serialize(fs, settings);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Failed to write config to disk: {e}");
+        }
+    }
+
     #region Options
 
     #endregion
