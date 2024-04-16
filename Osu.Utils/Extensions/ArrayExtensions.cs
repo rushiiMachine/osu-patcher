@@ -1,3 +1,5 @@
+using System;
+
 namespace Osu.Utils.Extensions;
 
 public static class ArrayExtensions
@@ -27,5 +29,21 @@ public static class ArrayExtensions
             array.CopyTo(newArray, i * array.Length);
 
         return newArray;
+    }
+
+    /// <summary>
+    ///     Copy an array of elements to a new array of a type only known at runtime.
+    /// </summary>
+    /// <param name="srcArray">Original array. All the elements should be assignable to the new target type.</param>
+    /// <param name="newType">The type to create the new array as.</param>
+    /// <returns>A copy of the array with a different parameterized type.</returns>
+    public static Array ToType(this Array srcArray, Type newType)
+    {
+        var typedArray = Array.CreateInstance(newType, srcArray.Length);
+
+        for (var i = 0; i < typedArray.Length; i++)
+            typedArray.SetValue(index: i, value: srcArray.GetValue(i));
+
+        return typedArray;
     }
 }

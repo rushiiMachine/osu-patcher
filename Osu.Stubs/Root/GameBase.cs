@@ -1,16 +1,24 @@
+using System.Linq;
+using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs.Root;
 
-/// <summary>
-///     Original: <c>osu.GameBase</c>
-///     b20240123: <c>#=zduF3QmjgMG4eSc$fOQ==</c>
-/// </summary>
 [PublicAPI]
 public static class GameBase
 {
+    /// <summary>
+    ///     Original: <c>osu.GameBase</c>
+    ///     b20240123: <c>#=zduF3QmjgMG4eSc$fOQ==</c>
+    /// </summary>
+    [Stub]
+    public static readonly LazyType Class = new(
+        "osu.GameBase",
+        () => GetModeCanReload!.Reference.DeclaringType
+    );
+
     /// <summary>
     ///     Original: <c>get_ModeCanReload()</c>
     ///     b20240123: <c>#=zL6aRJUMxZO5fmlF9KQ==</c>
@@ -50,5 +58,17 @@ public static class GameBase
             Brfalse_S,
             Ldc_I4_8,
         ]
+    );
+
+    /// <summary>
+    ///     Original: <c>Options</c>
+    ///     b20240123: <c></c>
+    /// </summary>
+    [Stub]
+    public static readonly LazyField<object> Options = new(
+        "osu.GameBase::Options",
+        () => Class.Reference
+            .GetDeclaredFields()
+            .First(field => field.FieldType == GameModes.Options.Options.Class.Reference)
     );
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -15,6 +17,11 @@ public static class Hook
     private const string GithubUrl = "https://github.com/rushiiMachine/osu-patcher";
     private static Harmony _harmony = null!;
 
+    /// <summary>
+    ///     An instance of all patch options that have been initialized.
+    /// </summary>
+    public static IReadOnlyList<PatchOptions> PatchOptions { get; private set; } = null!;
+    
     /// <summary>
     ///     Entry point into the hook called by the injector.
     /// </summary>
@@ -40,6 +47,9 @@ public static class Hook
 
         try
         {
+            // Create settings
+            PatchOptions = Patches.PatchOptions.CreateAllPatchOptions().ToList();
+            
             _harmony = new Harmony("osu!patcher");
             InitializePatches(_harmony);
 
