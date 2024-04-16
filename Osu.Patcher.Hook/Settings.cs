@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using Osu.Patcher.Hook.Patches.LivePerformance;
 
 namespace Osu.Patcher.Hook;
 
@@ -71,6 +72,9 @@ public class Settings
     #region Options
 
     public bool EnableModAudioPreview { get; set; } = true;
+    public bool ShowPerformanceInGame { get; set; } = true;
+    public bool ShowPerformanceOnLeaderboard { get; set; } = true;
+    public PerformanceCalculatorType PerformanceCalculator { get; set; } = PerformanceCalculatorType.AkatsukiLimited;
     
     #endregion
 }

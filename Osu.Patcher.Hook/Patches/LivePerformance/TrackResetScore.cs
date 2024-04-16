@@ -19,5 +19,11 @@ internal static class TrackResetScore
 
     [UsedImplicitly]
     [HarmonyPostfix]
-    private static void After() => PerformanceCalculator.ResetCalculator();
+    private static void After()
+    {
+        if (!PerformanceOptions.ShowPerformanceInGame.Value)
+            return;
+
+        PerformanceCalculator.ResetCalculator();
+    }
 }
