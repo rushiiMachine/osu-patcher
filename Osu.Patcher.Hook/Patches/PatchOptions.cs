@@ -17,6 +17,11 @@ public abstract class PatchOptions
     public abstract IEnumerable<object> CreateOptions();
 
     /// <summary>
+    ///     When called, initialize internal state to what is read from the config file.
+    /// </summary>
+    public abstract void Load(Settings config);
+
+    /// <summary>
     ///     Finds and initializes an instance of every single type extending <see cref="PatchOptions" />.
     /// </summary>
     public static IEnumerable<PatchOptions> CreateAllPatchOptions()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using HarmonyLib;
@@ -8,6 +9,7 @@ using JetBrains.Annotations;
 using Osu.Patcher.Hook.Patches;
 using Osu.Performance;
 using Osu.Stubs.Wrappers;
+using Osu.Utils;
 
 namespace Osu.Patcher.Hook;
 
@@ -21,7 +23,7 @@ public static class Hook
     ///     An instance of all patch options that have been initialized.
     /// </summary>
     public static IReadOnlyList<PatchOptions> PatchOptions { get; private set; } = null!;
-    
+
     /// <summary>
     ///     Entry point into the hook called by the injector.
     /// </summary>
@@ -47,9 +49,13 @@ public static class Hook
 
         try
         {
-            // Create settings
+            var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
+
+            // Load settings
+            var settings = Settings.ReadFromDisk(osuDir);
             PatchOptions = Patches.PatchOptions.CreateAllPatchOptions().ToList();
-            
+            PatchOptions.Do(options => options.Load(settings));
+
             _harmony = new Harmony("osu!patcher");
             InitializePatches(_harmony);
 
