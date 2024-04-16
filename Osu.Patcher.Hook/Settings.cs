@@ -70,5 +70,7 @@ public class Settings
 
     #region Options
 
+    public bool EnableModAudioPreview { get; set; } = true;
+    
     #endregion
 }

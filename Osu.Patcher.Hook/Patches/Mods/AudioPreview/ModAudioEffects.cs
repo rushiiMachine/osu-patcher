@@ -13,9 +13,10 @@ internal static class ModAudioEffects
     /// <summary>
     ///     Applies the audio changes to the AudioEngine based on the current global mods.
     /// </summary>
-    internal static void ApplyModEffects()
+    internal static void ApplyModEffects(bool clear = false)
     {
         ResetChanges();
+        if (clear) return;
 
         var mods = ModManager.ModStatus.Get();
 

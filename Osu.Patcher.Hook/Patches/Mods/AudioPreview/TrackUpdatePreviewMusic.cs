@@ -20,5 +20,11 @@ public class TrackUpdatePreviewMusic
 
     [HarmonyPostfix]
     [UsedImplicitly]
-    private static void After() => Task.Run(ModAudioEffects.ApplyModEffects);
+    private static void After()
+    {
+        if (!AudioPreviewOptions.Enabled.Value)
+            return;
+
+        Task.Run(() => ModAudioEffects.ApplyModEffects());
+    }
 }
