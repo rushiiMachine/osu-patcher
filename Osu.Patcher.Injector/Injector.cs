@@ -46,9 +46,9 @@ internal static class Injector
 
             if (exe != "osu!.exe") continue;
 
-            // Make sure there's a "-devserver xyz" in cli args
+            // Make sure devserver arg is present and not pointing to ppy.sh
             var args = cli.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (args is not [_, "-devserver", { Length: > 3 }])
+            if (args is not [_, "-devserver", { Length: > 3 }] || args is [_, "-devserver", "ppy.sh"])
                 throw new Exception("Will not inject into osu! connected to Bancho!");
 
             return pid;
