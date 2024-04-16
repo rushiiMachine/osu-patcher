@@ -19,7 +19,7 @@ public class Bindable
     public static readonly Bindable Generic = new();
 
     /// <summary>
-    ///     Original: <c>osu.Helpers.Bindable{T}</c>
+    ///     Original: <c>osu.Helpers.Bindable{T} where T : IComparable</c>
     ///     b20240102.2: <c>#=zDruHkLGdhQjyjYxqzw==</c>
     /// </summary>
     [Stub]
@@ -87,7 +87,7 @@ public class Bindable
             "osu.Helpers.Bindable<T>",
             () => SetValue.Reference.DeclaringType
         );
-        
+
         GetValue = new LazyMethod<object>(
             "osu.Helpers.Bindable<T>::get_Value()",
             () => Class.Reference

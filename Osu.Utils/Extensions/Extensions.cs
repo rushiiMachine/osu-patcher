@@ -42,4 +42,20 @@ public static class Extensions
         using var enumerator = sequence.GetEnumerator();
         return enumerator.MoveNext() ? enumerator.Current : null;
     }
+
+    /// <summary>
+    ///     Returns the only element of a sequence, and returns null
+    ///     if there is not exactly one element in the sequence.
+    /// </summary>
+    public static T? SingleOrNull<T>(this IEnumerable<T> sequence)
+        where T : class
+    {
+        using var enumerator = sequence.GetEnumerator();
+
+        var item = enumerator.MoveNext()
+            ? enumerator.Current
+            : null;
+
+        return enumerator.MoveNext() ? null : item;
+    }
 }
