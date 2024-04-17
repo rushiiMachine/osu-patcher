@@ -59,6 +59,9 @@ public static class Hook
             _harmony = new Harmony("osu!patcher");
             InitializePatches(_harmony);
 
+            // Forcefully reload options to allow patches to inject new options
+            OptionsUtils.ReloadOptions();
+
             Notifications.ShowMessage(
                 "osu!patcher initialized!",
                 NotificationColor.Neutral,
