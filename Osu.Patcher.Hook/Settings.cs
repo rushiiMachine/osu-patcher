@@ -21,6 +21,12 @@ public class Settings
     [XmlIgnore]
     public static Settings Default = new();
 
+    #region Options
+
+    public bool EnableModAudioPreview { get; set; } = true;
+
+    #endregion
+
     /// <summary>
     ///     Handles reading the patcher options from disk.
     /// </summary>
@@ -56,7 +62,7 @@ public class Settings
         Directory.CreateDirectory(osuDir);
 
         var file = Path.Combine(osuDir, OptionsFilename);
-        using var fs = File.OpenWrite(file);
+        using var fs = File.Open(file, FileMode.Create);
 
         try
         {
@@ -67,10 +73,4 @@ public class Settings
             Console.WriteLine($"Failed to write config to disk: {e}");
         }
     }
-
-    #region Options
-
-    public bool EnableModAudioPreview { get; set; } = true;
-    
-    #endregion
 }

@@ -5,7 +5,6 @@ using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs.Helpers;
 
-// TODO: make this into a generic wrapper like Bindable/OptionDropdown
 [PublicAPI]
 public class Obfuscated
 {
