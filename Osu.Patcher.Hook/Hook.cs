@@ -30,7 +30,7 @@ public static class Hook
     [UsedImplicitly]
     public static int Initialize(string _)
     {
-        ConsoleHook.Initialize();
+        var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
 
         try
         {
@@ -45,6 +45,7 @@ public static class Hook
         }
 
 #if DEBUG
+        ConsoleHook.InitializeConsoleOutput();
         DebugHook.Initialize();
 
         try
@@ -58,12 +59,12 @@ public static class Hook
             ShowErrorNotification();
             return 0;
         }
+#else
+        ConsoleHook.InitializeLogOutput(osuDir);
 #endif
 
         try
         {
-            var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
-
             // Load settings
             var settings = Settings.ReadFromDisk(osuDir);
             PatchOptions = Patches.PatchOptions.CreateAllPatchOptions().ToList();
