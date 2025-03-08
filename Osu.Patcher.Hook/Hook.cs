@@ -32,6 +32,18 @@ public static class Hook
     {
         ConsoleHook.Initialize();
 
+        try
+        {
+            Notifications.ShowMessage(
+                "Loading osu!patcher...",
+                NotificationColor.Neutral,
+                3000);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
 #if DEBUG
         DebugHook.Initialize();
 
@@ -43,6 +55,7 @@ public static class Hook
         catch (Exception e)
         {
             Console.WriteLine($"MSBuild broke again; clean & rebuild: {e}");
+            ShowErrorNotification();
             return 0;
         }
 #endif
