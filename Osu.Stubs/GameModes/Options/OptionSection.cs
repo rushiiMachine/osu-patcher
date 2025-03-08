@@ -1,35 +1,55 @@
+using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 using JetBrains.Annotations;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
 namespace Osu.Stubs.GameModes.Options;
 
-/// <summary>
-///     Original: <c>osu.GameModes.Options.OptionSection</c>
-///     b20240123: <c></c>
-/// </summary>
 [PublicAPI]
 public class OptionSection
 {
     /// <summary>
-    ///     Original: <c>OptionSection(OsuString title, IEnumerable{string} keywords)</c>
-    ///     b20240123: <c></c>
+    ///     Original: <c>osu.GameModes.Options.OptionSection</c>
+    ///     b20250309.2: <c>#=z6o8TWFro5CFT4nNbnpcUroUVOeFA</c>
     /// </summary>
     [Stub]
-    public static readonly LazyConstructor Constructor = LazyConstructor.BySignature(
-        "osu.GameModes.Options.OptionSection::OptionSection(OsuString, IEnumerable<string>)",
+    public static readonly LazyType Class = new(
+        "osu.GameModes.Options.OptionElement",
+        () => Constructor2!.Reference.DeclaringType
+    );
+
+    /// <summary>
+    ///     Original: <c>OptionSection(OsuString title, IEnumerable{string} keywords)</c>
+    /// </summary>
+    [Stub]
+    public static readonly LazyConstructor Constructor = new(
+        "osu.GameModes.Options.OptionSection::OptionSection(OsuString title, IEnumerable{string} keywords)",
+        () => Class.Reference.GetDeclaredConstructors().First()
+    );
+
+    /// <summary>
+    ///     Original: <c>OptionSection(string title, IEnumerable{string} keywords)</c>
+    /// </summary>
+    [Stub]
+    public static readonly LazyConstructor Constructor2 = LazyConstructor.ByPartialSignature(
+        "osu.GameModes.Options.OptionSection::OptionSection(string, IEnumerable{string} keywords)",
         [
-            Ldarg_0,
-            Ldarg_1,
-            Call,
-            Ldarg_2,
-            Call,
-            Ldarg_0,
-            Ldarga_S,
-            Constrained,
             Callvirt,
+            Stloc_1,
+            Ldarg_0,
+            Ldloc_1,
             Call,
+            Ldloc_0,
+            Callvirt,
+            Brtrue_S,
+            Leave_S,
+            Ldloc_0,
+            Brfalse_S,
+            Ldloc_0,
+            Callvirt,
+            Endfinally,
             Ret,
         ]
     );

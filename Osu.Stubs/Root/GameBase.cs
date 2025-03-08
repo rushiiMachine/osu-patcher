@@ -1,6 +1,7 @@
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
+using Osu.Utils.Extensions;
 using Osu.Utils.Lazy;
 using static System.Reflection.Emit.OpCodes;
 
@@ -70,5 +71,19 @@ public static class GameBase
         () => Class.Reference
             .GetDeclaredFields()
             .First(field => field.FieldType == GameModes.Options.Options.Class.Reference)
+    );
+
+    /// <summary>
+    ///     Original: <c>Scheduler</c>
+    ///     This is the main thread scheduler.
+    /// </summary>
+    [Stub]
+    public static readonly LazyField<object> Scheduler = new(
+        "osu.GameBase::Scheduler",
+        // There's two fields of type Scheduler, get the first one
+        () => Class.Reference
+            .GetDeclaredFields()
+            .Where(field => field.FieldType == Helpers.Scheduler.Class.Reference)
+            .FirstOrNull()!
     );
 }

@@ -57,7 +57,7 @@ public class Settings
         Directory.CreateDirectory(osuDir);
 
         var file = Path.Combine(osuDir, OptionsFilename);
-        using var fs = File.OpenWrite(file);
+        using var fs = File.Open(file, FileMode.Create);
 
         try
         {

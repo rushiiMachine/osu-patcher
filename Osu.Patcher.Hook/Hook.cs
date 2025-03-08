@@ -30,9 +30,22 @@ public static class Hook
     [UsedImplicitly]
     public static int Initialize(string _)
     {
-        ConsoleHook.Initialize();
+        var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
+
+        try
+        {
+            Notifications.ShowMessage(
+                "Loading osu!patcher...",
+                NotificationColor.Neutral,
+                3000);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
 
 #if DEBUG
+        ConsoleHook.InitializeConsoleOutput();
         DebugHook.Initialize();
 
         try
@@ -43,14 +56,15 @@ public static class Hook
         catch (Exception e)
         {
             Console.WriteLine($"MSBuild broke again; clean & rebuild: {e}");
+            ShowErrorNotification();
             return 0;
         }
+#else
+        ConsoleHook.InitializeLogOutput(osuDir);
 #endif
 
         try
         {
-            var osuDir = Path.GetDirectoryName(OsuAssembly.Assembly.Location)!;
-
             // Load settings
             var settings = Settings.ReadFromDisk(osuDir);
             PatchOptions = Patches.PatchOptions.CreateAllPatchOptions().ToList();
@@ -58,6 +72,9 @@ public static class Hook
 
             _harmony = new Harmony("osu!patcher");
             InitializePatches(_harmony);
+
+            // Forcefully reload options to allow patches to inject new options
+            OptionsUtils.ReloadOptions();
 
             Notifications.ShowMessage(
                 "osu!patcher initialized!",

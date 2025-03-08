@@ -45,6 +45,11 @@ Using this on official Bancho servers WILL get you banned.
 Until I have a release ready, then go to the [latest actions build](ehttps://github.com/rushiiMachine/osu-patcher/actions?query=branch%3Amaster) 
 for the `master` branch and download the attached artifact to extract. No automatic updater is included.
 
+Only the `Stable` release stream is officially supported! `Cutting Edge` and `Beta` release streams
+may have changes that cause errors or crashes. No support will be provided.
+
+Latest tested `Stable` version: [`b20250309.2`](https://osu.ppy.sh/home/changelog/stable40/20250309.2).
+
 Your antivirus may detect it as malware, however this is completely expected as it contains code to inject 
 into processes. If you aren't convinced it isn't a false positive, feel free to build from source code.
 

@@ -11,8 +11,10 @@ namespace Osu.Patcher.Hook;
 ///     A utility for immediately showing a console window with AllocConsole() upon something being written to
 ///     stdout/stderr and redirecting any further output to that window.
 /// </summary>
+// FIXME: make flushing async (flushing on main thread might cause mini lagspikes)
 internal static class ConsoleHook
 {
+    private const string LogFilename = "osu!patcher.log";
     private static volatile bool _consoleInitialized;
 
     [DllImport("kernel32.dll")]
@@ -21,12 +23,23 @@ internal static class ConsoleHook
     [DllImport("kernel32.dll")]
     private static extern int AllocConsole();
 
-    public static void Initialize()
+    // This may trigger the anti-cheat since no console is supposed to be allocated
+    // That's why this should only be used in Debug mode when playing offline
+    public static void InitializeConsoleOutput()
     {
         if (_consoleInitialized) return;
 
         Console.SetOut(new InterceptingWriter(false));
         Console.SetError(new InterceptingWriter(true));
+    }
+
+    public static void InitializeLogOutput(string osuDir)
+    {
+        var fileStream = new FileStream(Path.Combine(osuDir, LogFilename), FileMode.Create, FileAccess.Write);
+        var outStream = new StreamWriter(new BufferedStream(fileStream)) { AutoFlush = true };
+
+        Console.SetOut(outStream);
+        Console.SetError(outStream);
     }
 
     private class InterceptingWriter : TextWriter
