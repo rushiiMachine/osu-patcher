@@ -57,7 +57,6 @@ public static class OpCodeMatcher
 
         foreach (var type in searchTypes)
         foreach (var method in type.GetConstructors(BindingFlags.Instance
-                                                    | BindingFlags.Static
                                                     | BindingFlags.Public
                                                     | BindingFlags.NonPublic))
         {

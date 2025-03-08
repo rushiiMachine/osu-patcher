@@ -30,7 +30,7 @@ internal static class RevertSortWhenNoGroup
     /// </summary>
     private static int _lastSortingMethod = -1;
 
-    private static readonly Bindable IntBindableStub = new(typeof(int));
+    private static readonly Bindable TreeGroupModeStub = new(TreeGroupMode.Class.Reference);
 
     public static int GetSortMethodForGrouping(
         object @this, // is SongSelection
@@ -40,7 +40,7 @@ internal static class RevertSortWhenNoGroup
     {
         var beatmapTreeManager = SongSelection.BeatmapTreeManager.Get(@this);
         var currentGroupModeBindable = BeatmapTreeManager.CurrentGroupMode.Get(beatmapTreeManager);
-        var currentGroupMode = IntBindableStub.GetValue.Invoke<int>(currentGroupModeBindable);
+        var currentGroupMode = TreeGroupModeStub.GetValue.Invoke<int>(currentGroupModeBindable);
 
         // We only care if the grouping method changes
         if (currentGroupMode == newGroupMode)

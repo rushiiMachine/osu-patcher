@@ -55,7 +55,7 @@ public static class pSpriteText
     ///     b20240123: <c>#=z2Klmy0o=</c>
     /// </summary>
     [Stub]
-    public static readonly LazyMethod<object> MeasureText = LazyMethod<object>.ByPartialSignature(
+    public static readonly LazyMethod<object> MeasureText = LazyMethod<object>.BySignature(
         "osu.Graphics.Sprites.pSpriteText::MeasureText()",
         [
             Ldarg_0,
@@ -67,7 +67,8 @@ public static class pSpriteText
             Ldarg_0,
             Ldfld,
             Ret,
-        ]
+        ],
+        Class.Reference
     );
 
     /// <summary>

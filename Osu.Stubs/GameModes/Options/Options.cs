@@ -25,18 +25,17 @@ public static class Options
     public static readonly LazyMethod InitializeOptions = LazyMethod.ByPartialSignature(
         "osu.GameModes.Options.Options::InitializeOptions()",
         [
-            Ldc_I4,
-            Ldsfld,
-            Ldnull,
-            Newobj,
-            Stelem_Ref,
+            Call,
+            Brtrue_S,
+            Leave_S,
+            Ldloca_S,
+            Constrained,
             Callvirt,
-            Ldloc_2,
-            Stelem_Ref,
-            Dup,
-            Ldc_I4_1,
-            Ldc_I4_S,
-            Ldnull,
+            Endfinally,
+            Ldarg_0,
+            Ldc_I4,
+            Ldc_I4,
+            Newobj,
         ]
     );
 
