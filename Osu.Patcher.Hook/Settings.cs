@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
+using Osu.Patcher.Hook.Patches.LivePerformance;
 
 namespace Osu.Patcher.Hook;
 
@@ -20,12 +21,6 @@ public class Settings
     /// </summary>
     [XmlIgnore]
     public static Settings Default = new();
-
-    #region Options
-
-    public bool EnableModAudioPreview { get; set; } = true;
-
-    #endregion
 
     /// <summary>
     ///     Handles reading the patcher options from disk.
@@ -73,4 +68,13 @@ public class Settings
             Console.WriteLine($"Failed to write config to disk: {e}");
         }
     }
+
+    #region Options
+
+    public bool EnableModAudioPreview { get; set; } = true;
+    public bool ShowPerformanceInGame { get; set; } = true;
+    public bool ShowPerformanceOnLeaderboard { get; set; } = true;
+    public PerformanceCalculatorType PerformanceCalculator { get; set; } = PerformanceCalculatorType.AkatsukiLimited;
+    
+    #endregion
 }
